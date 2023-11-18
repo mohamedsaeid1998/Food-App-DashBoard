@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import './variables.scss';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+.Auth-container {
+  background: url('../assets/images/main-BackGround.jpeg') no-repeat;
+  background-size: 100% 100%;
+
+
+  // .bg-overlay{
+
+  // }
+
+  p {
+    color: $soft-color;
+    font-weight: 400;
+  }
+
+a{
+  all: unset;
+  cursor: pointer;
+}
+
+  .input-con {
+    background-color: $dark-bg;
+    border-radius: 8px;
+    border: unset;
+    padding: 12px;
+    margin-top: 25px;
+
+
+    i {
+      font-size: 21px;
+      color: $input-con-color;
+      padding: 2px;
+      border-right: 1px solid $input-con-color;
+    }
+
+    input::-webkit-input-placeholder{
+      color: $input-con-color ;
+    }
+
+    .show{
+      border-right: unset;
+      cursor: pointer;
+    }
+
+  }
+
+
+  .form-control{
+    all: unset;
+  }
+
+  .forget{
+    color: $main-bg;
+  }
+
+  button{
+    background-color: $main-bg;
+  }
+}
+
+
+
+// <div className='flex flex-1 relative '>
+// <input className='rounded-[10px] bg-white w-full p-2 pr-10 ' type="search" placeholder='بحث' />
+// <i className="fa-solid fa-magnifying-glass absolute cursor-pointer  top-[35%] pr-1 translate-x-[-50%]"></i>
+
+// </div>
