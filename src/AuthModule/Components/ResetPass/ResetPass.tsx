@@ -2,11 +2,11 @@ import { Link, useNavigate } from 'react-router-dom'
 import logo from '../../../assets/images/Login -logo.png'
 import { useForm } from 'react-hook-form'
 // import UseAuthenticatedQuery from '@/Hooks/UseAuthenticatedQuery'
-import axios from 'axios'
 import { toast } from 'react-toastify'
 import { togglePass } from '@/App'
 import { IFormValues } from '@/Interfaces'
 import { useState } from 'react'
+import { baseUrl } from '@/utils/Custom/custom'
 
 const ResetPass = () => {
 
@@ -14,12 +14,12 @@ const ResetPass = () => {
 
   const navigate = useNavigate()
 
-  const { register, handleSubmit, watch , formState: { errors } } = useForm<IFormValues>()
+  const { register, handleSubmit, getValues , formState: { errors } } = useForm<IFormValues>()
 
 
   const onSubmit = (data: IFormValues) => {
     setLoading(true)
-    return axios.post(`http://upskilling-egypt.com:3002/api/v1/Users/Reset`, data)
+    return baseUrl.post(`/api/v1/Users/Reset`, data)
       .then((res) =>{
         console.log(res)
         setTimeout(() => {
@@ -62,7 +62,7 @@ const ResetPass = () => {
 
   return <>
     <main className="Auth-container container-fluid">
-    <div className="row vh-100 justify-content-center align-items-center ">
+    <div className="row bg-overlay vh-100 justify-content-center align-items-center ">
       <div className="col-md-6">
         <div className="bg-white p-5">
 
@@ -146,9 +146,7 @@ const ResetPass = () => {
                     placeholder='Confirm New Password'
                     {...register("confirmPassword", {
                       required: true,
-                      validate: (value) => value === watch('password') || 'Passwords do not match'
-                      
-
+                      validate: (value) => value === getValues('password') || 'Passwords do not match',
                     })} />
                 </div>
                 <i onClick={() => togglePass()} className="fa-regular fa-eye show "></i>
@@ -156,11 +154,12 @@ const ResetPass = () => {
 
             </div>
             {errors.confirmPassword && errors.confirmPassword.type === "required" ? <span className='text-danger'>Password is Required</span> : null}
+            {errors.confirmPassword && errors.confirmPassword.type === "validate" ? <span className='text-danger'>Passwords do not match</span> : null}
 
-            <div className=' mt-2 text-end'>
-              <Link to={'/'} >Login Now ?</Link>
+            <div className=' mt-2 '>
+              <Link to={'/'} className='forget'>Login Now ?</Link>
             </div>
-                    {Loading?<button type='button' disabled className='btn btn-success w-100 mt-4 fw-bold'><i className='fa fa-spin fa-spinner'></i></button>:<button type='submit' className='btn btn-success w-100 mt-4 fw-bold'>Login</button>}
+                    {Loading?<button type='button' disabled className='btn btn-success w-100 mt-4 fw-bold'><i className='fa fa-spin fa-spinner'></i></button>:<button type='submit' className='btn btn-success w-100 mt-4 fw-bold'>Reset Password</button>}
           </form>
         </div>
       </div>

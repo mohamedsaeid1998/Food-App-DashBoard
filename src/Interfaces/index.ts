@@ -4,3 +4,9 @@ export interface IFormValues {
   confirmPassword?: string,
   seed?: string,
 }
+
+export interface IFormValuesChange {
+  oldPassword: string,
+  newPassword: string,
+  confirmNewPassword: string,
+}

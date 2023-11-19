@@ -1,28 +1,23 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import { AuthLayout, MasterLayout, NotFound, ProtectedRoute } from './SharedModule/Components'
+import { AuthLayout, MasterLayout, NotFound, ProtectedRoute } from '@/SharedModule/Components'
 import Home from './HomeModule/Components/Home/Home'
 import UsersList from './UsersModule/Components/UsersList/UsersList'
 import CategoriesList from './CategoriesModule/Components/CategoriesList/CategoriesList'
 import RecipesList from './RecipesModule/Components/RecipesList/RecipesList'
 import { useEffect, useState } from 'react'
 import { JwtPayload, jwtDecode } from 'jwt-decode'
-import { Login, ResetPass, ResetPassRequest } from '@/AuthModule/Components'
-
+import {  Login, ResetPass, ResetPassRequest } from '@/AuthModule/Components'
 
 export const togglePass = () => {
   const eyeIcon = document.querySelector('.show') as HTMLElement;
   const passInput = document.querySelector('.pass') as HTMLInputElement;
   if (passInput && eyeIcon) {
     passInput.type = (passInput?.type === 'password') ? 'text' : 'password';
-    if (eyeIcon.classList.contains("fa-eye")) {
-      eyeIcon.classList.remove("fa-eye")
-      eyeIcon.classList.add("fa-eye-slash")
-    } else {
-      eyeIcon.classList.remove("fa-eye-slash")
-      eyeIcon.classList.add("fa-eye")
-    }
+    eyeIcon.classList.toggle('fa-eye');
+    eyeIcon.classList.toggle('fa-eye-slash');
   }
 };
+
 
 function App() {
 
@@ -41,9 +36,12 @@ function App() {
     localStorage.getItem("adminToken") !== null ? saveAdminData() : null
   }, [])
 
+
+
+  
   const routes = createBrowserRouter([
     {
-      path: "dashboard", element: <ProtectedRoute ><MasterLayout adminData={adminData} /></ProtectedRoute>, errorElement: <NotFound />, children: [
+      path: "dashboard", element: <ProtectedRoute><MasterLayout {...{ adminData }} /></ProtectedRoute>, errorElement: <NotFound />, children: [
         { index: true, element: <Home /> },
         { path: "users", element: <UsersList /> },
         { path: "categories", element: <CategoriesList /> },
@@ -51,14 +49,12 @@ function App() {
       ]
     },
 
-
-
     {
       path: "/", element: <AuthLayout />, errorElement: <NotFound />, children: [
-        { index: true, element: <Login {...{saveAdminData}} /> },
-        { path: "login", element: <Login {...{saveAdminData}} /> },
+        { index: true, element: <Login {...{ saveAdminData }} /> },
+        { path: "login", element: <Login {...{ saveAdminData }} /> },
         { path: "forget-pass-request", element: <ResetPassRequest /> },
-        { path: "reset-pass", element: <ResetPass/> },
+        { path: "reset-pass", element: <ResetPass /> },
       ]
     }
   ])

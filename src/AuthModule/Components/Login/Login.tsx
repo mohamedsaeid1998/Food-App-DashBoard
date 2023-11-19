@@ -2,11 +2,12 @@ import { Link, useNavigate } from 'react-router-dom'
 import logo from '../../../assets/images/Login -logo.png'
 import { useForm } from 'react-hook-form'
 // import UseAuthenticatedQuery from '@/Hooks/UseAuthenticatedQuery'
-import axios from 'axios'
+
 import { toast } from 'react-toastify'
 import { togglePass } from '@/App'
 import { IFormValues } from '@/Interfaces'
 import { useState } from 'react'
+import { baseUrl } from '@/utils/Custom/custom'
 
 
 interface Props {
@@ -24,7 +25,7 @@ const [Loading, setLoading] = useState(false)
 
   const onSubmit = (data: IFormValues) => {
     setLoading(true)
-    return axios.post(`http://upskilling-egypt.com:3002/api/v1/Users/Login`, data)
+    return baseUrl.post(`/api/v1/Users/Login`, data)
       .then((res) =>{
         console.log(res)
         localStorage.setItem("adminToken",res.data.token)
@@ -68,7 +69,7 @@ const [Loading, setLoading] = useState(false)
 
 return <>
   <main className="Auth-container container-fluid">
-    <div className="row vh-100 justify-content-center align-items-center ">
+    <div className="row bg-overlay vh-100 justify-content-center align-items-center ">
       <div className="col-md-6">
         <div className="bg-white p-5">
 

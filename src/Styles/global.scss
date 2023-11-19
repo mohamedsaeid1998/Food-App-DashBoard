@@ -8,24 +8,32 @@
   font-family: 'Inter', sans-serif;
 }
 
+.active {
+  background-color: #0092471A;
+border-left: 4px solid #009247;
+  .ps-menu-label {
+    color: white !important;
+  }
+}
+
 .Auth-container {
   background: url('../assets/images/main-BackGround.jpeg') no-repeat;
   background-size: 100% 100%;
 
 
-  // .bg-overlay{
-
-  // }
+  .bg-overlay {
+    background: linear-gradient(to bottom left, rgba(0, 0, 0, 0.4), rgba(47, 140, 51, 0.7));
+  }
 
   p {
     color: $soft-color;
     font-weight: 400;
   }
 
-a{
-  all: unset;
-  cursor: pointer;
-}
+  a {
+    all: unset;
+    cursor: pointer;
+  }
 
   .input-con {
     background-color: $dark-bg;
@@ -42,11 +50,11 @@ a{
       border-right: 1px solid $input-con-color;
     }
 
-    input::-webkit-input-placeholder{
+    input::-webkit-input-placeholder {
       color: $input-con-color ;
     }
 
-    .show{
+    .show {
       border-right: unset;
       cursor: pointer;
     }
@@ -54,23 +62,44 @@ a{
   }
 
 
-  .form-control{
+  .form-control {
     all: unset;
   }
 
-  .forget{
+  .forget {
     color: $main-bg;
   }
 
-  button{
+  button {
     background-color: $main-bg;
   }
 }
 
 
 
-// <div className='flex flex-1 relative '>
-// <input className='rounded-[10px] bg-white w-full p-2 pr-10 ' type="search" placeholder='بحث' />
-// <i className="fa-solid fa-magnifying-glass absolute cursor-pointer  top-[35%] pr-1 translate-x-[-50%]"></i>
 
-// </div>
+.sidebar-container {
+
+  aside {
+    background-color: #1f263d;
+    border-radius: 0px 58px 0px 0px;
+
+    .ps-sidebar-container {
+      background-color: unset;
+
+      .ps-menu-label {
+        color: rgba(255, 255, 255, 0.65);
+      }
+
+      .ps-menu-button:hover{
+        background-color:#009247;
+
+        .ps-menu-label {
+          color: white !important;
+        }
+      }
+    }
+
+
+  }
+}
