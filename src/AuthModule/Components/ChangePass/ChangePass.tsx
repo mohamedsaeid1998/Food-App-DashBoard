@@ -1,31 +1,31 @@
+import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import logo from '../../../assets/images/Login -logo.png'
-import { useForm } from 'react-hook-form'
 // import UseAuthenticatedQuery from '@/Hooks/UseAuthenticatedQuery'
-import { toast } from 'react-toastify'
-import { togglePass } from '@/App'
-import { IFormValuesChange } from '@/Interfaces'
+import { IFormValues } from '@/Interfaces'
+import { PasswordInput } from '@/SharedModule/Components'
+import baseUrl from '@/utils/Custom/Custom'
 import { useState } from 'react'
-import { baseUrl } from '@/utils/Custom/custom'
+import { toast } from 'react-toastify'
 const ChangePass = () => {
 
   const [Loading, setLoading] = useState(false)
 
   const navigate = useNavigate()
 
-  const { register, handleSubmit, getValues, formState: { errors } } = useForm<IFormValuesChange>()
+  const { register, handleSubmit, formState: { errors } } = useForm<IFormValues>()
 
 
-  const onSubmit = (data: IFormValuesChange) => {
+  const onSubmit = (data: IFormValues) => {
     setLoading(true)
-    return baseUrl.put(`/api/v1/Users/ChangePassword`, data ,{
+    return baseUrl.put(`/api/v1/Users/ChangePassword`, data, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
       },
     })
       .then((res) => {
         console.log(res)
-        setTimeout(() => {
+
           toast.success(`${res.data.message}`, {
             position: "top-right",
             autoClose: 3000,
@@ -36,7 +36,7 @@ const ChangePass = () => {
             progress: undefined,
             theme: "colored",
           });
-        }, 1);
+
         navigate('/')
       })
       .catch((err) => {
@@ -80,18 +80,7 @@ const ChangePass = () => {
               <div className='input-con'>
 
                 <div className=' d-flex align-items-center justify-content-between '>
-
-                  <div className='d-flex gap-2'>
-                    <i className="fa-solid fa-lock pe-2"></i>
-                    <input
-                      className='form-control pass'
-                      type="password"
-                      placeholder='Old Password'
-                      {...register("oldPassword", {
-                        required: true
-                      })} />
-                  </div>
-                  <i onClick={() => togglePass()} className="fa-regular fa-eye show "></i>
+                <PasswordInput register={register} inputName={'oldPassword'} placeholder='Old Password' />
                 </div>
 
               </div>
@@ -101,17 +90,7 @@ const ChangePass = () => {
 
                 <div className=' d-flex align-items-center justify-content-between '>
 
-                  <div className='d-flex gap-2'>
-                    <i className="fa-solid fa-lock pe-2"></i>
-                    <input
-                      className='form-control pass'
-                      type="password"
-                      placeholder='New Password'
-                      {...register("newPassword", {
-                        required: true
-                      })} />
-                  </div>
-                  <i onClick={() => togglePass()} className="fa-regular fa-eye show "></i>
+                <PasswordInput register={register} inputName={'newPassword'} placeholder='New Password' />
                 </div>
 
               </div>
@@ -120,19 +99,8 @@ const ChangePass = () => {
               <div className='input-con'>
 
                 <div className=' d-flex  align-items-center justify-content-between '>
+                <PasswordInput register={register} inputName={'confirmNewPassword'} placeholder='Confirm New Password' />
 
-                  <div className='d-flex gap-2'>
-                    <i className="fa-solid fa-lock pe-2"></i>
-                    <input
-                      className='form-control pass'
-                      type="password"
-                      placeholder='Confirm New Password'
-                      {...register("confirmNewPassword", {
-                        required: true,
-                        validate: (value) => value === getValues('newPassword') || 'Passwords do not match',
-                      })} />
-                  </div>
-                  <i onClick={() => togglePass()} className="fa-regular fa-eye show "></i>
                 </div>
 
               </div>

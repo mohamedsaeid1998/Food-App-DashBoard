@@ -9,49 +9,47 @@ import { IoIosUnlock } from "react-icons/io";
 import { FiLogOut } from "react-icons/fi";
 import { useState } from 'react';
 import logo from '../../../assets/images/sidebar-logo.png'
-import Modal from 'react-bootstrap/Modal';
-import { ChangePass } from '@/AuthModule/Components';
+// import Modal from 'react-bootstrap/Modal';
+// import { ChangePass } from '@/AuthModule/Components';
+import { ModalUi } from '..';
 
 const SideBar = () => {
   const navigate = useNavigate()
   const [iscollapsed, setIscollapsed] = useState(false)
-
   const { pathname } = useLocation()
   const handleToggle = () => {
     setIscollapsed(!iscollapsed)
   }
 
+  const links = [
+    { path: "/dashboard", icon: <LiaHomeSolid size={'25px'} />, title: 'Home' },
+    { path: '/dashboard/users', icon: <HiOutlineUsers size={'25px'} />, title: 'Users' },
+    { path: '/dashboard/recipes', icon: <BsColumnsGap size={'25px'} />, title: 'Recipes' },
+    { path: '/dashboard/categories', icon: <FaRegCalendarAlt size={'25px'} />, title: 'Categories' },
+  ]
+  const [modalState, setModalState] = useState("close")
 
-  const [show, setShow] = useState(false);
+  const showChangePassModal = () => {
+    setModalState("ChangePass")
+  }
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-
-const logOut = () => {
+  
+  const logOut = () => {
     localStorage.removeItem('adminToken')
     navigate('/')
   }
   return <>
     <div className='sidebar-container text-white'>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Body><ChangePass /></Modal.Body>
-      </Modal>
-      <Sidebar collapsed={iscollapsed} className='vh-100'>
+<ModalUi  {...{setModalState,modalState}}/>
+      <Sidebar  collapsed={iscollapsed}  className='vh-100 '>
         <Menu>
-          {/* <MenuItem onClick={() => handleToggle()}  ><img src={logo} className='img-fluid w-75' alt="logo" /></MenuItem> */}
-          <img onClick={() => handleToggle()} src={logo} className='img-fluid w-75 ms-2' alt="logo" />
-          <MenuItem className={`${pathname === '/dashboard' ? 'active' : null}`} icon={<LiaHomeSolid size={'25px'} />} component={<Link to="/dashboard" />}> Home</MenuItem>
-          <MenuItem className={`${pathname === '/dashboard/users' ? 'active' : null}`} icon={<HiOutlineUsers size={'25px'} />} component={<Link to="/dashboard/users" />}> Users</MenuItem>
-          <MenuItem className={`${pathname === '/dashboard/recipes' ? 'active' : null}`} icon={<BsColumnsGap size={'25px'} />} component={<Link to="/dashboard/recipes" />}> Recipes</MenuItem>
-          <MenuItem className={`${pathname === '/dashboard/categories' ? 'active' : null}`} icon={<FaRegCalendarAlt size={'25px'} />} component={<Link to="/dashboard/categories" />}> Categories</MenuItem>
-          <MenuItem onClick={handleShow} icon={<IoIosUnlock size={'25px'} />}> Change Password</MenuItem>
+          <MenuItem className='my-4' onClick={() => handleToggle()}  ><img src={logo} className='w-100 ' alt="logo" /></MenuItem>
+          {links?.map((link) => <MenuItem  key={link.path} className={`${pathname === link.path ? 'active' : null} link`} icon={link.icon} component={<Link to={link.path} />}> {link.title}</MenuItem>)}
+          <MenuItem onClick={showChangePassModal} icon={<IoIosUnlock size={'25px'} />}> Change Password</MenuItem>
           <MenuItem icon={<FiLogOut size={'25px'} />} onClick={() => logOut()}>LogOut</MenuItem>
         </Menu>
       </Sidebar>
     </div>
-
-
   </>
 }
 

@@ -6,21 +6,9 @@ import CategoriesList from './CategoriesModule/Components/CategoriesList/Categor
 import RecipesList from './RecipesModule/Components/RecipesList/RecipesList'
 import { useEffect, useState } from 'react'
 import { JwtPayload, jwtDecode } from 'jwt-decode'
-import {  Login, ResetPass, ResetPassRequest } from '@/AuthModule/Components'
-
-export const togglePass = () => {
-  const eyeIcon = document.querySelector('.show') as HTMLElement;
-  const passInput = document.querySelector('.pass') as HTMLInputElement;
-  if (passInput && eyeIcon) {
-    passInput.type = (passInput?.type === 'password') ? 'text' : 'password';
-    eyeIcon.classList.toggle('fa-eye');
-    eyeIcon.classList.toggle('fa-eye-slash');
-  }
-};
-
+import { Login, ResetPass, ResetPassRequest } from '@/AuthModule/Components'
 
 function App() {
-
 
   const [adminData, setAdminData] = useState<JwtPayload | null>(null)
 
@@ -36,9 +24,6 @@ function App() {
     localStorage.getItem("adminToken") !== null ? saveAdminData() : null
   }, [])
 
-
-
-  
   const routes = createBrowserRouter([
     {
       path: "dashboard", element: <ProtectedRoute><MasterLayout {...{ adminData }} /></ProtectedRoute>, errorElement: <NotFound />, children: [

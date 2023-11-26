@@ -3,10 +3,10 @@ import logo from '../../../assets/images/Login -logo.png'
 import { useForm } from 'react-hook-form'
 // import UseAuthenticatedQuery from '@/Hooks/UseAuthenticatedQuery'
 import { toast } from 'react-toastify'
-import { togglePass } from '@/App'
 import { IFormValues } from '@/Interfaces'
 import { useState } from 'react'
-import { baseUrl } from '@/utils/Custom/custom'
+import baseUrl from '@/utils/Custom/Custom'
+import { PasswordInput } from '@/SharedModule/Components'
 
 const ResetPass = () => {
 
@@ -14,15 +14,14 @@ const ResetPass = () => {
 
   const navigate = useNavigate()
 
-  const { register, handleSubmit, getValues , formState: { errors } } = useForm<IFormValues>()
+  const { register, handleSubmit,  formState: { errors } } = useForm<IFormValues>()
 
 
   const onSubmit = (data: IFormValues) => {
     setLoading(true)
     return baseUrl.post(`/api/v1/Users/Reset`, data)
-      .then((res) =>{
+      .then((res) => {
         console.log(res)
-        setTimeout(() => {
           toast.success('Password changed successfully', {
             position: "top-right",
             autoClose: 3000,
@@ -32,22 +31,21 @@ const ResetPass = () => {
             draggable: true,
             progress: undefined,
             theme: "colored",
-            });
-        }, 1);
+          });
         navigate('/')
       })
-      .catch((err) =>{
-          toast.error(`${err.response.data.message}`, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-            });
-            setLoading(false)
+      .catch((err) => {
+        toast.error(`${err.response.data.message}`, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        setLoading(false)
       })
 
 
@@ -56,115 +54,95 @@ const ResetPass = () => {
     //   url:`http://upskilling-egypt.com:3002/api/v1/Users/Login`,
     //   data,
     //     })
-      
+
   }
 
 
   return <>
     <main className="Auth-container container-fluid">
-    <div className="row bg-overlay vh-100 justify-content-center align-items-center ">
-      <div className="col-md-6">
-        <div className="bg-white p-5">
+      <div className="row bg-overlay vh-100 justify-content-center align-items-center ">
+        <div className="col-md-6">
+          <div className="bg-white p-5">
 
-          <div className="logo text-center">
-            <img src={logo} className='w-50' alt="logo" />
-          </div>
-
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <h2 className='fw-bold'>Reset Password</h2>
-            <p>Please Enter Your Otp or Check Your Inbox</p>
-
-            <div className='input-con'>
-
-              <div className=' d-flex gap-2 '>
-                <i className="fa-solid fa-mobile-screen pe-2"></i>
-                <input
-                  className=' form-control'
-                  type="email"
-                  placeholder='Enter your E-mail'
-
-                  {...register("email", {
-                    required: true,
-                    pattern: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/
-                  })}
-                />
-
-              </div>
-
+            <div className="logo text-center">
+              <img src={logo} className='w-50' alt="logo" />
             </div>
-            {errors.email && errors.email.type === "required" ? <span className='text-danger'>Email is Required</span> : null}
-            {errors.email && errors.email.type === "pattern" ? <span className='text-danger'>Email is InValid</span> : null}
-            
-            <div className='input-con'>
 
-              <div className=' d-flex gap-2 '>
-                <i className="fa-solid fa-lock pe-2"></i>
-                <input
-                  className=' form-control'
-                  type="text"
-                  placeholder='OTP'
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <h2 className='fw-bold'>Reset Password</h2>
+              <p>Please Enter Your Otp or Check Your Inbox</p>
 
-                  {...register("seed", {
-                    required: true,
-                  })}
-                />
+              <div className='input-con'>
 
-              </div>
-
-            </div>
-            {errors.email && errors.email.type === "required" ? <span className='text-danger'>Email is Required</span> : null}
-
-            <div className='input-con'>
-
-              <div className=' d-flex align-items-center justify-content-between '>
-
-                <div className='d-flex gap-2'>
-                  <i className="fa-solid fa-lock pe-2"></i>
+                <div className=' d-flex gap-2 '>
+                  <i className="fa-solid fa-mobile-screen pe-2"></i>
                   <input
-                    className='form-control pass'
-                    type="password"
-                    placeholder='New Password'
-                    {...register("password", {
-                      required: true
-                    })} />
-                </div>
-                <i onClick={() => togglePass()} className="fa-regular fa-eye show "></i>
-              </div>
+                    className=' form-control w-100'
+                    type="email"
+                    placeholder='Enter your E-mail'
 
-            </div>
-            {errors.password && errors.password.type === "required" ? <span className='text-danger'>Password is Required</span> : null}
-
-            <div className='input-con'>
-
-              <div className=' d-flex  align-items-center justify-content-between '>
-
-                <div className='d-flex gap-2'>
-                  <i className="fa-solid fa-lock pe-2"></i>
-                  <input
-                    className='form-control pass'
-                    type="password"
-                    placeholder='Confirm New Password'
-                    {...register("confirmPassword", {
+                    {...register("email", {
                       required: true,
-                      validate: (value) => value === getValues('password') || 'Passwords do not match',
-                    })} />
+                      pattern: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/
+                    })}
+                  />
+
                 </div>
-                <i onClick={() => togglePass()} className="fa-regular fa-eye show "></i>
+
               </div>
+              {errors.email && errors.email.type === "required" ? <span className='text-danger'>Email is Required</span> : null}
+              {errors.email && errors.email.type === "pattern" ? <span className='text-danger'>Email is InValid</span> : null}
 
-            </div>
-            {errors.confirmPassword && errors.confirmPassword.type === "required" ? <span className='text-danger'>Password is Required</span> : null}
-            {errors.confirmPassword && errors.confirmPassword.type === "validate" ? <span className='text-danger'>Passwords do not match</span> : null}
+              <div className='input-con'>
 
-            <div className=' mt-2 '>
-              <Link to={'/'} className='forget'>Login Now ?</Link>
-            </div>
-                    {Loading?<button type='button' disabled className='btn btn-success w-100 mt-4 fw-bold'><i className='fa fa-spin fa-spinner'></i></button>:<button type='submit' className='btn btn-success w-100 mt-4 fw-bold'>Reset Password</button>}
-          </form>
+                <div className=' d-flex gap-2 '>
+                  <i className="fa-solid fa-lock pe-2"></i>
+                  <input
+                    className=' form-control w-100'
+                    type="text"
+                    placeholder='OTP'
+
+                    {...register("seed", {
+                      required: true,
+                    })}
+                  />
+
+                </div>
+
+              </div>
+              {errors.email && errors.email.type === "required" ? <span className='text-danger'>Email is Required</span> : null}
+
+              <div className='input-con'>
+
+                <div className=' d-flex align-items-center justify-content-between '>
+
+                <PasswordInput register={register} inputName={'password'} placeholder='New Password'  />
+
+                </div>
+
+              </div>
+              {errors.password && errors.password.type === "required" ? <span className='text-danger'>Password is Required</span> : null}
+
+              <div className='input-con'>
+
+                <div className=' d-flex  align-items-center justify-content-between '>
+                <PasswordInput register={register} inputName={'confirmPassword'} placeholder='Confirm New Password'  />
+
+                </div>
+
+              </div>
+              {errors.confirmPassword && errors.confirmPassword.type === "required" ? <span className='text-danger'>Password is Required</span> : null}
+              {errors.confirmPassword && errors.confirmPassword.type === "validate" ? <span className='text-danger'>Passwords do not match</span> : null}
+
+              <div className=' mt-2 '>
+                <Link to={'/'} className='forget'>Login Now ?</Link>
+              </div>
+              {Loading ? <button type='button' disabled className='btn btn-success w-100 mt-4 fw-bold'><i className='fa fa-spin fa-spinner'></i></button> : <button type='submit' className='btn btn-success w-100 mt-4 fw-bold'>Reset Password</button>}
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-  </main>
+    </main>
   </>
 }
 

@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { IFormValues } from '@/Interfaces'
 import { useState } from 'react'
-import { baseUrl } from '@/utils/Custom/custom'
+import baseUrl from '@/utils/Custom/Custom'
 
 const ResetPassRequest = () => {
 
@@ -19,9 +19,8 @@ const ResetPassRequest = () => {
   const onSubmit = (data: IFormValues) => {
     setLoading(true)
     return baseUrl.post(`/api/v1/Users/Reset/Request`, data)
-      .then((res) =>{
+      .then((res) => {
         console.log(res)
-        setTimeout(() => {
           toast.success(' Mail Send Successfully', {
             position: "top-right",
             autoClose: 3000,
@@ -31,22 +30,21 @@ const ResetPassRequest = () => {
             draggable: true,
             progress: undefined,
             theme: "colored",
-            });
-        }, 1);
+          });
         navigate('/reset-pass')
       })
-      .catch((err) =>{
-          toast.error(`${err.response.data.message}`, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-            });
-            setLoading(false)
+      .catch((err) => {
+        toast.error(`${err.response.data.message}`, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        setLoading(false)
       })
 
 
@@ -55,56 +53,56 @@ const ResetPassRequest = () => {
     //   url:`http://upskilling-egypt.com:3002/api/v1/Users/Login`,
     //   data,
     //     })
-      
+
   }
 
 
 
   return <>
-  
-  <main className="Auth-container container-fluid">
-    <div className="row bg-overlay vh-100 justify-content-center align-items-center ">
-      <div className="col-md-6">
-        <div className="bg-white p-5">
 
-          <div className="logo text-center">
-            <img src={logo} className='w-50' alt="logo" />
-          </div>
+    <main className="Auth-container container-fluid">
+      <div className="row bg-overlay vh-100 justify-content-center align-items-center ">
+        <div className="col-md-6">
+          <div className="bg-white p-5">
 
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <h2 className='fw-bold'>Request Reset Password</h2>
-            <p>Please Enter Your Email And Check Your Inbox</p>
+            <div className="logo text-center">
+              <img src={logo} className='w-50' alt="logo" />
+            </div>
 
-            <div className='input-con'>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <h2 className='fw-bold'>Request Reset Password</h2>
+              <p>Please Enter Your Email And Check Your Inbox</p>
 
-              <div className=' d-flex gap-2 '>
-              <i className="fa-regular fa-envelope pe-2"></i>
-                <input
-                  className=' form-control'
-                  type="email"
-                  placeholder='Enter your E-mail'
+              <div className='input-con'>
 
-                  {...register("email", {
-                    required: true,
-                    pattern: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/
-                  })}
-                />
+                <div className=' d-flex gap-2 '>
+                  <i className="fa-regular fa-envelope pe-2"></i>
+                  <input
+                    className=' form-control w-100'
+                    type="email"
+                    placeholder='Enter your E-mail'
+
+                    {...register("email", {
+                      required: true,
+                      pattern: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/
+                    })}
+                  />
+
+                </div>
 
               </div>
+              {errors.email && errors.email.type === "required" ? <span className='text-danger'>Email is Required</span> : null}
+              {errors.email && errors.email.type === "pattern" ? <span className='text-danger'>Email is InValid</span> : null}
 
-            </div>
-            {errors.email && errors.email.type === "required" ? <span className='text-danger'>Email is Required</span> : null}
-            {errors.email && errors.email.type === "pattern" ? <span className='text-danger'>Email is InValid</span> : null}
-
-            <div className=' mt-2 '>
-              <Link to={'/'} className='forget'>Login Now ?</Link>
-            </div>
-                    {Loading?<button type='button' disabled className='btn btn-success w-100 mt-4 fw-bold'><i className='fa fa-spin fa-spinner'></i></button>:<button type='submit' className='btn btn-success w-100 mt-4 fw-bold'>Send</button>}
-          </form>
+              <div className=' mt-2 '>
+                <Link to={'/'} className='forget'>Login Now ?</Link>
+              </div>
+              {Loading ? <button type='button' disabled className='btn btn-success w-100 mt-4 fw-bold'><i className='fa fa-spin fa-spinner'></i></button> : <button type='submit' className='btn btn-success w-100 mt-4 fw-bold'>Send</button>}
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-  </main>
+    </main>
   </>
 }
 

@@ -31,7 +31,7 @@
   },
   "include": [
     "src"
-, "utils/Hooks"  ],
+, "utils/Hooks", "src/SharedModule/Components/Modal/.tsx"  ],
   "exclude": [
     "node_modules",
     "build",
