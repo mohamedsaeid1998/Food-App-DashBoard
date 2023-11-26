@@ -8,5 +8,6 @@ export default defineConfig({
       '@': '/src',
     }
   },
+  base:"/Food-App-DashBoard/",
   plugins: [react()],
 })
