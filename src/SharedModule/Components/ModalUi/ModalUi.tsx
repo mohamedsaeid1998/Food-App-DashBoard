@@ -204,9 +204,9 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps)
     <select {...register("tagId", {
       required: "This Field is required",
       valueAsNumber: true
-    })} className="form-control w-100 mt-3 mb-1" placeholder="TagId" >
+    })} className="form-select w-100 mt-3 mb-1" placeholder="TagId" >
       {tags?.map((tag: any) =>
-        <option key={tag.id} value={tag.id}>{tag.id}</option>
+        <option key={tag.id} value={tag.id}>{tag.name}</option>
       )}
     </select>
     {errors?.tagId ? <span className='text-danger'>{errors?.tagId?.message}</span> : null}
@@ -216,7 +216,7 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps)
 
     <select {...register("categoriesIds", {
       required: "This Field is required",
-    })} className="form-control w-100 mt-3 mb-1" placeholder="CategoryId" >
+    })} className="form-select w-100 mt-3 mb-1" placeholder="CategoryId" >
       {categories?.data?.map((category: any) =>
         <option key={category.id} value={category.id}>{category.name}</option>
       )}
@@ -232,7 +232,7 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps)
     {errors?.description ? <span className='text-danger'>{errors?.description?.message}</span> : null}
 
     <input {...register("recipeImage", {
-    })} className="form-control w-100 mt-3 mb-1" type="file" placeholder="add Image" />
+    })} className="form-lable w-100 mt-3 mb-1" type="file" placeholder="add Image" />
 
     {Loading ? <button type='button' disabled className='btn btn-success w-100 mt-2 fw-bold'><i className='fa fa-spin fa-spinner'></i></button> : <button type='submit' className=' mt-2 btn btn-success w-100  fw-bold'>Add Recipes</button>}
   </form>
