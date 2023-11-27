@@ -14,7 +14,7 @@ const ResetPass = () => {
 
   const navigate = useNavigate()
 
-  const { register, handleSubmit,  formState: { errors } } = useForm<IFormValues>()
+  const { register, handleSubmit, getValues, formState: { errors } } = useForm<IFormValues>()
 
 
   const onSubmit = (data: IFormValues) => {
@@ -116,7 +116,7 @@ const ResetPass = () => {
 
                 <div className=' d-flex align-items-center justify-content-between '>
 
-                <PasswordInput register={register} inputName={'password'} placeholder='New Password'  />
+                <PasswordInput register={register} inputName={'password'} placeholder='New Password' getValues={getValues} />
 
                 </div>
 
@@ -126,7 +126,7 @@ const ResetPass = () => {
               <div className='input-con'>
 
                 <div className=' d-flex  align-items-center justify-content-between '>
-                <PasswordInput register={register} inputName={'confirmPassword'} placeholder='Confirm New Password'  />
+                <PasswordInput register={register} inputName={'confirmPassword'} placeholder='Confirm New Password' getValues={getValues} />
 
                 </div>
 

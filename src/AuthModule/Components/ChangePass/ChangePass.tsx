@@ -13,7 +13,7 @@ const ChangePass = () => {
 
   const navigate = useNavigate()
 
-  const { register, handleSubmit, formState: { errors } } = useForm<IFormValues>()
+  const { register, getValues,handleSubmit, formState: { errors } } = useForm<IFormValues>()
 
 
   const onSubmit = (data: IFormValues) => {
@@ -80,7 +80,7 @@ const ChangePass = () => {
               <div className='input-con'>
 
                 <div className=' d-flex align-items-center justify-content-between '>
-                <PasswordInput register={register} inputName={'oldPassword'} placeholder='Old Password' />
+                <PasswordInput register={register} inputName={'oldPassword'} placeholder='Old Password' getValues={getValues} />
                 </div>
 
               </div>
@@ -90,7 +90,7 @@ const ChangePass = () => {
 
                 <div className=' d-flex align-items-center justify-content-between '>
 
-                <PasswordInput register={register} inputName={'newPassword'} placeholder='New Password' />
+                <PasswordInput register={register} inputName={'newPassword'} placeholder='New Password' getValues={getValues} />
                 </div>
 
               </div>
@@ -99,7 +99,7 @@ const ChangePass = () => {
               <div className='input-con'>
 
                 <div className=' d-flex  align-items-center justify-content-between '>
-                <PasswordInput register={register} inputName={'confirmNewPassword'} placeholder='Confirm New Password' />
+                <PasswordInput register={register} inputName={'confirmNewPassword'} placeholder='Confirm New Password' getValues={getValues} />
 
                 </div>
 

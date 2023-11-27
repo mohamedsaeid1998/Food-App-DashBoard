@@ -19,7 +19,7 @@ const Login = ({ saveAdminData }: Props) => {
 
   const navigate = useNavigate()
 
-  const { register, handleSubmit, formState: { errors } } = useForm<IFormValues>()
+  const { register, getValues,handleSubmit, formState: { errors } } = useForm<IFormValues>()
 
 
 
@@ -104,7 +104,7 @@ const Login = ({ saveAdminData }: Props) => {
 
                 <div className=' d-flex  align-items-center justify-content-between '>
 
-                <PasswordInput register={register} inputName={'password'} placeholder='Password' />
+                <PasswordInput register={register} inputName={'password'} placeholder='Password'getValues={getValues} />
 
 
                 </div>

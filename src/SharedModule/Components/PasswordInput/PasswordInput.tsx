@@ -1,15 +1,15 @@
 import { IFormValues } from "@/Interfaces"
 import { useState } from "react";
-import { UseFormRegister } from "react-hook-form"
+import { UseFormGetValues, UseFormRegister } from "react-hook-form"
 
 interface IProps {
-  register: UseFormRegister<IFormValues> 
-  inputName: 'password' | "email" | "seed" | 'confirmPassword' | "newPassword" |"oldPassword" | "confirmNewPassword"
+  register: UseFormRegister<IFormValues>
+  inputName: 'password' | "email" | "seed" | 'confirmPassword' | "newPassword" | "oldPassword" | "confirmNewPassword"
   placeholder: string
-  // getValues?: UseFormGetValues<IFormValues>
+  getValues: UseFormGetValues<IFormValues>
 }
 
-const PasswordInput = ({ register, inputName, placeholder }: IProps) => {
+const PasswordInput = ({ register, inputName, placeholder, getValues }: IProps) => {
 
   const [type, setType] = useState(false)
   console.log(type);
@@ -23,7 +23,9 @@ const PasswordInput = ({ register, inputName, placeholder }: IProps) => {
         placeholder={placeholder}
         {...register(`${inputName}`, {
           required: true,
-          // validate: (value) => value === getValues('password') || 'Passwords do not match'
+          
+          validate: (value) => value === getValues(inputName ==="confirmNewPassword"?"newPassword":'password' ) || 'Passwords do not match'
+          
         })} />
     </div>
     <i onClick={() => setType(!type)} className={`fa-regular ${type ? 'fa-eye-slash' : 'fa-eye'} show `} ></i>
@@ -33,7 +35,7 @@ const PasswordInput = ({ register, inputName, placeholder }: IProps) => {
 export default PasswordInput
 
 
-                  {/* <div className='d-flex gap-2'>
+{/* <div className='d-flex gap-2'>
                     <i className="fa-solid fa-lock pe-2"></i>
                     <input
                       className='form-control pass w-100'
