@@ -2,7 +2,7 @@ import { UseAuthenticatedQuery } from '@/utils';
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid';
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { NoData } from '..';
-
+import emptyData from '@/assets/images/NoData-Img.png'
 interface Props {
   showDeleteModal: (id: number) => void
   showEditModal: (id: number, name: string) => void
@@ -14,7 +14,7 @@ const TableData = ({ showDeleteModal, showEditModal, location }: Props) => {
   const handleClose = () => {
 
   }
-  
+
   //?  **********Get Categories And Recipes**********//
   const { data } = UseAuthenticatedQuery({
     queryKey: [`get${location === "category" ? "Category" : "Recipes"}`],
@@ -28,12 +28,14 @@ const TableData = ({ showDeleteModal, showEditModal, location }: Props) => {
   })
 
   const allData = data?.data
-// console.log(allData);
-// ! Error Here 
+  // console.log(allData);
+  // ! Error Here 
   const RecipesColumns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 90, editable: false  , renderCell: (params) => {
-      return params.id 
-    },},
+    {
+      field: 'id', headerName: 'ID', width: 90, editable: false, renderCell: (params) => {
+        return params.id
+      },
+    },
     {
       field: 'name',
       headerName: 'Recipes Name',
@@ -52,8 +54,9 @@ const TableData = ({ showDeleteModal, showEditModal, location }: Props) => {
       width: 150,
       editable: false,
       renderCell: (params) => {
-        return <img className='w-25' src={`https://upskilling-egypt.com:443
-/` + params.row.imagePath} alt="image" />;
+        return ( params.formattedValue === "" ? <img className='w-25' src={emptyData} alt="image" /> : <img className='w-25' src={`https://upskilling-egypt.com:443/` + params.row.imagePath} alt="image" /> )
+
+        // <img className='w-25' src={`https://upskilling-egypt.com:443/` + params.row.imagePath} alt="image" />;
       },
     },
     {
@@ -68,7 +71,9 @@ const TableData = ({ showDeleteModal, showEditModal, location }: Props) => {
       width: 150,
       editable: false,
       renderCell: (params) => {
-        return params?.row?.category[0]?.name
+        return (params?.row?.category[0]===undefined?"No Category":params?.row?.category[0]?.name)
+        
+        // params?.row?.category[0]?.name
       },
     },
     {

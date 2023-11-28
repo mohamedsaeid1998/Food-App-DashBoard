@@ -28,7 +28,7 @@ interface IFormInputs {
 
 
 const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps) => {
-
+  const required = "This Field is required"
   const [Loading, setLoading] = useState(false)
   const handleClose = () => setModalState("close");
 
@@ -38,7 +38,7 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps)
   //TODO  **********Create New Category**********//
   const onSubmit = (data: IFormInputs) => {
     setLoading(true)
-    
+
     return baseUrl.post(`/api/v1/Category`, data, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('adminToken')}`
@@ -66,7 +66,7 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps)
   //!  **********Update Category**********//
   const onSubmitEdit = (data: IFormInputs) => {
     console.log(data);
-    
+
     setLoading(true)
     return baseUrl.put(`/api/v1/Category/${itemId}`, data, {
       headers: {
@@ -95,6 +95,8 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps)
   const onSubmitRecipes = (data: IFormInputs) => {
 
     console.log(data);
+    console.log(data.recipeImage[0]);
+
     setLoading(true)
     return baseUrl.post(`/api/v1/Recipe`, { ...data, recipeImage: data.recipeImage[0] }, {
       headers: {
@@ -147,26 +149,22 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps)
 
 
 
-
-
-
-
   const createNewRecipes = <form onSubmit={handleSubmit(onSubmitRecipes)}>
     <h4 className="text-center">Add New Recipes</h4>
     <input {...register("name", {
-      required: "This Field is required"
+      required
     })} className="form-control w-100 mt-3 mb-1" type="text" placeholder="Recipes Name" />
     {errors?.name ? <span className='text-danger'>{errors?.name?.message}</span> : null}
 
     <input {...register("price", {
-      required: "This Field is required",
+      required,
       valueAsNumber: true
     })} className="form-control w-100 mt-3 mb-1" type="number" placeholder="Price" />
     {errors?.price ? <span className='text-danger'>{errors?.price?.message}</span> : null}
 
 
     <select {...register("tagId", {
-      required: "This Field is required",
+      required,
       valueAsNumber: true
     })} className="form-select w-100 mt-3 mb-1" placeholder="TagId" >
       {tags?.map((tag: any) =>
@@ -179,7 +177,7 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps)
 
 
     <select {...register("categoriesIds", {
-      required: "This Field is required",
+      required,
     })} className="form-select w-100 mt-3 mb-1" placeholder="CategoryId" >
       {categories?.data?.map((category: any) =>
         <option key={category.id} value={category.id}>{category.name}</option>
@@ -189,7 +187,7 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps)
 
 
     <textarea {...register("description", {
-      required: "This Field is required"
+      required,
     })} className="form-control w-100 mt-3 mb-1" placeholder="Description" >
 
     </textarea>
@@ -204,9 +202,9 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps)
   const createNewCategory = <form onSubmit={handleSubmit(onSubmit)}>
     <h4> Add New Category </h4>
     <input {...register("name", {
-      required: "This Field is required"
+      required,
     })} className="form-control w-100 mt-3 mb-1" type="text" placeholder="New Category" />
-    {errors?.name? <span className='text-danger'>{errors?.name?.message}</span> : null}
+    {errors?.name ? <span className='text-danger'>{errors?.name?.message}</span> : null}
     {Loading ? <button type='button' disabled className='btn btn-success w-100 mt-2 fw-bold'><i className='fa fa-spin fa-spinner'></i></button> : <button type='submit' className=' mt-2 btn btn-success w-100  fw-bold'>Add Category</button>}
   </form>
 
@@ -214,7 +212,7 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps)
   const UpdateCategory = <form onSubmit={handleSubmit(onSubmitEdit)}>
     <h4> Update Category </h4>
     <input {...register("name", {
-      required: "This Field is required",
+      required,
     })} defaultValue={itemName} className="form-control w-100 mt-3 mb-1" type="text" placeholder="New Category" />
     {errors?.name ? <span className='text-danger'>{errors?.name?.message}</span> : null}
     {Loading ? <button type='button' disabled className='btn btn-success w-100 mt-2 fw-bold'><i className='fa fa-spin fa-spinner'></i></button> : <button type='submit' className=' mt-2 btn btn-success w-100  fw-bold'>Update Category</button>}
@@ -222,7 +220,7 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps)
 
 
 
-  const render = modalState === 'Add' ? title === "Recipes" ? createNewRecipes : createNewCategory : modalState === 'ChangePass' ? <ChangePass /> : modalState === "Delete" &&  title==="Categories" ? <NoData location='category' itemId={itemId} handleClose={handleClose} /> : modalState === "Delete" &&  title==="Recipes" ? <NoData location='recipes' itemId={itemId} handleClose={handleClose} /> : UpdateCategory
+  const render = modalState === 'Add' ? title === "Recipes" ? createNewRecipes : createNewCategory : modalState === 'ChangePass' ? <ChangePass /> : modalState === "Delete" && title === "Categories" ? <NoData location='category' itemId={itemId} handleClose={handleClose} /> : modalState === "Delete" && title === "Recipes" ? <NoData location='recipes' itemId={itemId} handleClose={handleClose} /> : UpdateCategory
 
   return <>
 
