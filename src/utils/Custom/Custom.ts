@@ -1,7 +1,7 @@
 import axios from "axios";
 
   const baseUrl = axios.create({
-  baseURL:`http://upskilling-egypt.com:3002`
+  baseURL:`https://upskilling-egypt.com:443`
 })
 
 export default baseUrl

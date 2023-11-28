@@ -1,7 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
-import logo from '../../../assets/images/Login -logo.png'
+import logo from '@/assets/images/Login -logo.png'
 import { useForm } from 'react-hook-form'
-// import UseAuthenticatedQuery from '@/Hooks/UseAuthenticatedQuery'
 import { toast } from 'react-toastify'
 import { IFormValues } from '@/Interfaces'
 import { useState } from 'react'
@@ -22,37 +21,19 @@ const ResetPassRequest = () => {
       .then((res) => {
         console.log(res)
           toast.success(' Mail Send Successfully', {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
+            autoClose: 2000,
             theme: "colored",
           });
         navigate('/reset-pass')
       })
       .catch((err) => {
         toast.error(`${err.response.data.message}`, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+          autoClose: 2000,
           theme: "colored",
         });
         setLoading(false)
       })
 
-
-    // const { isLoading  } = UseAuthenticatedQuery({
-    //   queryKey:["LoginRequest"],
-    //   url:`http://upskilling-egypt.com:3002/api/v1/Users/Login`,
-    //   data,
-    //     })
 
   }
 

@@ -8,9 +8,7 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { IoIosUnlock } from "react-icons/io";
 import { FiLogOut } from "react-icons/fi";
 import { useState } from 'react';
-import logo from '../../../assets/images/sidebar-logo.png'
-// import Modal from 'react-bootstrap/Modal';
-// import { ChangePass } from '@/AuthModule/Components';
+import logo from '@/assets/images/small.logo.svg'
 import { ModalUi } from '..';
 
 const SideBar = () => {
@@ -43,7 +41,7 @@ const SideBar = () => {
 <ModalUi  {...{setModalState,modalState}}/>
       <Sidebar  collapsed={iscollapsed}  className='vh-100 '>
         <Menu>
-          <MenuItem className='my-4' onClick={() => handleToggle()}  ><img src={logo} className='w-100 ' alt="logo" /></MenuItem>
+          <MenuItem className='my-4' onClick={() => handleToggle()}  ><img src={logo} className='w-50' alt="logo" /></MenuItem>
           {links?.map((link) => <MenuItem  key={link.path} className={`${pathname === link.path ? 'active' : null} link`} icon={link.icon} component={<Link to={link.path} />}> {link.title}</MenuItem>)}
           <MenuItem onClick={showChangePassModal} icon={<IoIosUnlock size={'25px'} />}> Change Password</MenuItem>
           <MenuItem icon={<FiLogOut size={'25px'} />} onClick={() => logOut()}>LogOut</MenuItem>

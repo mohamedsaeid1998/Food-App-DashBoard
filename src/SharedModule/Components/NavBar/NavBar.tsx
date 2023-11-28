@@ -24,7 +24,6 @@ console.log(adminData);
         <Navbar.Toggle aria-controls="navbarScroll" >
           <h5>UpSkilling</h5>
 
-          {/* <h5>{adminData?.userName}</h5> */}
         </Navbar.Toggle>
         <Navbar.Collapse id="navbarScroll">
           <Nav

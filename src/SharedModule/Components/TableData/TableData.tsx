@@ -14,10 +14,12 @@ const TableData = ({ showDeleteModal, showEditModal, location }: Props) => {
   const handleClose = () => {
 
   }
+  
   //?  **********Get Categories And Recipes**********//
   const { data } = UseAuthenticatedQuery({
     queryKey: [`get${location === "category" ? "Category" : "Recipes"}`],
-    url: `http://upskilling-egypt.com:3002/api/v1/${location === "category" ? "Category" : "Recipe"}/?pageSize=50&pageNumber=1`,
+    url: `https://upskilling-egypt.com:443
+/api/v1/${location === "category" ? "Category" : "Recipe"}/?pageSize=50&pageNumber=1`,
     config: {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
@@ -26,9 +28,12 @@ const TableData = ({ showDeleteModal, showEditModal, location }: Props) => {
   })
 
   const allData = data?.data
-
+// console.log(allData);
+// ! Error Here 
   const RecipesColumns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 90, editable: false },
+    { field: 'id', headerName: 'ID', width: 90, editable: false  , renderCell: (params) => {
+      return params.id 
+    },},
     {
       field: 'name',
       headerName: 'Recipes Name',
@@ -47,7 +52,8 @@ const TableData = ({ showDeleteModal, showEditModal, location }: Props) => {
       width: 150,
       editable: false,
       renderCell: (params) => {
-        return <img className='w-25' src={`http://upskilling-egypt.com:3002/` + params.row.imagePath} alt="image" />;
+        return <img className='w-25' src={`https://upskilling-egypt.com:443
+/` + params.row.imagePath} alt="image" />;
       },
     },
     {

@@ -21,26 +21,14 @@ console.log(location);
       .then((res) => {
         console.log(res)
         toast.success(`  ${location==="category"?"Category":"Recipe"} Deleted successfully`, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+          autoClose: 2000,
           theme: "colored",
         });
         handleClose()
       })
       .catch((err) => {
         toast.error(`${err.response.data.message}`, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+          autoClose: 2000,
           theme: "colored",
         });
       })

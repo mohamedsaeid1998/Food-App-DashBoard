@@ -15,12 +15,12 @@ const Header = ({ title, subTitle, para, subPara }: Props) => {
   
   return <>
 
-    <header className=" header-container ">
-      <div className="row py-2 mt-3 align-items-center px-4 g-0 ">
+    <header className=" header-container rounded-3 ">
+      <div className="row py-2 mt-3 align-items-center px-4 g-0  ">
 
         <div className="col-sm-10">
 
-          <div className="px-5 text-white">
+          <div className="px-3 text-white">
             <h3 className='fw-light'><span className="fw-bold h2">{title}</span>  {subTitle}</h3>
 
             <p className="fw-light">{para}<br /> {subPara}</p>

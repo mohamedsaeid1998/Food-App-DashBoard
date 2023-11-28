@@ -1,7 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-import logo from '../../../assets/images/Login -logo.png'
-// import UseAuthenticatedQuery from '@/Hooks/UseAuthenticatedQuery'
+import logo from '@/assets/images/Login -logo.png'
 import { IFormValues } from '@/Interfaces'
 import { PasswordInput } from '@/SharedModule/Components'
 import baseUrl from '@/utils/Custom/Custom'
@@ -25,40 +24,20 @@ const ChangePass = () => {
     })
       .then((res) => {
         console.log(res)
-
           toast.success(`${res.data.message}`, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
+            autoClose: 2000,
             theme: "colored",
-          });
+          })
 
         navigate('/')
       })
       .catch((err) => {
         toast.error(`${err.response.data.message}`, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+          autoClose: 2000,
           theme: "colored",
         });
         setLoading(false)
       })
-
-
-    // const { isLoading  } = UseAuthenticatedQuery({
-    //   queryKey:["LoginRequest"],
-    //   url:`http://upskilling-egypt.com:3002/api/v1/Users/Login`,
-    //   data,
-    //     })
 
   }
 

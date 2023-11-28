@@ -10,7 +10,6 @@ import './Styles/global.scss'
 
 const queryClient = new QueryClient()
 
-
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <QueryClientProvider client={queryClient}>
     <ToastContainer />

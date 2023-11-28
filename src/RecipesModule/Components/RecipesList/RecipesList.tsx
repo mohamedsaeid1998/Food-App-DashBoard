@@ -27,10 +27,10 @@ const RecipesList = () => {
 
 
   return <>
-    <ModalUi title="Recipes" {...{ setModalState, modalState, itemId, itemName }} />
+    <ModalUi key={Math.random()} title="Recipes" {...{ setModalState, modalState, itemId, itemName }} />
     <Header title="Recipes" subTitle="Items" para="You can now add your items that any user can order it from" subPara="the Application and you can edit" />
     <TableDetailsSec {...{ showAddModal }} />
-    <TableData location="recipes" {...{ showDeleteModal, showEditModal }} />
+    <TableData key={Math.random()} location="recipes" {...{ showDeleteModal, showEditModal }} />
 
   </>
 }

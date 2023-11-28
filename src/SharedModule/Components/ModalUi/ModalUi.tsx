@@ -1,4 +1,3 @@
-
 import { ChangePass } from "@/AuthModule/Components";
 import baseUrl from "@/utils/Custom/Custom";
 import { useState } from "react";
@@ -7,8 +6,6 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { NoData } from "..";
 import { UseAuthenticatedQuery } from "@/utils";
-
-// defaultValue في مشكله  في حتت اني استدعي الفانكشن اللي بتجيب الداتا من الاول لل component ده علشان تعمل update للداتا بعد ما اعمل اي معامله سواء عملية update او delete  وده بسبب التايب سكريبت  
 
 
 
@@ -31,7 +28,6 @@ interface IFormInputs {
 
 
 const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps) => {
-  // console.log(itemName);
 
   const [Loading, setLoading] = useState(false)
   const handleClose = () => setModalState("close");
@@ -42,6 +38,7 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps)
   //TODO  **********Create New Category**********//
   const onSubmit = (data: IFormInputs) => {
     setLoading(true)
+    
     return baseUrl.post(`/api/v1/Category`, data, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('adminToken')}`
@@ -50,13 +47,7 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps)
       .then((res) => {
         console.log(res)
         toast.success(' Added Category successfully', {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+          autoClose: 2000,
           theme: "colored",
         });
         handleClose()
@@ -65,13 +56,7 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps)
       })
       .catch((err) => {
         toast.error(`${err.response.data.message}`, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+          autoClose: 2000,
           theme: "colored",
         });
         setLoading(false)
@@ -80,6 +65,8 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps)
 
   //!  **********Update Category**********//
   const onSubmitEdit = (data: IFormInputs) => {
+    console.log(data);
+    
     setLoading(true)
     return baseUrl.put(`/api/v1/Category/${itemId}`, data, {
       headers: {
@@ -89,13 +76,7 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps)
       .then((res) => {
         console.log(res)
         toast.success(' Category Updated successfully', {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+          autoClose: 2000,
           theme: "colored",
         });
         handleClose()
@@ -103,13 +84,7 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps)
       })
       .catch((err) => {
         toast.error(`${err.response.data.message}`, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+          autoClose: 2000,
           theme: "colored",
         });
         setLoading(false)
@@ -130,13 +105,7 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps)
       .then((res) => {
         console.log(res)
         toast.success('Added Recipes successfully', {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+          autoClose: 2000,
           theme: "colored",
         });
         handleClose()
@@ -144,13 +113,7 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps)
       })
       .catch((err) => {
         toast.error(`${err.response.data.message}`, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+          autoClose: 2000,
           theme: "colored",
         });
         setLoading(false)
@@ -161,7 +124,8 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps)
   //?  **********Get Tags**********//
   const { data: tags } = UseAuthenticatedQuery({
     queryKey: [`getTags`],
-    url: `http://upskilling-egypt.com:3002/api/v1/tag`,
+    url: `https://upskilling-egypt.com:443
+/api/v1/tag`,
     config: {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('adminToken')}`
@@ -172,13 +136,13 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps)
   //?  **********Get categories**********//
   const { data: categories } = UseAuthenticatedQuery({
     queryKey: [`getCategory`],
-    url: `http://upskilling-egypt.com:3002/api/v1/Category/?pageSize=50&pageNumber=1`,
+    url: `https://upskilling-egypt.com:443
+/api/v1/Category/?pageSize=50&pageNumber=1`,
     config: {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('adminToken')}`
       }
     }
-
   })
 
 
@@ -242,24 +206,23 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps)
     <input {...register("name", {
       required: "This Field is required"
     })} className="form-control w-100 mt-3 mb-1" type="text" placeholder="New Category" />
-    {errors?.name ? <span className='text-danger'>{errors?.name?.message}</span> : null}
+    {errors?.name? <span className='text-danger'>{errors?.name?.message}</span> : null}
     {Loading ? <button type='button' disabled className='btn btn-success w-100 mt-2 fw-bold'><i className='fa fa-spin fa-spinner'></i></button> : <button type='submit' className=' mt-2 btn btn-success w-100  fw-bold'>Add Category</button>}
   </form>
 
-  // defaultValue في مشكله هنا في 
+
   const UpdateCategory = <form onSubmit={handleSubmit(onSubmitEdit)}>
     <h4> Update Category </h4>
     <input {...register("name", {
       required: "This Field is required",
     })} defaultValue={itemName} className="form-control w-100 mt-3 mb-1" type="text" placeholder="New Category" />
     {errors?.name ? <span className='text-danger'>{errors?.name?.message}</span> : null}
-    {Loading ? <button type='button' disabled className='btn btn-success w-100 mt-2 fw-bold'><i className='fa fa-spin fa-spinner'></i></button> : <button type='submit' className=' mt-2 btn btn-success w-100  fw-bold'>Add Category</button>}
+    {Loading ? <button type='button' disabled className='btn btn-success w-100 mt-2 fw-bold'><i className='fa fa-spin fa-spinner'></i></button> : <button type='submit' className=' mt-2 btn btn-success w-100  fw-bold'>Update Category</button>}
   </form>
 
 
 
   const render = modalState === 'Add' ? title === "Recipes" ? createNewRecipes : createNewCategory : modalState === 'ChangePass' ? <ChangePass /> : modalState === "Delete" &&  title==="Categories" ? <NoData location='category' itemId={itemId} handleClose={handleClose} /> : modalState === "Delete" &&  title==="Recipes" ? <NoData location='recipes' itemId={itemId} handleClose={handleClose} /> : UpdateCategory
-
 
   return <>
 

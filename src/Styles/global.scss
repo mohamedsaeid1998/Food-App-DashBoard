@@ -28,6 +28,8 @@
   cursor: pointer;
 }
 
+img{
+}
 
 
 .active {
@@ -113,6 +115,7 @@
 
       .ps-menu-label {
         color: rgba(255, 255, 255, 0.65);
+        
       }
 
 
@@ -159,7 +162,7 @@ nav{
 header{
 
   &{
-    background:  url( '../assets/images/header-bg-svg.svg') center no-repeat ;
+    background-image: url('../assets/images/header-bg.svg'),linear-gradient(to right , rgb(21 128 61),#009247);
     background-size: cover;
   }
 
