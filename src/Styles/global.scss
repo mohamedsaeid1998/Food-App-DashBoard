@@ -8,27 +8,28 @@
   font-family: 'Inter', sans-serif;
 }
 
-.mutedColor{
+.mutedColor {
   color: rgba(73, 73, 73, 0.60);
 }
 
-.subColor{
+.subColor {
   color: $sub-main-color;
 }
 
-.dark-color{
+.dark-color {
   color: $dark-color;
 }
 
-.sub-dark-bg{
+.sub-dark-bg {
   background: $sub-dark-bg;
 }
 
-.pointer{
+.pointer {
   cursor: pointer;
 }
 
-img{
+.small {
+  font-size: 14px;
 }
 
 
@@ -42,7 +43,7 @@ img{
 }
 
 .Auth-container {
-  background: url('../assets/images/main-BackGround.jpeg') no-repeat;
+  background: url('../assets/images/AuthBackGround.jpeg') no-repeat;
   background-size: 100% 100%;
 
 
@@ -101,8 +102,6 @@ img{
 }
 
 
-
-
 .sidebar-container {
 
   aside {
@@ -115,7 +114,7 @@ img{
 
       .ps-menu-label {
         color: rgba(255, 255, 255, 0.65);
-        
+
       }
 
 
@@ -138,11 +137,11 @@ img{
   }
 }
 
-nav{
-  .notification{
+nav {
+  .notification {
     position: relative;
-    
-    span{
+
+    span {
       position: absolute;
       top: 0px;
       right: -2px;
@@ -159,10 +158,10 @@ nav{
   }
 }
 
-header{
+header {
 
-  &{
-    background-image: url('../assets/images/header-bg.svg'),linear-gradient(to right , rgb(21 128 61),#009247);
+  & {
+    background-image: url('../assets/images/header-bg.svg'), linear-gradient(to right, rgb(21 128 61), #009247);
     background-size: cover;
   }
 
@@ -170,13 +169,35 @@ header{
 
 
 
-  .dataGrid{
-    background-color: white;
+.dataGrid {
+  background-color: white;
 
-    .MuiDataGrid-toolbarContainer{
-      flex-direction: row-reverse;
-    }
+  .MuiDataGrid-toolbarContainer {
+    flex-direction: row-reverse;
   }
+}
+
+.css-ptkaw2-MuiDataGrid-root {
+  height: fit-content !important;
+}
+
+.loading{
+  position: relative;
+  height: 50%;
+  .icon{
+    position: absolute;
+    top: 35%;
+    left: 45%;
+
+  }
+}
+
+.selectedImage{
+  height: 50px;
+  width: 50px;
+}
 
 
-
+.table{
+  table-layout: fixed;
+}

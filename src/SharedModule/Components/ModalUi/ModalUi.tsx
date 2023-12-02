@@ -5,7 +5,6 @@ import Modal from 'react-bootstrap/Modal';
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { NoData } from "..";
-import { UseAuthenticatedQuery } from "@/utils";
 
 
 
@@ -15,6 +14,8 @@ interface IProps {
   itemId?: number
   itemName?: string | undefined
   title?: string
+  categories?: any
+  tags?: any
 }
 
 interface IFormInputs {
@@ -27,16 +28,28 @@ interface IFormInputs {
 }
 
 
-const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps) => {
+const ModalUi = ({ setModalState, modalState, itemId, itemName, title, categories, tags }: IProps) => {
   const required = "This Field is required"
   const [Loading, setLoading] = useState(false)
   const handleClose = () => setModalState("close");
 
   const { handleSubmit, register, formState: { errors }, reset } = useForm<IFormInputs>()
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
 
-  //TODO  **********Create New Category**********//
-  const onSubmit = (data: IFormInputs) => {
+  const catchSelectedImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event?.target?.files?.[0];
+    console.log(file);
+
+    if (file)
+      setSelectedImage(URL.createObjectURL(file));
+  }
+
+
+
+  const onSubmitAdd = (data: IFormInputs) => {
+    console.log(data);
+    
     setLoading(true)
 
     return baseUrl.post(`/api/v1/Category`, data, {
@@ -94,8 +107,7 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps)
   //TODO  **********Create New Recipes**********//
   const onSubmitRecipes = (data: IFormInputs) => {
 
-    console.log(data);
-    console.log(data.recipeImage[0]);
+ 
 
     setLoading(true)
     return baseUrl.post(`/api/v1/Recipe`, { ...data, recipeImage: data.recipeImage[0] }, {
@@ -123,29 +135,7 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps)
 
   }
 
-  //?  **********Get Tags**********//
-  const { data: tags } = UseAuthenticatedQuery({
-    queryKey: [`getTags`],
-    url: `https://upskilling-egypt.com:443
-/api/v1/tag`,
-    config: {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('adminToken')}`
-      }
-    }
-  })
 
-  //?  **********Get categories**********//
-  const { data: categories } = UseAuthenticatedQuery({
-    queryKey: [`getCategory`],
-    url: `https://upskilling-egypt.com:443
-/api/v1/Category/?pageSize=50&pageNumber=1`,
-    config: {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('adminToken')}`
-      }
-    }
-  })
 
 
 
@@ -193,19 +183,25 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps)
     </textarea>
     {errors?.description ? <span className='text-danger'>{errors?.description?.message}</span> : null}
 
-    <input {...register("recipeImage", {
-    })} className="form-lable w-100 mt-3 mb-1" type="file" placeholder="add Image" />
+    <div className="d-flex ">
+      {selectedImage ? <img className='selectedImage me-2' src={selectedImage} alt="selectedImage" /> : null}
+      <input {...register("recipeImage", {
+      })} className="form-lable mt-3 mb-1 " onChange={catchSelectedImage} type="file" placeholder="add Image" />
+    </div>
 
-    {Loading ? <button type='button' disabled className='btn btn-success w-100 mt-2 fw-bold'><i className='fa fa-spin fa-spinner'></i></button> : <button type='submit' className=' mt-2 btn btn-success w-100  fw-bold'>Add Recipes</button>}
+    <button type='submit' disabled={Loading} className='btn btn-success w-100 mt-2 fw-bold'>{Loading ? <i className='fa fa-spin fa-spinner'></i> : "Add Recipes"}</button>
+
   </form>
 
-  const createNewCategory = <form onSubmit={handleSubmit(onSubmit)}>
+  const createNewCategory = <form onSubmit={handleSubmit(onSubmitAdd)}>
     <h4> Add New Category </h4>
     <input {...register("name", {
       required,
     })} className="form-control w-100 mt-3 mb-1" type="text" placeholder="New Category" />
     {errors?.name ? <span className='text-danger'>{errors?.name?.message}</span> : null}
-    {Loading ? <button type='button' disabled className='btn btn-success w-100 mt-2 fw-bold'><i className='fa fa-spin fa-spinner'></i></button> : <button type='submit' className=' mt-2 btn btn-success w-100  fw-bold'>Add Category</button>}
+    <button type='submit' disabled={Loading} className='btn btn-success w-100 mt-2 fw-bold'>{Loading ? <i className='fa fa-spin fa-spinner'></i> : "Add Category"}</button>
+    {/* <button  className=" btn btn-outline-danger">Delete This Item </button> */}
+
   </form>
 
 
@@ -215,12 +211,13 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title }: IProps)
       required,
     })} defaultValue={itemName} className="form-control w-100 mt-3 mb-1" type="text" placeholder="New Category" />
     {errors?.name ? <span className='text-danger'>{errors?.name?.message}</span> : null}
-    {Loading ? <button type='button' disabled className='btn btn-success w-100 mt-2 fw-bold'><i className='fa fa-spin fa-spinner'></i></button> : <button type='submit' className=' mt-2 btn btn-success w-100  fw-bold'>Update Category</button>}
+    <button type='submit' disabled={Loading} className='btn btn-success w-100 mt-2 fw-bold'>{Loading ? <i className='fa fa-spin fa-spinner'></i> : "Update Category"}</button>
+
   </form>
 
 
 
-  const render = modalState === 'Add' ? title === "Recipes" ? createNewRecipes : createNewCategory : modalState === 'ChangePass' ? <ChangePass /> : modalState === "Delete" && title === "Categories" ? <NoData location='category' itemId={itemId} handleClose={handleClose} /> : modalState === "Delete" && title === "Recipes" ? <NoData location='recipes' itemId={itemId} handleClose={handleClose} /> : UpdateCategory
+  const render = modalState === 'Add' && title === "Recipes" ? createNewRecipes : modalState === 'Add' && title === "Categories" ? createNewCategory : modalState === 'ChangePass' ? <ChangePass /> : modalState === "Delete" && title === "Categories" ? <NoData location='category' itemId={itemId} handleClose={handleClose} /> : modalState === "Delete" && title === "Recipes" ? <NoData location='recipes' itemId={itemId} handleClose={handleClose} /> : UpdateCategory
 
   return <>
 

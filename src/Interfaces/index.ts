@@ -1,4 +1,6 @@
-export interface IFormValues {
+import { FieldErrors, UseFormGetValues, UseFormRegister } from "react-hook-form"
+
+  export interface IFormValues {
   email?: string,
   password?: string,
   confirmPassword?: string,
@@ -8,3 +10,12 @@ export interface IFormValues {
   confirmNewPassword?: string,
 }
 
+
+
+export interface IInputsProps {
+  register: UseFormRegister<IFormValues>
+  inputName: 'password' | "newPassword" | "oldPassword" | "email"
+  placeholder?: string
+  getValues?: UseFormGetValues<IFormValues>
+  errors: FieldErrors<IFormValues>
+}

@@ -10,6 +10,10 @@ import { Login, ResetPass, ResetPassRequest } from '@/AuthModule/Components'
 
 function App() {
 
+  useEffect(() => {
+    localStorage.getItem("adminToken") !== null ? saveAdminData() : null
+  }, [])
+
   const [adminData, setAdminData] = useState<JwtPayload | null>(null)
 
   const saveAdminData = () => {
@@ -20,9 +24,6 @@ function App() {
     }
   }
 
-  useEffect(() => {
-    localStorage.getItem("adminToken") !== null ? saveAdminData() : null
-  }, [])
 
   const routes = createBrowserRouter([
     {

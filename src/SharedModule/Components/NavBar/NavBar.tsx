@@ -1,56 +1,40 @@
+import { NavAvatar } from '@/assets/images';
 import { JwtPayload } from 'jwt-decode';
 import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import logo from "../../../assets/images/Ellipse 234.svg"
+
 import { IoNotifications } from "react-icons/io5";
 
 interface Props {
   adminData?: JwtPayload | null
+    logOut:() => void
 }
 
-
-const NavBar = ({ adminData }: Props) => {
+//! Error Here
+const NavBar = ({ adminData,logOut }: Props) => {
 console.log(adminData);
 
 
   return <>
   
-    <Navbar expand="lg" className="bg-body-tertiary mt-4">
+    <Navbar expand="lg" className="bg-body-tertiary mt-4 ">
       <Container fluid>
 
-        <Navbar.Toggle aria-controls="navbarScroll" >
-          <h5>UpSkilling</h5>
+        <Navbar.Toggle aria-controls="navbarScroll" />
 
-        </Navbar.Toggle>
         <Navbar.Collapse id="navbarScroll">
           <Nav
-            className="my-2 my-lg-0 d-flex align-items-center gap-3 w-100"
-            style={{ maxHeight: '100px' }}
+            className="my-2 d-flex align-items-center justify-content-end gap-3 w-100"
+            style={{ maxHeight: '200px' }}
             navbarScroll
           >
-            <Form className="d-flex flex-grow-1">
-              <Form.Control
-                type="search"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
-              />
-            </Form>
-            <img src={logo} alt="" />
+            <img src={NavAvatar} alt="NavAvatar" />
             <NavDropdown title={"UpSkilling"} id="navbarScrollingDropdown">
-              <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action4">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action5">
-                Something else here
-              </NavDropdown.Item>
+              <NavDropdown.Item onClick={logOut}>LogOut</NavDropdown.Item>
             </NavDropdown>
-            <div className="notification">
+            <div className="notification ">
               <IoNotifications size={20}/>
               <span></span>
             </div>

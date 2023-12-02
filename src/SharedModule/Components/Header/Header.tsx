@@ -1,6 +1,5 @@
+import { usersAvatar, homeAvatar } from "@/assets/images"
 import { useLocation } from "react-router-dom"
-import UsersAvatar from '@/assets/images/users-avatar.svg'
-import HomeAvatar from '@/assets/images/home-avatar.svg'
 
 interface Props {
   title: string
@@ -31,7 +30,7 @@ const Header = ({ title, subTitle, para, subPara }: Props) => {
         <div className="col-sm-2">
           <div className='text-center'>
 
-            <img src={pathname === "/dashboard" ? HomeAvatar : UsersAvatar} className='img-fluid' alt="" />
+            <img src={pathname === "/dashboard" ? homeAvatar : usersAvatar} className='img-fluid' alt="headerBg" />
           </div>
         </div>
 

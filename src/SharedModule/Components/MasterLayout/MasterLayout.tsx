@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import SideBar from '../SideBar/SideBar'
 import { JwtPayload } from 'jwt-decode'
 import {  NavBar } from '..'
@@ -9,24 +9,30 @@ interface Props {
 }
 
 
+
 const MasterLayout = ({adminData}:Props ) => {
   
+  const navigate = useNavigate()
+  const logOut = () => {
+    localStorage.removeItem('adminToken')
+    navigate('/')
+  }
+
   return <>
-  <div className="container-fluid">
-    <div className="row ">
-      <div className="col-md-2 ps-0 ">
-        <div className='sidebar-container'>
-          <SideBar/>
+  <div className="container-fluid d-flex ps-0 ">
+
+        <div className='sidebar-container '>
+          <SideBar {...{logOut}}/>
         </div>
-      </div>
-      <div className="col-md-10">
-        <div className='container-fluid'>
-          <NavBar {...{adminData}}/>
+
+
+        <div className='container-fluid '>
+          <NavBar {...{adminData,logOut}}/>
           <Outlet/>
         </div>
+
       </div>
-    </div>
-  </div>
+
   </>
 }
 

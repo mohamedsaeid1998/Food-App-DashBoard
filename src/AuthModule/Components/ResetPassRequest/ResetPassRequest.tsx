@@ -1,10 +1,10 @@
-import { Link, useNavigate } from 'react-router-dom'
-import logo from '@/assets/images/Login -logo.png'
-import { useForm } from 'react-hook-form'
-import { toast } from 'react-toastify'
 import { IFormValues } from '@/Interfaces'
-import { useState } from 'react'
+import { AuthComponent, EmailInput } from '@/SharedModule/Components'
 import baseUrl from '@/utils/Custom/Custom'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const ResetPassRequest = () => {
 
@@ -20,10 +20,10 @@ const ResetPassRequest = () => {
     return baseUrl.post(`/api/v1/Users/Reset/Request`, data)
       .then((res) => {
         console.log(res)
-          toast.success(' Mail Send Successfully', {
-            autoClose: 2000,
-            theme: "colored",
-          });
+        toast.success(' Mail Send Successfully', {
+          autoClose: 2000,
+          theme: "colored",
+        });
         navigate('/reset-pass')
       })
       .catch((err) => {
@@ -34,56 +34,27 @@ const ResetPassRequest = () => {
         setLoading(false)
       })
 
-
   }
 
 
 
   return <>
 
-    <main className="Auth-container container-fluid">
-      <div className="row bg-overlay vh-100 justify-content-center align-items-center ">
-        <div className="col-md-6">
-          <div className="bg-white p-5">
+    <AuthComponent>
 
-            <div className="logo text-center">
-              <img src={logo} className='w-50' alt="logo" />
-            </div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <h2 className='fw-bold'>Request Reset Password</h2>
+        <p>Please Enter Your Email And Check Your Inbox</p>
 
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <h2 className='fw-bold'>Request Reset Password</h2>
-              <p>Please Enter Your Email And Check Your Inbox</p>
+        <EmailInput {...{ register, errors, }} inputName={'email'} />
 
-              <div className='input-con'>
-
-                <div className=' d-flex gap-2 '>
-                  <i className="fa-regular fa-envelope pe-2"></i>
-                  <input
-                    className=' form-control w-100'
-                    type="email"
-                    placeholder='Enter your E-mail'
-
-                    {...register("email", {
-                      required: true,
-                      pattern: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/
-                    })}
-                  />
-
-                </div>
-
-              </div>
-              {errors.email && errors.email.type === "required" ? <span className='text-danger'>Email is Required</span> : null}
-              {errors.email && errors.email.type === "pattern" ? <span className='text-danger'>Email is InValid</span> : null}
-
-              <div className=' mt-2 '>
-                <Link to={'/'} className='forget'>Login Now ?</Link>
-              </div>
-              {Loading ? <button type='button' disabled className='btn btn-success w-100 mt-4 fw-bold'><i className='fa fa-spin fa-spinner'></i></button> : <button type='submit' className='btn btn-success w-100 mt-4 fw-bold'>Send</button>}
-            </form>
-          </div>
+        <div className=' mt-2 '>
+          <Link to={'/'} className='forget'>Login Now ?</Link>
         </div>
-      </div>
-    </main>
+        <button type='submit' disabled={Loading} className='btn btn-success w-100 mt-4 fw-bold'>{Loading ? <i className='fa fa-spin fa-spinner'></i> : "Send"}</button>
+
+      </form>
+    </AuthComponent>
   </>
 }
 
