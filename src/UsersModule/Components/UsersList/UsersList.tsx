@@ -5,7 +5,7 @@ import { UseAuthenticatedQuery } from '@/utils';
 const UsersList = () => {
   const [modalState, setModalState] = useState("close")
   const [itemId, setItemId] = useState(0)
-  const [itemName, setItemName] = useState<string | undefined>("")
+
 
 
 
@@ -59,7 +59,7 @@ const UsersList = () => {
 
 
   return <>
-    <ModalUi key={Math.random()} title="Users" {...{ setModalState, modalState, itemId, itemName }} />
+    <ModalUi key={Math.random()} title="Users" {...{ setModalState, modalState, itemId }} />
     <Header title="Users" subTitle="List" para="You can now add your items that any user can order it from " subPara="the Application and you can edit" />
     <TableDetailsSec showAddModal={showAddModal} />
     <TableData key={Math.random()} location="Users" {...{ showDeleteModal, showEditModal,tableData,setSearchParams,searchParams }} />
