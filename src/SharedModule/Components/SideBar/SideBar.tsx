@@ -42,7 +42,7 @@ const SideBar = ({logOut}:Props) => {
 <ModalUi  {...{setModalState,modalState}}/>
       <Sidebar  collapsed={iscollapsed}  className='vh-100 '>
         <Menu>
-          <MenuItem className='my-4' onClick={() => handleToggle()}  ><img src={sideBarLogo} className='w-50' alt="logo" /></MenuItem>
+          <MenuItem className='my-4 logoImage' onClick={() => handleToggle()} icon={<img src={sideBarLogo}  alt="logo" />} ></MenuItem>
           {links?.map((link) => <MenuItem  key={link.path} className={`${pathname === link.path ? 'active' : null} link`} icon={link.icon} component={<Link to={link.path} />}> {link.title}</MenuItem>)}
           <MenuItem onClick={showChangePassModal} icon={<IoIosUnlock size={'25px'} />}> Change Password</MenuItem>
           <MenuItem icon={<FiLogOut size={'25px'} />} onClick={() => logOut()}>LogOut</MenuItem>

@@ -105,9 +105,15 @@
 .sidebar-container {
 
   aside {
-    background-color: #1f263d;
     border-radius: 0px 58px 0px 0px;
+    background-color: #1F263E;
+    height: 100vh;
 
+    .ps-sidebar-root{
+      border: none;
+      width: 200px;
+      min-width: 200px;
+    }
 
     .ps-sidebar-container {
       background-color: unset;
@@ -117,10 +123,21 @@
 
       }
 
+      .logoImage{
+        margin: 20px 0;
+        
+      img{
+        width: 85px;
+    }
+      }
 
+      span{
+        width: fit-content
+      }
       .ps-menu-button:hover {
         background-color: unset;
       }
+
 
       .link {
 
@@ -167,8 +184,6 @@ header {
 
 }
 
-
-
 .dataGrid {
   background-color: white;
 
@@ -196,7 +211,6 @@ header {
   height: 50px;
   width: 50px;
 }
-
 
 .table{
   table-layout: fixed;

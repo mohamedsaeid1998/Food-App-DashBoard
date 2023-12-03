@@ -22,13 +22,13 @@ const CategoriesList = () => {
     setItemName(name)
     setItemId(id)
     setModalState("Edit")
-
   }
 
   const [searchParams, setSearchParams] = useState({
     pageNumber: 1,
     name: '',
   });
+
   const { data: tableData ,refetch } = UseAuthenticatedQuery({
     queryKey: [`getCategory`],
     url: `https://upskilling-egypt.com:443
@@ -38,9 +38,9 @@ const CategoriesList = () => {
         Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
       },
       params:{
-        pageSize:5,
-        pageNumber:searchParams.pageNumber,
-        name:searchParams.name
+        pageSize:3,
+        pageNumber:searchParams?.pageNumber,
+        name:searchParams?.name
       }
     }
   })
@@ -48,9 +48,6 @@ const CategoriesList = () => {
   useEffect(() => {
     refetch()
   }, [searchParams]);
-
-
-
 
 console.log(searchParams);
 

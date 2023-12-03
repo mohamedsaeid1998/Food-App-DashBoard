@@ -7,7 +7,7 @@ interface Props {
 const TableDetailsSec = ({showAddModal}:Props) => {
   const { pathname } = useLocation()
 
-  const title = pathname === '/dashboard/users' ? 'Users' : pathname === '/dashboard/recipes' ? 'Recipes' : 'Categories'
+  const title = pathname === '/dashboard/users' ? 'Users' : pathname === '/dashboard/recipes' ? 'Recipe' : 'Category'
   return <>
 
     <section>

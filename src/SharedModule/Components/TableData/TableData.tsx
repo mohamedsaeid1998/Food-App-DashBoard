@@ -1,54 +1,155 @@
 import { NoDataImg } from '@/assets/images';
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { NoData } from '..';
+
+
 interface Props {
   showDeleteModal: (id: number) => void
   showEditModal: (id: number, name: string) => void
   location: string,
   tableData?: any,
-  setSearchParams:React.Dispatch<React.SetStateAction<{
-    pageNumber: number;
-    name: string;
-}>>
-,searchParams:{
-  pageNumber: number;
-  name: string;
+  setSearchParams: any
+  searchParams: any
+  categories?: any
+  tags?: any
 }
 
-}
+const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSearchParams, searchParams, tags, categories }: Props) => {
 
-const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSearchParams,searchParams}: Props) => {
+
   //! عملت الفانكشن دي بس علشان في ايرور في التايب سكربت
   const handleClose = () => {
 
   }
 
-  //?  **********Get Categories And Recipes**********//
+  // const [loading, setLoading] = useState(false)
 
-  const getNameValue = (e:React.ChangeEvent<HTMLInputElement>) => {
+  const getUserNameValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+
     setSearchParams({
+      ...searchParams,
+      pageNumber: 1,
+      userName: e.target.value,
+    });
+
+  }
+
+  const getRoleValue = ( e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSearchParams({
+      ...searchParams,
+      pageNumber: 1,
+      groups: e.target.value,
+    });
+  }
+
+
+
+
+
+  const getNameValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // setLoading(true)
+
+    setSearchParams({
+      ...searchParams,
       pageNumber: 1,
       name: e.target.value,
-    })
+    });
+
   }
+
+  const getTagValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
+
+    setSearchParams({
+      ...searchParams,
+      pageNumber: 1,
+      tagId: +e.target.value,
+    });
+  }
+
+  const getCategoryValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
+
+    setSearchParams({
+      ...searchParams,
+      pageNumber: 1,
+      categoryId: +e.target.value,
+    });
+  }
+
+  console.log(tableData);
+  console.log(searchParams);
+
 
   return <>
     {tableData ?
       <div>
-        <input onChange={getNameValue} type="search" className='form-control my-2' placeholder='Search by Category Name...' />
+        {location === "recipes" ? <div className="row d-flex align-items-center">
+          <div className="col-md-6">
+            <input onChange={getNameValue} value={searchParams.name} type="search" className='form-control my-2' placeholder={`Search by ${location === "recipes" ? "Recipe " : "Category "}Name...`} />
+          </div>
+          <div className="col-md-3">
+            <select onChange={getTagValue} value={searchParams.tagId} className="form-select "  >
+              <option value={0} className="text-muted">Select Tag</option>
+              {tags?.map((tag: any) =>
+                <option key={tag.id} value={tag.id}>{tag.name}</option>
+
+              )}
+            </select>
+          </div>
+          <div className="col-md-3">
+            <select onChange={getCategoryValue} value={searchParams.categoryId} className="form-select " placeholder="CategoryId" >
+              <option value={0} className="text-muted" >Select Category</option>
+              {categories?.data?.map((category: any) =>
+                <option key={category.id} value={category.id}>{category.name}</option>
+              )}
+            </select>
+          </div>
+
+        </div> :
+
+
+
+          location === "Users" ? <div className="row d-flex align-items-center">
+            <div className="col-md-6">
+              <input onChange={getUserNameValue} value={searchParams.userName} type="search" className='form-control my-2' placeholder={`Search by User Name...`} />
+            </div>
+            <div className="col-md-6">
+            <select onChange={getRoleValue} value={searchParams?.groups} className="form-select " >
+              <option value="" className="text-muted">Select Role</option>
+                <option value={["1"]}>Admin</option>
+                <option value={["2"]}>User</option>
+            </select>
+
+            </div>
+          </div>
+
+
+
+            : <input onChange={getNameValue} value={searchParams.name} type="search" className='form-control my-2' placeholder={`Search by Category Name...`} />
+        }
+
         <table className="table">
+
 
           <thead>
             <tr>
               <th>Id</th>
-              <th>{location === "recipes" ? "Recipe" : "Category"} Name</th>
+              <th>{location === "recipes" ? "Recipe" : location === "Users" ? "Users" : "Categories"} Name</th>
+
+              {location === "Users" ? <>
+                <th>Image</th>
+                {/* <th>email</th> */}
+                {/* <th>PhoneNumber</th> */}
+                <th>country</th>
+                <th>groups</th>
+              </>
+                : null}
 
               {location === "recipes" ? <>
                 <th>Price</th>
                 <th>Image</th>
                 <th>Description</th>
-                <th>Category</th>
                 <th>Tag</th>
+                <th>Category</th>
               </> : null}
               <th>Actions</th>
 
@@ -58,18 +159,27 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
           <tbody className=''>
             {tableData?.data.length > 0 ? tableData?.data.map((data: any, index: number) => <tr key={data?.id} >
               <th data-cell="id">{index + 1}</th>
-              <td data-cell="name">{data?.name}</td>
+              <td data-cell="name">{location === "Users" ? data?.userName : data?.name}</td>
+              {location === "Users" ? <>
+                <td data-cell="image">{data?.imagePath === null ? <img className='w-25' src={NoDataImg} alt="image" /> : <img className='w-50' src={`https://upskilling-egypt.com:443/` + data?.imagePath} alt="image" />}</td>
+                {/* <td data-cell="email">{data.email}</td> */}
+                {/* <td data-cell="phoneNumber">{data.phoneNumber}</td> */}
+                <td data-cell="country">{data.country}</td>
+                <td data-cell="group">{data.group.name}</td>
+              </>
+                : null}
               {location === "recipes" ? <>
                 <td data-cell="price">{data?.price}</td>
                 <td data-cell="image">{data?.imagePath === "" ? <img className='w-25' src={NoDataImg} alt="image" /> : <img className='w-50' src={`https://upskilling-egypt.com:443/` + data?.imagePath} alt="image" />}</td>
                 <td data-cell="description">{data?.description}</td>
-                <td data-cell="category">{data?.category[0] === undefined ? "No Category" : data?.category[0]?.name}</td>
                 <td data-cell="tag">{data?.tag?.name}</td>
+                <td data-cell="category">{data?.category[0] === undefined ? "No Category" : data?.category[0]?.name}</td>
               </> : null}
               <td data-cell="actions" className='action d-flex align-items-center gap-3'>
-                <div className="edit text-info pointer">
+                {location !== "Users" ? <div className="edit text-info pointer">
                   <FaEdit onClick={() => showEditModal(data.id, data.name)} size={'20px'} />
-                </div>
+                </div> : null}
+
                 <div className="delete text-danger pointer" >
                   <FaTrash onClick={() => showDeleteModal(data.id)} size={'20px'} />
                 </div>

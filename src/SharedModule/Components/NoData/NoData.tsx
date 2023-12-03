@@ -6,25 +6,27 @@ interface IProps {
   location?: string
   handleClose: () => void
   itemId?:number
+  refetch?:any
 }
 
 
 
-const NoData = ({ location, handleClose ,itemId}: IProps) => {
+const NoData = ({ location, handleClose ,itemId,refetch}: IProps) => {
 
   const deleteCategory = () => {
-    return baseUrl.delete(`/api/v1/${location==="category"?"Category":"Recipe"}/${itemId}`, {
+    return baseUrl.delete(`/api/v1/${location==="category"?"Category":location==="Users"? "Users": "Recipe"}/${itemId}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('adminToken')}`
       }
     })
       .then((res) => {
         console.log(res)
-        toast.success(`  ${location==="category"?"Category":"Recipe"} Deleted successfully`, {
+        toast.success(` ${location==="category"?"Category": location==="Users"? "Users":"Recipe"} Deleted successfully`, {
           autoClose: 2000,
           theme: "colored",
-        });
+        })
         handleClose()
+        refetch()
       })
       .catch((err) => {
         toast.error(`${err.response.data.message}`, {
@@ -39,8 +41,8 @@ const NoData = ({ location, handleClose ,itemId}: IProps) => {
   return <>
     <div className='text-center '>
       <img src={NoDataImg} alt="noData-img" />
-      <h4 className='pt-1 mb-0'>{location === "category" || location === "recipes" ? "Delete This Item ?" : "No Data !"}</h4>
-      {location === "category" || location === "recipes" ? <div>
+      <h4 className='pt-1 mb-0'>{location === "category" || location === "recipes" ||location==="Users" ? "Delete This Item ?" : "No Data !"}</h4>
+      {location === "category" || location === "recipes"|| location==="Users" ? <div>
         <p className='mutedColor'>are you sure you want to delete this item ? if you are sure just <br /> click on delete it</p>
         <button onClick={deleteCategory} className=" btn btn-outline-danger">Delete This Item </button>
       </div>

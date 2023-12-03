@@ -1,6 +1,6 @@
 import { Header, ModalUi, TableData, TableDetailsSec } from "@/SharedModule/Components"
 import { UseAuthenticatedQuery } from "@/utils"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const RecipesList = () => {
 
@@ -40,7 +40,7 @@ const RecipesList = () => {
 
   //?  **********Get categories**********//
   const { data: categories } = UseAuthenticatedQuery({
-    queryKey: [`getCategory`],
+    queryKey: [`getCategories`],
     url: `https://upskilling-egypt.com:443
 /api/v1/Category/`,
     config: {
@@ -59,9 +59,11 @@ const RecipesList = () => {
 
   const [searchParams, setSearchParams] = useState({
     pageNumber: 1,
-    name: '',
+    name:  "",
+    tagId: undefined,
+    categoryId:  undefined,
   });
-  const { data: tableData } = UseAuthenticatedQuery({
+  const { data: tableData, refetch } = UseAuthenticatedQuery({
     queryKey: [`getRecipes`],
     url: `https://upskilling-egypt.com:443
 /api/v1/Recipe/`,
@@ -70,18 +72,25 @@ const RecipesList = () => {
         Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
       },
       params: {
-        pageSize: 5,
-        pageNumber: searchParams.pageNumber
+        pageSize: 3,
+        pageNumber: searchParams.pageNumber,
+        name: searchParams.name,
+        tagId: searchParams.tagId,
+        categoryId: searchParams.categoryId
       }
     }
   })
+  useEffect(() => {
+    refetch()
+  }, [searchParams]);
 
+  console.log(searchParams);
 
   return <>
-    <ModalUi key={Math.random()} title="Recipes" {...{ setModalState, modalState, itemId, itemName, categories, tags }} />
+    <ModalUi key={Math.random()} title="Recipes" {...{ setModalState, modalState, itemId, itemName, categories, tags, refetch }} />
     <Header title="Recipes" subTitle="Items" para="You can now add your items that any user can order it from" subPara="the Application and you can edit" />
     <TableDetailsSec {...{ showAddModal }} />
-    <TableData key={Math.random()} location="recipes" {...{ showDeleteModal, showEditModal, tableData, setSearchParams, searchParams }} />
+    <TableData key={Math.random()} location="recipes" {...{ showDeleteModal, showEditModal, tableData, setSearchParams, searchParams, tags, categories }} />
 
   </>
 }
