@@ -3,14 +3,14 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  resolve: {
+  // resolve: {
     
-    alias: {
-      '@': '/src',
-    }
-  },
-  base:"/Food-App-DashBoard/",
+  //   alias: {
+  //     '@': '/src',
+  //   }
+  // },
   plugins: [react()],
+  base: /Food-App-DashBoard/
   
 
 })
