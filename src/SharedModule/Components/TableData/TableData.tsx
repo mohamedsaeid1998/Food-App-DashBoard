@@ -1,6 +1,7 @@
 import { NoDataImg } from '@/assets/images';
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { NoData } from '..';
+import { useEffect ,useRef} from 'react';
 
 
 interface Props {
@@ -16,6 +17,14 @@ interface Props {
 
 const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSearchParams, searchParams, tags, categories }: Props) => {
 
+
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [tableData]);
 
   //! عملت الفانكشن دي بس علشان في ايرور في التايب سكربت
   const handleClose = () => {
@@ -84,7 +93,7 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
       <div>
         {location === "recipes" ? <div className="row d-flex align-items-center">
           <div className="col-md-6">
-            <input onChange={getNameValue} value={searchParams.name} type="search" className='form-control my-2' placeholder={`Search by ${location === "recipes" ? "Recipe " : "Category "}Name...`} />
+            <input   ref={searchInputRef} onChange={getNameValue} value={searchParams.name} type="search" className='form-control my-2' placeholder={`Search by ${location === "recipes" ? "Recipe " : "Category "}Name...`} />
           </div>
           <div className="col-md-3">
             <select onChange={getTagValue} value={searchParams.tagId} className="form-select "  >
@@ -110,7 +119,7 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
 
           location === "Users" ? <div className="row d-flex align-items-center">
             <div className="col-md-6">
-              <input onChange={getUserNameValue} value={searchParams.userName} type="search" className='form-control my-2' placeholder={`Search by User Name...`} />
+              <input   ref={searchInputRef} onChange={getUserNameValue} value={searchParams.userName} type="search" className='form-control my-2' placeholder={`Search by User Name...`} />
             </div>
             <div className="col-md-6">
             <select onChange={getRoleValue} value={searchParams?.groups} className="form-select " >
@@ -124,7 +133,7 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
 
 
 
-            : <input onChange={getNameValue} value={searchParams.name} type="search" className='form-control my-2' placeholder={`Search by Category Name...`} />
+            : <input   ref={searchInputRef} onChange={getNameValue} value={searchParams.name} type="search" className='form-control my-2' placeholder={`Search by Category Name...`} />
         }
 
         <table className="table">
