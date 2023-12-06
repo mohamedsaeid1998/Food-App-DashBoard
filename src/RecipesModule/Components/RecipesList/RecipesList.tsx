@@ -81,10 +81,10 @@ const RecipesList = () => {
     }
   })
   useEffect(() => {
+    
     refetch()
   }, [searchParams]);
 
-  console.log(searchParams);
 
   return <>
     <ModalUi key={Math.random()} title="Recipes" {...{ setModalState, modalState, itemId, itemName, categories, tags, refetch }} />

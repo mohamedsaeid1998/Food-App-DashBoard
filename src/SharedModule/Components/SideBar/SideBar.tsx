@@ -13,14 +13,18 @@ import { sideBarLogo } from '@/assets/images';
 
 interface Props {
   logOut:() => void
+  setSidebarOpen:(a:boolean) => void
+  isSidebarOpen:boolean
 }
 
-const SideBar = ({logOut}:Props) => {
-
+const SideBar = ({logOut,isSidebarOpen,setSidebarOpen}:Props) => {
   const [iscollapsed, setIscollapsed] = useState(false)
+
+
   const { pathname } = useLocation()
   const handleToggle = () => {
     setIscollapsed(!iscollapsed)
+    setSidebarOpen(!isSidebarOpen)
   }
 
   const links = [
@@ -35,12 +39,12 @@ const SideBar = ({logOut}:Props) => {
     setModalState("ChangePass")
   }
 
-  
 
   return <>
     <div className='sidebar-container text-white'>
 <ModalUi  {...{setModalState,modalState}}/>
-      <Sidebar  collapsed={iscollapsed}  className='vh-100 '>
+      <Sidebar  collapsed={iscollapsed}  className='h-100 '>
+
         <Menu>
           <MenuItem className='my-4 logoImage' onClick={() => handleToggle()} icon={<img src={sideBarLogo}  alt="logo" />} ></MenuItem>
           {links?.map((link) => <MenuItem  key={link.path} className={`${pathname === link.path ? 'active' : null} link`} icon={link.icon} component={<Link to={link.path} />}> {link.title}</MenuItem>)}

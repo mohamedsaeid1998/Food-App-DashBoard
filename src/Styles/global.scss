@@ -107,7 +107,8 @@
   aside {
     border-radius: 0px 58px 0px 0px;
     background-color: #1F263E;
-    height: 100vh;
+    position: fixed;
+    z-index: 1;
 
     .ps-sidebar-root{
       border: none;
@@ -214,4 +215,44 @@ header {
 
 .table{
   table-layout: fixed;
+}
+
+// .main{
+//   margin-left: 80px;
+//   transition: all 0.3s;
+// }
+
+// .margin{
+//   margin-left: 250px;
+//   transition: all 0.3s;
+// }
+
+
+//   @media screen and (max-width:(1000px)) {
+//     .margin{
+//       margin-left: 80px;
+//     }
+//   }
+
+
+//   @media screen and (max-width:(1000px)) {
+//     .sidebar-container aside {
+//       width: 80px !important;
+//     }
+//   }
+
+
+
+
+.container-fluid.main {
+  transition: all 0.3s;
+}
+
+
+.main-sidebar-closed {
+  margin-left:80px;
+}
+
+.main-sidebar-open {
+  margin-left: 250px;
 }

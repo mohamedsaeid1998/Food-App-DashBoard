@@ -1,7 +1,7 @@
 import { NoDataImg } from '@/assets/images';
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { NoData } from '..';
-import { useEffect ,useRef} from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 
 interface Props {
@@ -43,16 +43,13 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
 
   }
 
-  const getRoleValue = ( e: React.ChangeEvent<HTMLSelectElement>) => {
+  const getRoleValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSearchParams({
       ...searchParams,
       pageNumber: 1,
       groups: e.target.value,
     });
   }
-
-
-
 
 
   const getNameValue = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,53 +86,53 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
 
 
   return <>
-    {tableData ?
-      <div>
-        {location === "recipes" ? <div className="row d-flex align-items-center">
-          <div className="col-md-6">
-            <input   ref={searchInputRef} onChange={getNameValue} value={searchParams.name} type="search" className='form-control my-2' placeholder={`Search by ${location === "recipes" ? "Recipe " : "Category "}Name...`} />
-          </div>
-          <div className="col-md-3">
-            <select onChange={getTagValue} value={searchParams.tagId} className="form-select "  >
-              <option value={0} className="text-muted">Select Tag</option>
-              {tags?.map((tag: any) =>
-                <option key={tag.id} value={tag.id}>{tag.name}</option>
+    {location === "recipes" ? <div className="row d-flex align-items-center">
+      <div className="col-md-6">
+        <input ref={searchInputRef} onChange={getNameValue} value={searchParams.name} type="search" className='form-control my-2' placeholder={`Search by ${location === "recipes" ? "Recipe " : "Category "}Name...`} />
+      </div>
+      <div className="col-md-3">
+        <select onChange={getTagValue} value={searchParams.tagId} className="form-select "  >
+          <option value={0} className="text-muted">Select Tag</option>
+          {tags?.map((tag: any) =>
+            <option key={tag.id} value={tag.id}>{tag.name}</option>
 
-              )}
-            </select>
-          </div>
-          <div className="col-md-3">
-            <select onChange={getCategoryValue} value={searchParams.categoryId} className="form-select " placeholder="CategoryId" >
-              <option value={0} className="text-muted" >Select Category</option>
-              {categories?.data?.map((category: any) =>
-                <option key={category.id} value={category.id}>{category.name}</option>
-              )}
-            </select>
-          </div>
+          )}
+        </select>
+      </div>
+      <div className="col-md-3">
+        <select onChange={getCategoryValue} value={searchParams.categoryId} className="form-select " placeholder="CategoryId" >
+          <option value={0} className="text-muted" >Select Category</option>
+          {categories?.data?.map((category: any) =>
+            <option key={category.id} value={category.id}>{category.name}</option>
+          )}
+        </select>
+      </div>
 
-        </div> :
+    </div> :
 
 
 
-          location === "Users" ? <div className="row d-flex align-items-center">
-            <div className="col-md-6">
-              <input   ref={searchInputRef} onChange={getUserNameValue} value={searchParams.userName} type="search" className='form-control my-2' placeholder={`Search by User Name...`} />
-            </div>
-            <div className="col-md-6">
-            <select onChange={getRoleValue} value={searchParams?.groups} className="form-select " >
-              <option value="" className="text-muted">Select Role</option>
-                <option value={["1"]}>Admin</option>
-                <option value={["2"]}>User</option>
-            </select>
+      location === "Users" ? <div className="row d-flex align-items-center">
+        <div className="col-md-6">
+          <input ref={searchInputRef} onChange={getUserNameValue} value={searchParams.userName} type="search" className='form-control my-2' placeholder={`Search by User Name...`} />
+        </div>
+        <div className="col-md-6">
+          <select onChange={getRoleValue} value={searchParams?.groups} className="form-select " >
+            <option value="" className="text-muted">Select Role</option>
+            <option value={["1"]}>Admin</option>
+            <option value={["2"]}>User</option>
+          </select>
 
-            </div>
-          </div>
+        </div>
+      </div>
 
 
 
-            : <input   ref={searchInputRef} onChange={getNameValue} value={searchParams.name} type="search" className='form-control my-2' placeholder={`Search by Category Name...`} />
-        }
+        : <input ref={searchInputRef} onChange={getNameValue} value={searchParams.name} type="search" className='form-control my-2' placeholder={`Search by Category Name...`} />
+    }
 
+    {tableData ? <>
+      {tableData?.data.length > 0 ? <>
         <table className="table">
 
 
@@ -165,8 +162,8 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
             </tr>
           </thead>
 
-          <tbody className=''>
-            {tableData?.data.length > 0 ? tableData?.data.map((data: any, index: number) => <tr key={data?.id} >
+          {tableData?.data.map((data: any, index: number) => <tbody className='   '>
+            <tr key={data?.id} >
               <th data-cell="id">{index + 1}</th>
               <td data-cell="name">{location === "Users" ? data?.userName : data?.name}</td>
               {location === "Users" ? <>
@@ -194,9 +191,8 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
                 </div>
               </td>
             </tr>
-              //   //! عملت الفانكشن دي بس علشان في ايرور في التايب سكربت
-            ) : <NoData handleClose={handleClose} />}
-          </tbody>
+
+          </tbody>)}
 
         </table>
 
@@ -214,11 +210,11 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
           </ul>
         </nav>
 
-      </div>
+      </> : <NoData handleClose={handleClose} />}
 
-      : <div className=' loading w-100 '>
-        <i className='fa fa-spin fa-spinner fa-7x icon'></i>
-      </div>}
+    </> : <div className=' loading w-100 '>
+      <i className='fa fa-spin fa-spinner fa-7x icon'></i>
+    </div>}
   </>
 }
 
