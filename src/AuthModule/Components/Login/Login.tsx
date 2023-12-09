@@ -32,7 +32,7 @@ const Login = ({ saveAdminData }: Props) => {
 
     }
   // @ts-ignore
-    google.accounts.id.prompt()
+
   useEffect(() => {
   // @ts-ignore
     google.accounts.id.initialize({
@@ -44,9 +44,9 @@ const Login = ({ saveAdminData }: Props) => {
     google.accounts.id.renderButton(
       document.getElementById("signInDiv"),
       {theme:"outline", size:"large"},
-  
-    )
-
+  )
+        // @ts-ignore
+  google.accounts.id.prompt()
   }, [])
 
   const onSubmit = (data: IFormValues) => {
