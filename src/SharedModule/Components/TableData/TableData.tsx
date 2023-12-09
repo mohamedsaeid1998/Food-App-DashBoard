@@ -1,7 +1,7 @@
 import { NoDataImg } from '@/assets/images';
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { NoData } from '..';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 
 interface Props {
@@ -13,9 +13,10 @@ interface Props {
   searchParams: any
   categories?: any
   tags?: any
+  isLoading?:boolean
 }
 
-const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSearchParams, searchParams, tags, categories }: Props) => {
+const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSearchParams, searchParams, tags, categories,isLoading }: Props) => {
 
 
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -25,7 +26,7 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
       searchInputRef.current.focus();
     }
   }, [tableData]);
-
+  
   //! عملت الفانكشن دي بس علشان في ايرور في التايب سكربت
   const handleClose = () => {
 
@@ -86,8 +87,8 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
 
 
   return <>
-    {location === "recipes" ? <div className="row d-flex align-items-center">
-      <div className="col-md-6">
+    {location === "recipes" ? <div className="row d-flex align-items-center filtration">
+      <div className="col-md-5">
         <input ref={searchInputRef} onChange={getNameValue} value={searchParams.name} type="search" className='form-control my-2' placeholder={`Search by ${location === "recipes" ? "Recipe " : "Category "}Name...`} />
       </div>
       <div className="col-md-3">
@@ -133,7 +134,7 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
 
     {tableData ? <>
       {tableData?.data.length > 0 ? <>
-        <table className="table">
+        <table className="table table-dark table-striped">
 
 
           <thead>
@@ -161,42 +162,44 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
 
             </tr>
           </thead>
-
-          {tableData?.data.map((data: any, index: number) => <tbody className='   '>
+          <tbody>
+          {tableData?.data.map((data: any, index: number) => 
             <tr key={data?.id} >
-              <th data-cell="id">{index + 1}</th>
-              <td data-cell="name">{location === "Users" ? data?.userName : data?.name}</td>
+              <td data-cell="id ">{index + 1}</td>
+              <td data-cell="name ">{location === "Users" ? data?.userName : data?.name}</td>
               {location === "Users" ? <>
-                <td data-cell="image">{data?.imagePath === null ? <img className='w-25' src={NoDataImg} alt="image" /> : <img className='w-50' src={`https://upskilling-egypt.com:443/` + data?.imagePath} alt="image" />}</td>
+                <td data-cell="image">{data?.imagePath === null ? <img className='img-table' src={NoDataImg} alt="image" /> : <img className='img-table ' src={`https://upskilling-egypt.com:443/` + data?.imagePath} alt="image" />}</td>
                 {/* <td data-cell="email">{data.email}</td> */}
                 {/* <td data-cell="phoneNumber">{data.phoneNumber}</td> */}
-                <td data-cell="country">{data.country}</td>
-                <td data-cell="group">{data.group.name}</td>
+                <td data-cell="country ">{data.country}</td>
+                <td data-cell="group ">{data.group.name}</td>
               </>
                 : null}
               {location === "recipes" ? <>
-                <td data-cell="price">{data?.price}</td>
-                <td data-cell="image">{data?.imagePath === "" ? <img className='w-25' src={NoDataImg} alt="image" /> : <img className='w-50' src={`https://upskilling-egypt.com:443/` + data?.imagePath} alt="image" />}</td>
-                <td data-cell="description">{data?.description}</td>
-                <td data-cell="tag">{data?.tag?.name}</td>
-                <td data-cell="category">{data?.category[0] === undefined ? "No Category" : data?.category[0]?.name}</td>
+                <td data-cell="price ">{data?.price}</td>
+                <td data-cell="image ">{data?.imagePath === "" ? <img className='img-table' src={NoDataImg} alt="image" /> : <img className=' img-table' src={`https://upskilling-egypt.com:443/` + data?.imagePath} alt="image" />}</td>
+                <td data-cell="description ">{data?.description}</td>
+                <td data-cell="tag ">{data?.tag?.name}</td>
+                <td data-cell="category ">{data?.category[0] === undefined ? "No Category" : data?.category[0]?.name}</td>
               </> : null}
-              <td data-cell="actions" className='action d-flex align-items-center gap-3'>
-                {location !== "Users" ? <div className="edit text-info pointer">
-                  <FaEdit onClick={() => showEditModal(data.id, data.name)} size={'20px'} />
-                </div> : null}
-
-                <div className="delete text-danger pointer" >
+              <td data-cell="actions " className='action  align-items-center gap-3   '>
+              <span className="delete text-danger pointer  text-center" >
                   <FaTrash onClick={() => showDeleteModal(data.id)} size={'20px'} />
-                </div>
-              </td>
-            </tr>
+                </span>
 
-          </tbody>)}
+                {location !== "Users" ? <span className="edit text-info pointer d-inline-block  ms-2 text-center">
+                  <FaEdit onClick={() => showEditModal(data.id, data.name)} size={'20px'} />
+                </span> : null}
+
+
+              </td>
+            </tr>)}
+
+          </tbody>
 
         </table>
 
-        <nav aria-label="...">
+        <nav className='pointer '>
           <ul className="pagination pagination-sm">
             {Array(tableData?.totalNumberOfPages).fill(0).map((_, i) => i + 1).map((pageNo) =>
               <li key={pageNo} onClick={() => setSearchParams({ ...searchParams, pageNumber: pageNo })} className="page-item">
@@ -205,8 +208,7 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
                 </a>
               </li>
             )}
-
-
+      
           </ul>
         </nav>
 

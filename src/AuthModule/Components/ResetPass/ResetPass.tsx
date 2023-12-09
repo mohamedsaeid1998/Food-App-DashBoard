@@ -43,7 +43,7 @@ const ResetPass = () => {
         <h2 className='fw-bold'>Reset Password</h2>
         <p>Please Enter Your Otp or Check Your Inbox</p>
 
-        <EmailInput {...{ register, errors, }} inputName={'email'} />
+        <EmailInput {...{ register, errors }} inputName={'email'} />
 
         <div className='input-con'>
 

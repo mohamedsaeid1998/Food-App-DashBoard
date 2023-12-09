@@ -1,4 +1,4 @@
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { RouterProvider, createHashRouter } from 'react-router-dom'
 import { AuthLayout, MasterLayout, NotFound, ProtectedRoute } from '@/SharedModule/Components'
 import Home from './HomeModule/Components/Home/Home'
 import UsersList from './UsersModule/Components/UsersList/UsersList'
@@ -9,9 +9,14 @@ import { JwtPayload, jwtDecode } from 'jwt-decode'
 import { Login, ResetPass, ResetPassRequest } from '@/AuthModule/Components'
 
 function App() {
+  
+
+
+
 
   useEffect(() => {
     localStorage.getItem("adminToken") !== null ? saveAdminData() : null
+
   }, [])
 
   const [adminData, setAdminData] = useState<JwtPayload | null>(null)
@@ -25,7 +30,7 @@ function App() {
   }
 
 
-  const routes = createBrowserRouter([
+  const routes = createHashRouter([
     {
       path: "dashboard", element: <ProtectedRoute><MasterLayout {...{ adminData }} /></ProtectedRoute>, errorElement: <NotFound />, children: [
         { index: true, element: <Home /> },

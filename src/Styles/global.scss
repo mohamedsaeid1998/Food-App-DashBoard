@@ -6,6 +6,8 @@
   margin: 0;
   padding: 0;
   font-family: 'Inter', sans-serif;
+
+
 }
 
 .mutedColor {
@@ -45,6 +47,7 @@
 .Auth-container {
   background: url('../assets/images/AuthBackGround.jpeg') no-repeat;
   background-size: 100% 100%;
+  
 
 
   .bg-overlay {
@@ -213,9 +216,7 @@ header {
   width: 50px;
 }
 
-.table{
-  table-layout: fixed;
-}
+
 
 // .main{
 //   margin-left: 80px;
@@ -246,6 +247,7 @@ header {
 
 .container-fluid.main {
   transition: all 0.3s;
+  
 }
 
 
@@ -255,4 +257,85 @@ header {
 
 .main-sidebar-open {
   margin-left: 250px;
+}
+
+.table{
+  table-layout: fixed;
+  // background-color: #323232 !important;  
+  border-collapse: collapse;
+  width: 100%;
+}
+
+// td{
+//   border-bottom:none !important
+// }
+.table>:not(caption)>*>*{
+
+      color: white !important;
+      border-bottom:none !important;
+
+}
+
+th{
+  text-align: left;
+  background-color: rgba(0, 0, 0, 0.9) !important; 
+}
+
+
+tr:nth-of-type(2n){
+  background: rgba(0, 0, 0, 0.6) !important;
+}
+
+@media (max-width:1000px){ 
+
+table{
+  margin-top: 20px;
+}
+
+.filtration{
+  gap: 6px;
+}
+
+
+  th{
+    display: none !important;
+  }
+
+  td{
+    display: grid !important;
+    grid-template-columns: 15ch auto;
+    padding: 4px 8px !important  ;
+  }
+
+  td::before{
+    content: attr(data-cell) ": ";
+    font-size: 700;
+    text-transform: capitalize;
+  }
+
+  td:first-child{
+    padding-top: 10px  !important;
+  }
+
+  td:last-child{
+    padding-bottom: 10px !important;
+  }
+
+  .delete{
+    margin-left: 70px;
+  }
+
+  .action{
+    display: flex !important;
+  }
+}
+
+.img-table{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+#g_a11y_announcement{
+  right: 0 !important;
 }

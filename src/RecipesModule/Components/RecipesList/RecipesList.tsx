@@ -63,7 +63,7 @@ const RecipesList = () => {
     tagId: undefined,
     categoryId:  undefined,
   });
-  const { data: tableData, refetch } = UseAuthenticatedQuery({
+  const { data: tableData, refetch , isLoading } = UseAuthenticatedQuery({
     queryKey: [`getRecipes`],
     url: `https://upskilling-egypt.com:443
 /api/v1/Recipe/`,
@@ -86,11 +86,13 @@ const RecipesList = () => {
   }, [searchParams]);
 
 
+
+
   return <>
     <ModalUi key={Math.random()} title="Recipes" {...{ setModalState, modalState, itemId, itemName, categories, tags, refetch }} />
     <Header title="Recipes" subTitle="Items" para="You can now add your items that any user can order it from" subPara="the Application and you can edit" />
     <TableDetailsSec {...{ showAddModal }} />
-    <TableData key={Math.random()} location="recipes" {...{ showDeleteModal, showEditModal, tableData, setSearchParams, searchParams, tags, categories }} />
+    <TableData key={Math.random()} location="recipes"  {...{ showDeleteModal, showEditModal, tableData, setSearchParams, searchParams, tags, categories,isLoading }} />
 
   </>
 }
