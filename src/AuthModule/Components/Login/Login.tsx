@@ -36,7 +36,7 @@ const Login = ({ saveAdminData }: Props) => {
   useEffect(() => {
   // @ts-ignore
     google.accounts.id.initialize({
-      client_id:'196510469832-vurspaq6trlau29s5viusak6oq7cmsrr.apps.googleusercontent.com',
+      client_id:'320174446901-nmfbjv4kcajfl2j2lbuqhm2a786jbull.apps.googleusercontent.com',
       callback: handleCallbackResponse,
     })
 
