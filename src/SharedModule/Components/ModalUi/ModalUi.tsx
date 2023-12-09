@@ -106,9 +106,7 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title, categorie
   }
 
   //TODO  **********Create New Recipes**********//
-  const onSubmitRecipes = (data: IFormInputs ,e:any) => {
-    // const formDatas = new FormData(e.currentTarget)
-    // console.log(formDatas);
+  const onSubmitRecipes = (data: IFormInputs ) => {
     
     setLoading(true)
     return baseUrl.post(`/api/v1/Recipe`, { ...data, recipeImage: data.recipeImage[0] }, {

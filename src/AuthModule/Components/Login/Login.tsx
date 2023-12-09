@@ -31,16 +31,16 @@ const Login = ({ saveAdminData }: Props) => {
     });
 
     }
-
+  // @ts-ignore
     google.accounts.id.prompt()
   useEffect(() => {
-
+  // @ts-ignore
     google.accounts.id.initialize({
       client_id:'196510469832-fhki1v2qpvha1kor449ncf4b8ohrbj1v.apps.googleusercontent.com',
       callback: handleCallbackResponse,
     })
 
-    
+      // @ts-ignore
     google.accounts.id.renderButton(
       document.getElementById("signInDiv"),
       {theme:"outline", size:"large"},

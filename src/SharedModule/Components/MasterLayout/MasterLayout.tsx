@@ -2,7 +2,7 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import SideBar from '../SideBar/SideBar'
 import { JwtPayload } from 'jwt-decode'
 import { NavBar } from '..'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 
 interface Props {

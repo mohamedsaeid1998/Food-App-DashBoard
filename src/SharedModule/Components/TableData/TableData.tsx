@@ -13,10 +13,10 @@ interface Props {
   searchParams: any
   categories?: any
   tags?: any
-  isLoading?:boolean
+
 }
 
-const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSearchParams, searchParams, tags, categories,isLoading }: Props) => {
+const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSearchParams, searchParams, tags, categories }: Props) => {
 
 
   const searchInputRef = useRef<HTMLInputElement>(null);
