@@ -6,7 +6,7 @@ import { useEffect, useRef } from 'react';
 
 interface Props {
   showDeleteModal: (id: number) => void
-  showEditModal: (id: number, name: string) => void
+  showEditModal: (data:any) => void
   location: string,
   tableData?: any,
   setSearchParams: any
@@ -188,7 +188,9 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
                 </span>
 
                 {location !== "Users" ? <span className="edit text-info pointer d-inline-block  ms-2 text-center">
-                  <FaEdit onClick={() => showEditModal(data.id, data.name)} size={'20px'} />
+                  <FaEdit onClick={() => showEditModal(data)} size={'20px'} />
+                  
+                  
                 </span> : null}
 
 

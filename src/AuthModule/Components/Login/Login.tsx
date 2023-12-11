@@ -8,10 +8,11 @@ import { toast } from 'react-toastify'
 
 interface Props {
   saveAdminData: () => void
+  adminData:any
 
 }
 
-const Login = ({ saveAdminData }: Props) => {
+const Login = ({ saveAdminData,adminData }: Props) => {
 
   const [Loading, setLoading] = useState(false)
 
@@ -20,34 +21,67 @@ const Login = ({ saveAdminData }: Props) => {
   const { register, handleSubmit, formState: { errors } } = useForm<IFormValues>()
 
   function handleCallbackResponse(response:any){
-    console.log("Encoded JWD ID token"+ response.credential);
+    console.log(response);
     localStorage.setItem("adminToken", response.credential)
-    saveAdminData()
-    navigate('/dashboard')
 
-    toast.success(' Welcome', {
-      autoClose: 2000,
-      theme: "colored",
-    });
+
+    
+    saveAdminData()
+   
+    checkEmailInDatabase(adminData);
+
+    // console.log("Encoded JWD ID token"+ response.credential);
+    // localStorage.setItem("adminToken", response.credential)
+    // saveAdminData()
+    // navigate('/dashboard')
+
+    // toast.success(' Welcome', {
+    //   autoClose: 2000,
+    //   theme: "colored",
+    // });
 
     }
   // @ts-ignore
 
   useEffect(() => {
-  // @ts-ignore
+    // @ts-ignore
+  const google = window.google
     google.accounts.id.initialize({
       client_id:'320174446901-75vhr20bt9ei5l896ul3lldh92bshbdg.apps.googleusercontent.com',
       callback: handleCallbackResponse,
     })
 
-      // @ts-ignore
-    google.accounts.id.renderButton(
+        google.accounts.id.renderButton(
       document.getElementById("signInDiv"),
       {theme:"outline", size:"large"},
   )
-        // @ts-ignore
-  google.accounts.id.prompt()
+        google.accounts.id.prompt()
   }, [])
+  console.log(adminData);
+  function checkEmailInDatabase(adminData:any) {
+    console.log(adminData);
+    
+
+    baseUrl.get(`/api/v1/Users/currentUser`,{
+      headers: {
+        Authorization: `Bearer ${adminData}`
+      }
+    })
+      .then((response) => {
+          console.log(response)
+          // localStorage.setItem("adminToken", response.credential)
+          // saveAdminData()
+          // navigate('/dashboard')
+          // toast.success('here', { autoClose: 2000, theme: "colored" });
+
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+
+
 
   const onSubmit = (data: IFormValues) => {
     setLoading(true)

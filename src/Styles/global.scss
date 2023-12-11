@@ -95,15 +95,16 @@
     all: unset;
   }
 
-  .forget {
-    color: $main-color;
-  }
+
 
   button {
     background-color: $main-color;
   }
 }
 
+.forget {
+  color: $main-color;
+}
 
 .sidebar-container {
 
@@ -339,3 +340,13 @@ table{
 #g_a11y_announcement{
   right: 0 !important;
 }
+
+.NotFound-container{
+  background: url('../assets/images/404-background.svg') right no-repeat;
+  background-size: contain;
+
+  .NotFound{
+    height: 70%;  
+  }
+}
+

@@ -5,12 +5,13 @@ import homeAvatar from './home-avatar.svg'
 import NoDataImg from './NoData-Img.png'
 import sideBarLogo from './sidebar-logo.svg'
 import usersAvatar from './users-avatar.svg'
+import NotFoundGround from './404-background.svg'
 
 
 
 
 
 export {
-  AuthLogo, NavAvatar,headerBg,homeAvatar,NoDataImg ,sideBarLogo,usersAvatar
+  AuthLogo, NavAvatar,headerBg,homeAvatar,NoDataImg ,sideBarLogo,usersAvatar,NotFoundGround
 }
 

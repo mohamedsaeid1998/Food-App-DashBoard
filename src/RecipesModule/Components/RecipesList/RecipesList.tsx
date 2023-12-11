@@ -6,7 +6,7 @@ const RecipesList = () => {
 
   const [modalState, setModalState] = useState("close")
   const [itemId, setItemId] = useState(0)
-  const [itemName, setItemName] = useState<string | undefined>("")
+  const [itemName, setItemName] = useState<{} | undefined>({})
 
   const showAddModal = () => {
     setModalState("Add")
@@ -19,9 +19,19 @@ const RecipesList = () => {
 
   }
 
-  const showEditModal = (id: number, name: string) => {
-    setItemName(name)
+  const showEditModal = (data:any) => {
+    const { id,name,price,imagePath,tag,category,description} = data
+    console.log(id,name,price,imagePath,tag,category,description);
     setItemId(id)
+    setItemName({
+      name,
+      price,
+      tag:tag,
+      categoriesIds:category[0],
+      description,
+      imagePath:`https://upskilling-egypt.com:443/` + imagePath
+    })
+    
     setModalState("Edit")
 
   }

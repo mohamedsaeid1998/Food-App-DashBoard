@@ -18,9 +18,9 @@ const CategoriesList = () => {
 
   }
 
-  const showEditModal = (id: number, name: string) => {
-    setItemName(name)
-    setItemId(id)
+  const showEditModal = (data:any) => {
+    setItemName(data.name)
+    setItemId(data.id)
     setModalState("Edit")
   }
 

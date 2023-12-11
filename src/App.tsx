@@ -21,8 +21,10 @@ function App() {
 
   const [adminData, setAdminData] = useState<JwtPayload | null>(null)
 
+
   const saveAdminData = () => {
     let encodedToken = localStorage.getItem('adminToken')
+    console.log(encodedToken);
     if (encodedToken) {
       let decodedToken = jwtDecode<JwtPayload>(encodedToken);
       setAdminData(decodedToken)
@@ -32,7 +34,7 @@ function App() {
 
   const routes = createHashRouter([
     {
-      path: "dashboard", element: <ProtectedRoute><MasterLayout {...{ adminData }} /></ProtectedRoute>, errorElement: <NotFound />, children: [
+      path: "dashboard", element: <ProtectedRoute><MasterLayout {...{ adminData }} /></ProtectedRoute>, errorElement: <NotFound  />, children: [
         { index: true, element: <Home /> },
         { path: "users", element: <UsersList /> },
         { path: "categories", element: <CategoriesList /> },
@@ -42,8 +44,8 @@ function App() {
 
     {
       path: "/", element: <AuthLayout />, errorElement: <NotFound />, children: [
-        { index: true, element: <Login {...{ saveAdminData }} /> },
-        { path: "login", element: <Login {...{ saveAdminData }} /> },
+        { index: true, element: <Login {...{ saveAdminData,adminData }} /> },
+        { path: "login", element: <Login {...{ saveAdminData,adminData }} /> },
         { path: "forget-pass-request", element: <ResetPassRequest /> },
         { path: "reset-pass", element: <ResetPass /> },
       ]

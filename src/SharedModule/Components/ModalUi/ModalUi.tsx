@@ -13,7 +13,7 @@ interface IProps {
   modalState: string
   setModalState: React.Dispatch<React.SetStateAction<string>>
   itemId?: number
-  itemName?: string | undefined
+  itemName?: any
   title?: string
   categories?: any
   tags?: any
@@ -31,12 +31,26 @@ interface IFormInputs {
 
 
 const ModalUi = ({ setModalState, modalState, itemId, itemName, title, categories, tags ,refetch}: IProps) => {
+  console.log(itemName);
+  
+  // const [currentImage, setCurrentImage] = useState(itemName?.imagePath || '');
+
+
   const required = "This Field is required"
   const [Loading, setLoading] = useState(false)
   const handleClose = () => setModalState("close");
 
   const { handleSubmit, register, formState: { errors }, reset } = useForm<IFormInputs>()
+  
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [currentImage, setCurrentImage] = useState(itemName?.imagePath || '');
+
+  const handleFileChange  = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event?.target?.files?.[0];
+
+    if (file)
+    setCurrentImage(URL.createObjectURL(file));
+  }
 
 
   const catchSelectedImage = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -105,11 +119,42 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title, categorie
       })
   }
 
-  //TODO  **********Create New Recipes**********//
+  //TODO  **********Create New Recipe**********//
   const onSubmitRecipes = (data: IFormInputs ) => {
     
     setLoading(true)
     return baseUrl.post(`/api/v1/Recipe`, { ...data, recipeImage: data.recipeImage[0] }, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
+        "Content-Type": "multipart/form-data"
+      }
+    })
+      .then((res) => {
+        console.log(res)
+        toast.success('Added Recipes successfully', {
+          autoClose: 2000,
+          theme: "colored",
+        });
+        handleClose()
+        setLoading(false)
+        refetch()
+      })
+      .catch((err) => {
+        toast.error(`${err.response.data.message}`, {
+          autoClose: 2000,
+          theme: "colored",
+        });
+        setLoading(false)
+      })
+
+  }
+
+    //TODO  **********Update Recipe**********//
+  const onSubmitUpdateRecipe = (data: IFormInputs ) => {
+    console.log(data);
+    
+    setLoading(true)
+    return baseUrl.put(`/api/v1/Recipe/${itemId}`, {data}, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
         "Content-Type": "multipart/form-data"
@@ -148,7 +193,8 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title, categorie
 
     <input {...register("price", {
       required,
-      valueAsNumber: true
+      valueAsNumber: true,
+      validate: value =>(value !== undefined && +value > 0) || "Please enter a positive number"
     })} className="form-control w-100 mt-3 mb-1" type="number" placeholder="Price" />
     {errors?.price ? <span className='text-danger'>{errors?.price?.message}</span> : null}
 
@@ -190,7 +236,61 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title, categorie
 
   </form>
 
+
+  const UpdateRecipes = <form onSubmit={handleSubmit(onSubmitUpdateRecipe)}>
+    <h4 className="text-center">Update Recipes</h4>
+    <input {...register("name", {
+      required
+    })}  defaultValue={itemName?.name} className="form-control w-100 mt-3 mb-1" type="text" placeholder="Recipes Name" />
+    {errors?.name ? <span className='text-danger'>{errors?.name?.message}</span> : null}
+
+    <input {...register("price", {
+      required,
+      valueAsNumber: true,
+      validate: value =>(value !== undefined && +value > 0) || "Please enter a positive number"
+    })} defaultValue={itemName?.price} className="form-control w-100 mt-3 mb-1" type="number" placeholder="Price" />
+    {errors?.price ? <span className='text-danger'>{errors?.price?.message}</span> : null}
+
+    <select {...register("tagId", {
+      required,
+      valueAsNumber: true
+    })} defaultValue={itemName?.tag?.id} onSelect={itemName?.tag?.name} className="form-select w-100 mt-3 mb-1"  >
+      <option className="text-muted">Select Tag</option>
+      {tags?.map((tag: any) =>
+        <option  key={tag.id} value={tag.id}>{tag.name}</option>
+      )}
+    </select>
+    {errors?.tagId ? <span className='text-danger'>{errors?.tagId?.message}</span> : null}
+
+    <select {...register("categoriesIds", {
+      required,
+    })}  defaultValue={itemName?.categoriesIds?.id} onSelect={itemName?.categoriesIds?.id} className="form-select w-100 mt-3 mb-1" placeholder="CategoryId" >
+      <option className="text-muted" >Select Category</option>
+      {categories?.data?.map((category: any) =>
+        <option key={category.id} value={category.id}>{category.name}</option>
+      )}
+    </select>
+    {errors?.categoriesIds ? <span className='text-danger'>{errors?.categoriesIds?.message}</span> : null}
+
+    <textarea {...register("description", {
+      required,
+    })} defaultValue={itemName?.description} className="form-control w-100 mt-3 mb-1" placeholder="Description" >
+
+    </textarea>
+    {errors?.description ? <span className='text-danger'>{errors?.description?.message}</span> : null}
+
+    <div className="d-flex ">
+      {currentImage ? <img className='selectedImage me-2'  src={currentImage} alt="selectedImage" /> : null}
+      <input {...register("recipeImage", {
+      })}  className="form-lable mt-3 mb-1 "  onChange={handleFileChange} type="file" placeholder="add Image" />
+    </div>
+
+    <button type='submit' disabled={Loading} className='btn btn-success w-100 mt-2 fw-bold'>{Loading ? <i className='fa fa-spin fa-spinner'></i> : "Update Recipes"}</button>
+
+  </form>
+
   const createNewCategory = <form onSubmit={handleSubmit(onSubmitAdd)}>
+
     <h4> Add New Category </h4>
     <input {...register("name", {
       required,
@@ -202,6 +302,7 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title, categorie
 
 
   const UpdateCategory = <form onSubmit={handleSubmit(onSubmitEdit)}>
+        {/* {  console.log(itemId,itemName)} */}
     <h4> Update Category </h4>
     <input {...register("name", {
       required,
@@ -213,7 +314,7 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title, categorie
 
 
 
-  const render = modalState === 'Add' && title === "Recipes" ? createNewRecipes : modalState === 'Add' && title === "Categories" ? createNewCategory : modalState === 'ChangePass' ? <ChangePass /> : modalState === "Delete" && title === "Categories" ? <NoData location='category' refetch={refetch} itemId={itemId}  handleClose={handleClose} /> : modalState === "Delete" && title === "Recipes" ? <NoData location='recipes' itemId={itemId} refetch={refetch} handleClose={handleClose} /> :modalState === "Delete" && title === "Users"? <NoData location='Users' refetch={refetch} itemId={itemId}  handleClose={handleClose} />: UpdateCategory
+  const render = modalState === 'Add' && title === "Recipes" ? createNewRecipes : modalState === 'Add' && title === "Categories" ? createNewCategory : modalState === 'ChangePass' ? <ChangePass /> : modalState === "Delete" && title === "Categories" ? <NoData location='category' refetch={refetch} itemId={itemId}  handleClose={handleClose} /> : modalState === "Delete" && title === "Recipes" ? <NoData location='recipes' itemId={itemId} refetch={refetch} handleClose={handleClose} /> :modalState === "Delete" && title === "Users"? <NoData location='Users' refetch={refetch} itemId={itemId}  handleClose={handleClose} />: modalState === 'Edit' && title === "Categories"?UpdateCategory: modalState === 'Edit' && title === "Recipes" ? UpdateRecipes :null
 
   return <>
 

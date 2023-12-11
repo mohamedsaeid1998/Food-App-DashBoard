@@ -2,6 +2,8 @@ import { Header } from "@/SharedModule/Components"
 import { Link } from "react-router-dom"
 const Home = () => {
   return <>
+  <div className="animate__animated animate__zoomIn">
+
     <Header title="Welcome" subTitle="Upskilling !" para="This is a welcoming screen for the entry of the application ," subPara=" you can now see the options" />
     <main className="my-4 p-4 rounded-3 sub-dark-bg ">
       <div className="row align-items-center">
@@ -21,6 +23,8 @@ const Home = () => {
 
       </div>
     </main>
+    </div>
+
   </>
 }
 
