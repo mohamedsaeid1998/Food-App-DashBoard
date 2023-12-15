@@ -10,8 +10,8 @@ const AuthComponent = ({ children }:Props) => {
 const {pathname} =  useLocation()
   return <>
     <main className="Auth-container container-fluid">
-      <div className="row bg-overlay vh-100 justify-content-center align-items-center ">
-        <div className="col-md-6">
+      <div className="row bg-overlay justify-content-center align-items-center ">
+        <div className="col-md-8 col-lg-6  col-10">
           <div className={`bg-white p-5 animate__animated ${pathname === "/" ?" animate__zoomIn": pathname === "/reset-pass"?"animate__slideInDown" :"animate__zoomInDown"} ` }>
             <div className="logo text-center">
               <img src={AuthLogo} className='w-50 object-fit-cover' alt="logo" />
@@ -25,4 +25,3 @@ const {pathname} =  useLocation()
 }
 
 export default AuthComponent
-// animate__slideInDown

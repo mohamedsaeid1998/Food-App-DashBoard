@@ -24,7 +24,7 @@ const ChangePass = () => {
       },
     })
       .then((res) => {
-        console.log(res)
+   
         toast.success(`${res.data.message}`, {
           autoClose: 2000,
           theme: "colored",
@@ -45,7 +45,7 @@ const ChangePass = () => {
   return <>
     <main className="Auth-container">
       <div className="row justify-content-center align-items-center ">
-        <div className="col-md-12">
+        <div className="col-md-6">
           <div className="bg-white p-5 object-fit-cover">
 
             <div className="logo text-center">

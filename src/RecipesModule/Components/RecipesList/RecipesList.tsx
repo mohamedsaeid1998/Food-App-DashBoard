@@ -20,8 +20,8 @@ const RecipesList = () => {
   }
 
   const showEditModal = (data:any) => {
+    console.log(data);
     const { id,name,price,imagePath,tag,category,description} = data
-    console.log(id,name,price,imagePath,tag,category,description);
     setItemId(id)
     setItemName({
       name,
@@ -29,7 +29,7 @@ const RecipesList = () => {
       tag:tag,
       categoriesIds:category[0],
       description,
-      imagePath:`https://upskilling-egypt.com:443/` + imagePath
+      imagePath:(imagePath?`https://upskilling-egypt.com:443/` + imagePath:undefined)
     })
     
     setModalState("Edit")

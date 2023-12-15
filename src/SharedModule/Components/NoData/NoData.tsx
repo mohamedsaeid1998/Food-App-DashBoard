@@ -1,6 +1,7 @@
 
 import { NoDataImg } from '@/assets/images'
 import baseUrl from '@/utils/Custom/Custom'
+import { useState } from 'react'
 import { toast } from 'react-toastify'
 interface IProps {
   location?: string
@@ -13,7 +14,12 @@ interface IProps {
 
 const NoData = ({ location, handleClose ,itemId,refetch}: IProps) => {
 
+  const [Loading, setLoading] = useState(false)
+console.log(refetch);
+console.log(itemId);
+
   const deleteCategory = () => {
+    setLoading(true)
     return baseUrl.delete(`/api/v1/${location==="category"?"Category":location==="Users"? "Users": "Recipe"}/${itemId}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('adminToken')}`
@@ -27,12 +33,14 @@ const NoData = ({ location, handleClose ,itemId,refetch}: IProps) => {
         })
         handleClose()
         refetch()
+        setLoading(false)
       })
       .catch((err) => {
         toast.error(`${err.response.data.message}`, {
           autoClose: 2000,
           theme: "colored",
-        });
+        })
+        setLoading(false)
       })
   }
 
@@ -44,7 +52,8 @@ const NoData = ({ location, handleClose ,itemId,refetch}: IProps) => {
       <h4 className='pt-1 mb-0'>{location === "category" || location === "recipes" ||location==="Users" ? "Delete This Item ?" : "No Data !"}</h4>
       {location === "category" || location === "recipes"|| location==="Users" ? <div>
         <p className='mutedColor'>are you sure you want to delete this item ? if you are sure just <br /> click on delete it</p>
-        <button onClick={deleteCategory} className=" btn btn-outline-danger">Delete This Item </button>
+        <button onClick={deleteCategory} disabled={Loading} className=" btn btn-outline-danger">{Loading ? <i className='fa fa-spin fa-spinner'></i> : "Delete This Item"} </button>
+        
       </div>
         : null}
     </div>

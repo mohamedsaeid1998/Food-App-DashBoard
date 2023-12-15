@@ -1,18 +1,11 @@
 import { Outlet, useNavigate } from 'react-router-dom'
 import SideBar from '../SideBar/SideBar'
-import { JwtPayload } from 'jwt-decode'
 import { NavBar } from '..'
 import { useState } from 'react'
 
 
-interface Props {
-  adminData: JwtPayload | null
-}
 
-
-
-
-const MasterLayout = ({ adminData }: Props) => {
+const MasterLayout = ({adminData}:any) => {
 
 
   const navigate = useNavigate()
@@ -33,7 +26,7 @@ const MasterLayout = ({ adminData }: Props) => {
 
 
       <div className={`container-fluid main ${isSidebarOpen ? 'main-sidebar-open' : 'main-sidebar-closed'}`}>
-        <NavBar {...{ adminData, logOut }} />
+        <NavBar {...{ logOut,adminData }} />
         <Outlet />
       </div>
 

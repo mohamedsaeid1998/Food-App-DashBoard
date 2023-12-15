@@ -1,11 +1,30 @@
 import { Header } from "@/SharedModule/Components"
+import { UseAuthenticatedQuery } from "@/utils";
 import { Link } from "react-router-dom"
-const Home = () => {
+
+
+const Home = ({adminData}:any) => {
+  
+
+  const { data } = UseAuthenticatedQuery({
+    queryKey: [`getUserDetails`],
+    url: `https://upskilling-egypt.com:443/api/v1/Users/currentUser`,
+    config: {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
+      }
+    }
+  })
+
+  console.log(data);
+  
+
+
   return <>
   <div className="animate__animated animate__zoomIn">
 
-    <Header title="Welcome" subTitle="Upskilling !" para="This is a welcoming screen for the entry of the application ," subPara=" you can now see the options" />
-    <main className="my-4 p-4 rounded-3 sub-dark-bg ">
+    <Header title="Welcome" subTitle={`${data?.userName ||adminData?.given_name} !`} para="This is a welcoming screen for the entry of the application ," subPara=" you can now see the options" />
+    <main className="my-4 p-4  rounded-3 sub-dark-bg ">
       <div className="row align-items-center">
 
         <div className="col md-6">

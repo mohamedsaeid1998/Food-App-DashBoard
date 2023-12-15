@@ -1,5 +1,6 @@
 import { IFormValues } from '@/Interfaces'
 import { AuthComponent, ConfirmPassInput, EmailInput, PasswordInput } from '@/SharedModule/Components'
+import { AuthLogo } from '@/assets/images'
 import baseUrl from '@/utils/Custom/Custom'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -18,8 +19,7 @@ const ResetPass = () => {
   const onSubmit = (data: IFormValues) => {
     setLoading(true)
     return baseUrl.post(`/api/v1/Users/Reset`, data)
-      .then((res) => {
-        console.log(res)
+      .then(() => {
         toast.success('Password changed successfully', {
           autoClose: 2000,
           theme: "colored",
@@ -76,7 +76,6 @@ const ResetPass = () => {
           <Link to={'/'} className='forget'>Login Now ?</Link>
         </div>
         <button type='submit' disabled={Loading} className='btn btn-success w-100 mt-4 fw-bold'>{Loading ? <i className='fa fa-spin fa-spinner'></i> : "Reset Password"}</button>
-
       </form>
     </AuthComponent>
   </>

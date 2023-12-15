@@ -29,7 +29,7 @@ const CategoriesList = () => {
     name: '',
   });
 
-  const { data: tableData ,refetch } = UseAuthenticatedQuery({
+  const { data: tableData , refetch } = UseAuthenticatedQuery({
     queryKey: [`getCategory`],
     url: `https://upskilling-egypt.com:443
 /api/v1/Category/`,
@@ -52,7 +52,7 @@ const CategoriesList = () => {
 console.log(searchParams);
 
   return <>
-    <ModalUi key={Math.random()} title="Categories" {...{ setModalState, modalState, itemId, itemName,refetch }} />
+    <ModalUi key={Math.random()} title="Categories" {...{ setModalState, modalState, itemId, itemName, refetch }} />
     <Header title="Categories" subTitle="Items" para="You can now add your items that any user can order it from" subPara="the Application and you can edit" />
     <TableDetailsSec showAddModal={showAddModal} />
     <TableData key={Math.random()} location="category" {...{ showDeleteModal, showEditModal,tableData,setSearchParams,searchParams }} />

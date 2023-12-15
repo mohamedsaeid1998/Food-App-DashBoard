@@ -2,6 +2,7 @@ import { NoDataImg } from '@/assets/images';
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { NoData } from '..';
 import { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 
 
 interface Props {
@@ -18,6 +19,7 @@ interface Props {
 
 const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSearchParams, searchParams, tags, categories }: Props) => {
 
+  const {pathname} = useLocation()
 
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -82,12 +84,10 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
     });
   }
 
-  console.log(tableData);
-  console.log(searchParams);
 
 
   return <>
-    {location === "recipes" ? <div className="row d-flex align-items-center filtration">
+    {location === "recipes" ? <div className="row d-flex align-items-center filtration my-2">
       <div className="col-md-5">
         <input ref={searchInputRef} onChange={getNameValue} value={searchParams.name} type="search" className='form-control my-2' placeholder={`Search by ${location === "recipes" ? "Recipe " : "Category "}Name...`} />
       </div>
@@ -113,7 +113,7 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
 
 
 
-      location === "Users" ? <div className="row d-flex align-items-center">
+      location === "Users" ? <div className="row d-flex align-items-center my-2 ">
         <div className="col-md-6">
           <input ref={searchInputRef} onChange={getUserNameValue} value={searchParams.userName} type="search" className='form-control my-2' placeholder={`Search by User Name...`} />
         </div>
@@ -129,16 +129,15 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
 
 
 
-        : <input ref={searchInputRef} onChange={getNameValue} value={searchParams.name} type="search" className='form-control my-2' placeholder={`Search by Category Name...`} />
+        : <input ref={searchInputRef} onChange={getNameValue} value={searchParams.name} type="search" className='form-control my-3' placeholder={`Search by Category Name...`} />
     }
 
     {tableData ? <>
       {tableData?.data.length > 0 ? <>
-        <table className="table table-dark table-striped">
+        <table className="table  table-striped ">
 
-
-          <thead>
-            <tr>
+          <thead className={`${pathname === "/dashboard/recipes" ? 'red' :pathname === "/dashboard/users"?"blue":"green"}`}>
+            <tr >
               <th>Id</th>
               <th>{location === "recipes" ? "Recipe" : location === "Users" ? "Users" : "Categories"} Name</th>
 
@@ -201,15 +200,25 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
 
         </table>
 
-        <nav className='pointer '>
-          <ul className="pagination pagination-sm">
-            {Array(tableData?.totalNumberOfPages).fill(0).map((_, i) => i + 1).map((pageNo) =>
-              <li key={pageNo} onClick={() => setSearchParams({ ...searchParams, pageNumber: pageNo })} className="page-item">
-                <a className="page-link">
-                  {pageNo}
-                </a>
-              </li>
-            )}
+        <nav className='page' aria-label="Page navigation example">
+          <ul className="pagination">
+          <li className={`page-item ${searchParams.pageNumber <= 1 ? 'disabled' : ''}`}>
+      <a className="page-link" onClick={() => setSearchParams({ ...searchParams, pageNumber: Math.max(1, searchParams.pageNumber - 1) })}>
+        Previous
+      </a>
+    </li>
+    {Array(tableData?.totalNumberOfPages).fill(0).map((_, i) => i + 1).map((pageNo) =>
+      <li key={pageNo} onClick={() => setSearchParams({ ...searchParams, pageNumber: pageNo })} className='page-item'>
+        <a className={`page-link ${searchParams.pageNumber === pageNo ? 'activePage' : ''}`}>
+          {pageNo}
+        </a>
+      </li>
+    )}
+    <li className={`page-item ${searchParams.pageNumber >= (tableData?.totalNumberOfPages || 1) ? 'disabled' : ''}`} >
+      <a className="page-link" onClick={() => setSearchParams({ ...searchParams, pageNumber: Math.min(tableData?.totalNumberOfPages || 1, searchParams.pageNumber + 1) })}>
+        Next
+      </a>
+    </li>
       
           </ul>
         </nav>

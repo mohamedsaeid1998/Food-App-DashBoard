@@ -18,8 +18,7 @@ const ResetPassRequest = () => {
   const onSubmit = (data: IFormValues) => {
     setLoading(true)
     return baseUrl.post(`/api/v1/Users/Reset/Request`, data)
-      .then((res) => {
-        console.log(res)
+      .then(() => {
         toast.success(' Mail Send Successfully', {
           autoClose: 2000,
           theme: "colored",

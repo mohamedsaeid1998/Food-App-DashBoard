@@ -1,50 +1,65 @@
-import { NavAvatar } from '@/assets/images';
-import { JwtPayload } from 'jwt-decode';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-
-import { IoNotifications } from "react-icons/io5";
+import { NavAvatar, sideBarLogo } from '@/assets/images';
+import { UseAuthenticatedQuery } from '@/utils';
 
 interface Props {
-  adminData?: JwtPayload | null
-    logOut:() => void
+  logOut: () => void
+  adminData:any
 }
 
-//! Error Here
-const NavBar = ({ adminData,logOut }: Props) => {
-console.log(adminData);
+const NavBar = ({ logOut,adminData }: Props) => {
+
+
+
+
+  const { data } = UseAuthenticatedQuery({
+    queryKey: [`getUserDetails`],
+    url: `https://upskilling-egypt.com:443/api/v1/Users/currentUser`,
+    config: {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
+      }
+    }
+  })
+
+
 
 
   return <>
-  
-    <Navbar expand="lg" className="bg-body-tertiary mt-4 ">
-      <Container fluid>
+    <nav className="navbar navbar-expand-lg bg-light mt-3">
+      <div className="container-fluid">
+        <img src={sideBarLogo} alt="Logo" width="55" height="55" className="d-inline-block align-text-top me-2 " />
+        <span className='fw-medium'>Food-App</span>
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse navStyle " id="navbarSupportedContent">
+          <ul className="navbar-nav  mb-2 mb-lg-0 ">
 
-        <Navbar.Toggle aria-controls="navbarScroll" />
+            <li className="nav-item dropdown">
 
-        <Navbar.Collapse id="navbarScroll">
-          <Nav
-            className="my-2 d-flex align-items-center justify-content-end gap-3 w-100"
-            style={{ maxHeight: '200px' }}
-            navbarScroll
-          >
-            <img src={NavAvatar} alt="NavAvatar" />
-            <NavDropdown title={"UpSkilling"} id="navbarScrollingDropdown">
-              <NavDropdown.Item onClick={logOut}>LogOut</NavDropdown.Item>
-            </NavDropdown>
-            <div className="notification ">
-              <IoNotifications size={20}/>
-              <span></span>
-            </div>
-          </Nav>
+              <a className="nav-link dropdown-toggle d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img className='navImage me-3' src={adminData?.given_name?NavAvatar: data?.imagePath !== null ? `https://upskilling-egypt.com:443/` + data?.imagePath : NavAvatar  } alt="NavAvatar" />
+                <div className='d-flex flex-column'>
+                  <span className='capitalize'>{data?.userName || adminData?.given_name}</span>
+                  <span className='navEmail small'>{data?.email|| adminData?.email}</span>
+                </div>
 
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+              </a>
+              <ul className="dropdown-menu">
+                <li><a className="dropdown-item pointer" onClick={logOut}>LogOut</a></li>
+              </ul>
+            </li>
+
+          </ul>
+
+        </div>
+      </div>
+    </nav>
+    
 
   </>
 }
 
 export default NavBar
+
+

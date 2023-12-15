@@ -1,13 +1,10 @@
 import { Header, ModalUi, TableData, TableDetailsSec } from "@/SharedModule/Components";
-import { useEffect, useState } from "react";
 import { UseAuthenticatedQuery } from '@/utils';
+import { useEffect, useState } from "react";
 
 const UsersList = () => {
   const [modalState, setModalState] = useState("close")
   const [itemId, setItemId] = useState(0)
-
-
-
 
   const showAddModal = () => {
     setModalState("Add")
@@ -21,7 +18,6 @@ const UsersList = () => {
   const showEditModal = () => {
 
   }
-
 
   const [searchParams, setSearchParams] = useState({
     pageNumber: 1,
@@ -59,7 +55,8 @@ const UsersList = () => {
 
 
   return <>
-    <ModalUi key={Math.random()} title="Users" {...{ setModalState, modalState, itemId }} />
+
+    <ModalUi key={Math.random()} title="Users" {...{ setModalState, modalState, itemId,refetch }} />
     <Header title="Users" subTitle="List" para="You can now add your items that any user can order it from " subPara="the Application and you can edit" />
     <TableDetailsSec showAddModal={showAddModal} />
     <TableData key={Math.random()} location="Users" {...{ showDeleteModal, showEditModal,tableData,setSearchParams,searchParams }} />

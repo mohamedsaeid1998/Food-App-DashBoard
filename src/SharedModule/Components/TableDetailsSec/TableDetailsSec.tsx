@@ -11,20 +11,20 @@ const TableDetailsSec = ({showAddModal}:Props) => {
   return <>
 
     <section>
-      <div className="row mt-2 align-items-center">
+      <div className="d-flex justify-content-between mt-2 ms-2 align-items-center">
 
-        <div className="col-md-6">
+ 
           <div>
             <h5 className="m-0">{title} Table Details</h5>
             <span>You can check all details</span>
           </div>
-        </div>
 
-        {pathname === '/dashboard/users' ? null : <div className="col-md-6">
+
+        {pathname === '/dashboard/users' ? null : 
           <div className="text-end">
             <button onClick={showAddModal} className="btn btn-success px-3 py-2 fw-bold">Add New {title}</button>
           </div>
-        </div>}
+}
 
       </div>
     </section>
