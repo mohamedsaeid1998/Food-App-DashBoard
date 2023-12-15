@@ -1,6 +1,5 @@
 import { IFormValues } from '@/Interfaces'
 import { AuthComponent, ConfirmPassInput, EmailInput, PasswordInput } from '@/SharedModule/Components'
-import { AuthLogo } from '@/assets/images'
 import baseUrl from '@/utils/Custom/Custom'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'

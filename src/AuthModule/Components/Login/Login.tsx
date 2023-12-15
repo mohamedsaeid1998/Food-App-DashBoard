@@ -8,11 +8,11 @@ import { toast } from 'react-toastify'
 
 interface Props {
   saveAdminData: () => void
-  adminData:any
+
 
 }
 
-const Login = ({ saveAdminData,adminData }: Props) => {
+const Login = ({ saveAdminData }: Props) => {
 
   const [Loading, setLoading] = useState(false)
 
@@ -25,7 +25,6 @@ const Login = ({ saveAdminData,adminData }: Props) => {
     localStorage.setItem("adminToken", response.credential)
     saveAdminData()
     navigate('/dashboard')
-
     toast.success('Welcome', {
       autoClose: 2000,
       theme: "colored",
