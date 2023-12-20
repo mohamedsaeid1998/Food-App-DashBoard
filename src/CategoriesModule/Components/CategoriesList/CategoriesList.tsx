@@ -38,7 +38,7 @@ const CategoriesList = () => {
         Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
       },
       params:{
-        pageSize:3,
+        pageSize:7,
         pageNumber:searchParams?.pageNumber,
         name:searchParams?.name
       }
@@ -49,7 +49,6 @@ const CategoriesList = () => {
     refetch()
   }, [searchParams]);
 
-console.log(searchParams);
 
   return <>
     <ModalUi key={Math.random()} title="Categories" {...{ setModalState, modalState, itemId, itemName, refetch }} />

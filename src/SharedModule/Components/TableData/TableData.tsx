@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 
 interface Props {
   showDeleteModal: (id: number) => void
-  showEditModal: (data:any) => void
+  showEditModal: (data: any) => void
   location: string,
   tableData?: any,
   setSearchParams: any
@@ -19,7 +19,8 @@ interface Props {
 
 const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSearchParams, searchParams, tags, categories }: Props) => {
 
-  const {pathname} = useLocation()
+  const { pathname } = useLocation()
+
 
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -28,7 +29,11 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
       searchInputRef.current.focus();
     }
   }, [tableData]);
-  
+
+
+
+
+
   //! عملت الفانكشن دي بس علشان في ايرور في التايب سكربت
   const handleClose = () => {
 
@@ -86,6 +91,8 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
 
 
 
+
+
   return <>
     {location === "recipes" ? <div className="row d-flex align-items-center filtration my-2">
       <div className="col-md-5">
@@ -93,7 +100,7 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
       </div>
       <div className="col-md-3">
         <select onChange={getTagValue} value={searchParams.tagId} className="form-select "  >
-          <option value={0} className="text-muted">Select Tag</option>
+          <option  value={0} className="text-muted">Select Tag</option>
           {tags?.map((tag: any) =>
             <option key={tag.id} value={tag.id}>{tag.name}</option>
 
@@ -132,11 +139,11 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
         : <input ref={searchInputRef} onChange={getNameValue} value={searchParams.name} type="search" className='form-control my-3' placeholder={`Search by Category Name...`} />
     }
 
-    {tableData ? <>
+    {tableData?    <>
       {tableData?.data.length > 0 ? <>
-        <table className="table  table-striped ">
+        <table className="table   ">
 
-          <thead className={`${pathname === "/dashboard/recipes" ? 'red' :pathname === "/dashboard/users"?"blue":"green"}`}>
+          <thead className={`${pathname === "/dashboard/recipes" ? 'red' : pathname === "/dashboard/users" ? "blue" : "green"}`}>
             <tr >
               <th>Id</th>
               <th>{location === "recipes" ? "Recipe" : location === "Users" ? "Users" : "Categories"} Name</th>
@@ -162,72 +169,117 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
             </tr>
           </thead>
           <tbody>
-          {tableData?.data.map((data: any, index: number) => 
-            <tr key={data?.id} >
-              <td data-cell="id ">{index + 1}</td>
-              <td data-cell="name ">{location === "Users" ? data?.userName : data?.name}</td>
-              {location === "Users" ? <>
-                <td data-cell="image">{data?.imagePath === null ? <img className='img-table' src={NoDataImg} alt="image" /> : <img className='img-table ' src={`https://upskilling-egypt.com:443/` + data?.imagePath} alt="image" />}</td>
-                {/* <td data-cell="email">{data.email}</td> */}
-                {/* <td data-cell="phoneNumber">{data.phoneNumber}</td> */}
-                <td data-cell="country ">{data.country}</td>
-                <td data-cell="group ">{data.group.name}</td>
-              </>
-                : null}
-              {location === "recipes" ? <>
-                <td data-cell="price ">{data?.price}</td>
-                <td data-cell="image ">{data?.imagePath === "" ? <img className='img-table' src={NoDataImg} alt="image" /> : <img className=' img-table' src={`https://upskilling-egypt.com:443/` + data?.imagePath} alt="image" />}</td>
-                <td data-cell="description ">{data?.description}</td>
-                <td data-cell="tag ">{data?.tag?.name}</td>
-                <td data-cell="category ">{data?.category[0] === undefined ? "No Category" : data?.category[0]?.name}</td>
-              </> : null}
-              <td data-cell="actions " className='action  align-items-center gap-3   '>
-              <span className="delete text-danger pointer  text-center" >
-                  <FaTrash onClick={() => showDeleteModal(data.id)} size={'20px'} />
-                </span>
+            {tableData?.data.map((data: any, index: number) =>
 
-                {location !== "Users" ? <span className="edit text-info pointer d-inline-block  ms-2 text-center">
-                  <FaEdit onClick={() => showEditModal(data)} size={'20px'} />
-                  
-                  
-                </span> : null}
+              <tr key={data?.id} >
+                <td data-cell="id ">{index + 1}</td>
+                <td data-cell="name ">{location === "Users" ? data?.userName : data?.name}</td>
+                {location === "Users" ? <>
+                  <td data-cell="image">{data?.imagePath === null ? <img className='img-table' src={NoDataImg} alt="image" /> : <img className='img-table ' src={`https://upskilling-egypt.com:443/` + data?.imagePath} alt="image" />}</td>
+                  {/* <td data-cell="email">{data.email}</td> */}
+                  {/* <td data-cell="phoneNumber">{data.phoneNumber}</td> */}
+                  <td data-cell="country ">{data.country}</td>
+                  <td data-cell="group ">{data.group.name}</td>
+                </>
+                  : null}
+                {location === "recipes" ? <>
+                  <td data-cell="price ">{data?.price}</td>
+                  <td data-cell="image ">{data?.imagePath === "" ? <img className='img-table' src={NoDataImg} alt="image" /> : <img className=' img-table' src={`https://upskilling-egypt.com:443/` + data?.imagePath} alt="image" />}</td>
+                  <td data-cell="description ">{data?.description}</td>
+                  <td data-cell="tag ">{data?.tag?.name}</td>
+                  <td data-cell="category ">{data?.category[0] === undefined ? "No Category" : data?.category[0]?.name}</td>
+                </> : null}
+                <td data-cell="actions " className='action  align-items-center gap-3   '>
+
+                  <span  className={`delete ${pathname === "/dashboard/users" ? data?.group?.name === "SystemUser" ? "text-danger pointer" : "opacity-25 notAllowed ": "text-danger pointer"}  text-center`} >
+                    <FaTrash onClick={() => showDeleteModal(data.id)} size={'20px'} />
+                  </span>
+
+                  {location !== "Users" ? <span className="edit text-info pointer d-inline-block  ms-2 text-center">
+                    <FaEdit onClick={() => showEditModal(data)} size={'20px'} />
 
 
-              </td>
-            </tr>)}
+                  </span> : null}
+
+
+                </td>
+              </tr>)}
 
           </tbody>
 
         </table>
 
-        <nav className='page' aria-label="Page navigation example">
-          <ul className="pagination">
-          <li className={`page-item ${searchParams.pageNumber <= 1 ? 'disabled' : ''}`}>
-      <a className="page-link" onClick={() => setSearchParams({ ...searchParams, pageNumber: Math.max(1, searchParams.pageNumber - 1) })}>
-        Previous
-      </a>
-    </li>
-    {Array(tableData?.totalNumberOfPages).fill(0).map((_, i) => i + 1).map((pageNo) =>
-      <li key={pageNo} onClick={() => setSearchParams({ ...searchParams, pageNumber: pageNo })} className='page-item'>
-        <a className={`page-link ${searchParams.pageNumber === pageNo ? 'activePage' : ''}`}>
-          {pageNo}
-        </a>
-      </li>
-    )}
-    <li className={`page-item ${searchParams.pageNumber >= (tableData?.totalNumberOfPages || 1) ? 'disabled' : ''}`} >
-      <a className="page-link" onClick={() => setSearchParams({ ...searchParams, pageNumber: Math.min(tableData?.totalNumberOfPages || 1, searchParams.pageNumber + 1) })}>
-        Next
-      </a>
-    </li>
-      
+        <nav className='page' aria-label="Page navigation example ">
+          <ul className="pagination m-auto mb-4">
+            <li className={`page-item ${searchParams.pageNumber <= 1 ? 'disabled' : ''}`}>
+              <a className="page-link" onClick={() => setSearchParams({ ...searchParams, pageNumber: Math.max(1, searchParams.pageNumber - 1) })}>
+                Previous
+              </a>
+            </li>
+            {Array(tableData?.totalNumberOfPages).fill(0).map((_, i) => i + 1).map((pageNo) =>
+              <li key={pageNo} onClick={() => setSearchParams({ ...searchParams, pageNumber: pageNo })} className='page-item'>
+                <a className={`page-link ${searchParams.pageNumber === pageNo ? 'activePage' : ''}`}>
+                  {pageNo}
+                </a>
+              </li>
+            )}
+            <li className={`page-item ${searchParams.pageNumber >= (tableData?.totalNumberOfPages || 1) ? 'disabled' : ''}`} >
+              <a className="page-link" onClick={() => setSearchParams({ ...searchParams, pageNumber: Math.min(tableData?.totalNumberOfPages || 1, searchParams.pageNumber + 1) })}>
+                Next
+              </a>
+            </li>
+
           </ul>
         </nav>
 
       </> : <NoData handleClose={handleClose} />}
 
-    </> : <div className=' loading w-100 '>
-      <i className='fa fa-spin fa-spinner fa-7x icon'></i>
-    </div>}
+    </> : <div className="l-wrapper mt-5">
+  <svg viewBox="0 0 120 120" width={150} height={150} version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+    <symbol id="s--circle">
+      <circle r={10} cx={20} cy={20} />
+    </symbol>
+    <g className="g-circles g-circles--v1">
+      <g className="g--circle">
+        <use xlinkHref="#s--circle" className="u--circle" />
+      </g>  
+      <g className="g--circle">
+        <use xlinkHref="#s--circle" className="u--circle" />
+      </g>
+      <g className="g--circle">
+        <use xlinkHref="#s--circle" className="u--circle" />
+      </g>
+      <g className="g--circle">
+        <use xlinkHref="#s--circle" className="u--circle" />
+      </g>
+      <g className="g--circle">
+        <use xlinkHref="#s--circle" className="u--circle" />
+      </g>
+      <g className="g--circle">
+        <use xlinkHref="#s--circle" className="u--circle" />
+      </g>
+      <g className="g--circle">
+        <use xlinkHref="#s--circle" className="u--circle" />
+      </g>
+      <g className="g--circle">
+        <use xlinkHref="#s--circle" className="u--circle" />
+      </g>
+      <g className="g--circle">
+        <use xlinkHref="#s--circle" className="u--circle" />
+      </g>
+      <g className="g--circle">
+        <use xlinkHref="#s--circle" className="u--circle" />
+      </g>
+      <g className="g--circle">
+        <use xlinkHref="#s--circle" className="u--circle" />
+      </g>
+      <g className="g--circle">
+        <use xlinkHref="#s--circle" className="u--circle" />
+      </g>
+    </g>
+  </svg>
+</div>
+}
   </>
 }
 

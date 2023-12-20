@@ -16,6 +16,7 @@ interface IProps {
   categories?: any
   tags?: any
   refetch?: any
+  role?:any
 }
 
 interface IFormInputs {
@@ -30,7 +31,7 @@ interface IFormInputs {
 
 
 
-const ModalUi = ({ setModalState, modalState, itemId, itemName, title, categories, tags, refetch }: IProps) => {
+const ModalUi = ({ setModalState, modalState, itemId, itemName, title, categories, tags, refetch,role }: IProps) => {
 
 
 
@@ -325,7 +326,7 @@ const createNewCategory = <form onSubmit={handleSubmit(onSubmitAdd)}>
 
 
 
-  const render = modalState === 'Add' && title === "Recipes" ? createNewRecipes : modalState === "Delete" && title === "Categories" ? <NoData location='category' refetch={refetch} itemId={itemId} handleClose={handleClose} /> : modalState === "Delete" && title === "Recipes" ? <NoData location='recipes' itemId={itemId} refetch={refetch} handleClose={handleClose} /> : modalState === "Delete" && title === "Users" ? <NoData location='Users' refetch={refetch} itemId={itemId} handleClose={handleClose} /> : (modalState === 'Edit' && title === "Categories") ? UpdateCategory : modalState === 'Edit' && title === "Recipes" ? UpdateRecipes : modalState === 'ChangePass' ? <ChangePass /> : createNewCategory 
+  const render = modalState === 'Add' && title === "Recipes" ? createNewRecipes : modalState === "Delete" && title === "Categories" ? <NoData location='category' {...{refetch,itemId,handleClose}} /> : modalState === "Delete" && title === "Recipes" ? <NoData location='recipes' {...{refetch,itemId,handleClose}} /> : modalState === "Delete" && title === "Users" ? <NoData location='Users' {...{refetch,itemId,handleClose,role}}  /> : (modalState === 'Edit' && title === "Categories") ? UpdateCategory : modalState === 'Edit' && title === "Recipes" ? UpdateRecipes : modalState === 'ChangePass' ? <ChangePass /> : createNewCategory 
 
   return <>
 

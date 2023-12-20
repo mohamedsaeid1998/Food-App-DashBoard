@@ -82,7 +82,7 @@ const RecipesList = () => {
         Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
       },
       params: {
-        pageSize: 3,
+        pageSize: 7,
         pageNumber: searchParams.pageNumber,
         name: searchParams.name,
         tagId: searchParams.tagId,

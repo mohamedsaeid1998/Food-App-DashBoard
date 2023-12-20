@@ -2,8 +2,6 @@ import { IInputsProps } from "@/Interfaces"
 import { useState } from "react";
 
 
-
-
 const PasswordInput = ({ register, inputName, placeholder, errors }: IInputsProps) => {
 
   const [type, setType] = useState(false)

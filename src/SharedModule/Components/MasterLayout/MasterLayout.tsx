@@ -18,7 +18,7 @@ const MasterLayout = ({adminData}:any) => {
 
 
   return <>
-    <div className="container-fluid d-flex ps-0 ">
+    <div className="container-fluid d-flex ps-0  ">
 
       <div className={`sidebar-container `}>
         <SideBar {...{ logOut ,setSidebarOpen ,isSidebarOpen}} />

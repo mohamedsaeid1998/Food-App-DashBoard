@@ -27,12 +27,6 @@ const SideBar = ({logOut,isSidebarOpen,setSidebarOpen}:Props) => {
     setSidebarOpen(!isSidebarOpen)
   }
 
-  const links = [
-    { path: "/dashboard", icon: <LiaHomeSolid size={'25px'} />, title: 'Home' },
-    { path: '/dashboard/users', icon: <HiOutlineUsers size={'25px'} />, title: 'Users' },
-    { path: '/dashboard/recipes', icon: <BsColumnsGap size={'25px'} />, title: 'Recipes' },
-    { path: '/dashboard/categories', icon: <FaRegCalendarAlt size={'25px'} />, title: 'Categories' },
-  ]
   const [modalState, setModalState] = useState("close")
 
   const showChangePassModal = () => {
@@ -44,12 +38,14 @@ const SideBar = ({logOut,isSidebarOpen,setSidebarOpen}:Props) => {
     <div className='sidebar-container text-white'>
 <ModalUi  {...{setModalState,modalState}}/>
       <Sidebar  collapsed={iscollapsed}  className='h-100 '>
-
         <Menu>
-          <MenuItem className='my-4 logoImage' onClick={() => handleToggle()} icon={<img src={sideBarLogo}  alt="logo" />} ></MenuItem>
-          {links?.map((link) => <MenuItem  key={link.path} className={`${pathname === link.path ? 'active' : null} link`} icon={link.icon} component={<Link to={link.path} />}> {link.title}</MenuItem>)}
-          <MenuItem onClick={showChangePassModal} icon={<IoIosUnlock size={'25px'} />}> Change Password</MenuItem>
-          <MenuItem icon={<FiLogOut size={'25px'} />} onClick={() => logOut()}>LogOut</MenuItem>
+          <MenuItem data-aos="zoom-out" className='my-4 logoImage'  onClick={() => handleToggle()} icon={<img src={sideBarLogo}  alt="logo" />} ></MenuItem>
+          <MenuItem data-aos-delay="200" data-aos="fade-right"  className={`${pathname === "/dashboard" ? 'active' : null} link`} component={<Link to="/dashboard" />} icon={<LiaHomeSolid size={'25px'} />}>Home</MenuItem>
+          <MenuItem data-aos-delay="300" data-aos="fade-right"  className={`${pathname === '/dashboard/users' ? 'active' : null} link`} component={<Link to='/dashboard/users' />} icon={<HiOutlineUsers size={'25px'} />}>Users</MenuItem>
+          <MenuItem data-aos-delay="400" data-aos="fade-right"  className={`${pathname === '/dashboard/recipes' ? 'active' : null} link`} component={<Link to='/dashboard/recipes' />} icon={<BsColumnsGap size={'25px'} />}>Recipes</MenuItem>
+          <MenuItem data-aos-delay="500" data-aos="fade-right"  className={`${pathname === '/dashboard/categories' ? 'active' : null} link`} component={<Link to='/dashboard/categories' />} icon={<FaRegCalendarAlt size={'25px'} />}>Categories</MenuItem>
+          <MenuItem data-aos-delay="600" data-aos="fade-right" className='link' onClick={showChangePassModal} icon={<IoIosUnlock size={'25px'} />}> Change Password</MenuItem>
+          <MenuItem data-aos-delay="700" data-aos="fade-right" className='link' icon={<FiLogOut size={'25px'} />} onClick={() => logOut()}>LogOut</MenuItem>
         </Menu>
       </Sidebar>
     </div>

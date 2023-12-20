@@ -27,7 +27,6 @@ const ConfirmPassInput = ({ register, inputName, placeholder, getValues, errors 
             {...register(`${inputName}`, {
               required,
               validate: (value) => value === getValues(inputName === "confirmNewPassword" ? "newPassword" : 'password') || 'Passwords do not match',
-
             })} />
         </div>
         <i onClick={() => setType(!type)} className={`fa-regular ${type ? 'fa-eye-slash' : 'fa-eye'} show `} ></i>

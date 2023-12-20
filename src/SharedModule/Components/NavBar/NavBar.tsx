@@ -25,7 +25,7 @@ const NavBar = ({ logOut,adminData }: Props) => {
 
 
   return <>
-    <nav className="navbar navbar-expand-lg bg-light mt-3">
+    <nav className="navbar navbar-expand-lg bg-light mt-3 ">
       <div className="container-fluid">
         <img src={sideBarLogo} alt="Logo" width="55" height="55" className="d-inline-block align-text-top me-2 " />
         <span className='fw-medium'>Food-App</span>

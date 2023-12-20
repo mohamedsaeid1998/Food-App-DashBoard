@@ -8,15 +8,15 @@ interface IProps {
   handleClose: () => void
   itemId?:number
   refetch?:any
+  role?:any
 }
 
 
 
 const NoData = ({ location, handleClose ,itemId,refetch}: IProps) => {
 
+
   const [Loading, setLoading] = useState(false)
-console.log(refetch);
-console.log(itemId);
 
   const deleteCategory = () => {
     setLoading(true)
