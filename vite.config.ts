@@ -10,7 +10,7 @@ export default defineConfig({
     }
   },
   plugins: [react()],
-  // base: /Food-App-DashBoard/
+  base: /Food-App-DashBoard/
   
 
 })
