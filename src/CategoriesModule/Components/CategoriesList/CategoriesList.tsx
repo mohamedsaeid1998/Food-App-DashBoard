@@ -51,10 +51,10 @@ const CategoriesList = () => {
 
 
   return <>
-    <ModalUi key={Math.random()} title="Categories" {...{ setModalState, modalState, itemId, itemName, refetch }} />
+    <ModalUi  title="Categories" {...{ setModalState, modalState, itemId, itemName, refetch }} />
     <Header title="Categories" subTitle="Items" para="You can now add your items that any user can order it from" subPara="the Application and you can edit" />
     <TableDetailsSec showAddModal={showAddModal} />
-    <TableData key={Math.random()} location="category" {...{ showDeleteModal, showEditModal,tableData,setSearchParams,searchParams }} />
+    <TableData  location="category" {...{ showDeleteModal, showEditModal,tableData,setSearchParams,searchParams }} />
   </>
 }
 

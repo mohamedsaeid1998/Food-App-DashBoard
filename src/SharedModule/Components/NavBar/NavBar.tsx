@@ -27,15 +27,19 @@ const NavBar = ({ logOut,adminData }: Props) => {
   return <>
     <nav className="navbar navbar-expand-lg bg-light mt-3 ">
       <div className="container-fluid">
+        <div data-aos="fade-right" data-aos-delay="400" className='d-flex align-items-center'>
+
         <img src={sideBarLogo} alt="Logo" width="55" height="55" className="d-inline-block align-text-top me-2 " />
         <span className='fw-medium'>Food-App</span>
+        </div>
+
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse navStyle " id="navbarSupportedContent">
           <ul className="navbar-nav  mb-2 mb-lg-0 ">
 
-            <li className="nav-item dropdown">
+            <li data-aos="fade-left" data-aos-delay="400" className="nav-item dropdown">
 
               <a className="nav-link dropdown-toggle d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <img className='navImage me-3' src={adminData?.given_name?NavAvatar: data?.imagePath !== null ? `https://upskilling-egypt.com:443/` + data?.imagePath : NavAvatar  } alt="NavAvatar" />

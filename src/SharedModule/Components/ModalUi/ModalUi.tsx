@@ -297,7 +297,7 @@ const createNewCategory = <form onSubmit={handleSubmit(onSubmitAdd)}>
   required
 })} className="form-control w-100 mt-3 mb-1" type="text" placeholder="New Category"/>
   {errors?.name ? <span className='text-danger'>{errors?.name?.message}</span> : null}
-<button type='submit' disabled={Loading} className='btn btn-success w-100 mt-2 fw-bold'>{Loading ? <i className='fa fa-spin fa-spinner'></i> : "Add Category"}</button>
+<button type='submit' disabled={Loading} className='btn btn-success w-100 mt-2 fw-bold'>{Loading ? <i className="fa fa-spin fa-spinner"></i> : "Add Category"}</button>
 
 </form>
 
