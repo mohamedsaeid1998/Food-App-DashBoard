@@ -36,7 +36,7 @@ const Home = ({adminData}:any) => {
 
         <div className="col md-6">
           <Link to={'/dashboard/recipes'} className="text-end d-block">
-            <button className="btn btn-success px-5 py-2">Fill Recipes <i className="fa fa-arrow-right ms-2"></i></button>
+            <button className="btn btn-success px-5 py-2 btn-sm">Fill Recipes <i className="fa fa-arrow-right ms-2"></i></button>
           </Link>
         </div>
 

@@ -25,8 +25,12 @@ const SideBar = ({logOut,isSidebarOpen,setSidebarOpen}:Props) => {
   const handleToggle = () => {
     setIscollapsed(!iscollapsed)
     setSidebarOpen(!isSidebarOpen)
+
+
+    
   }
 
+  
   const [modalState, setModalState] = useState("close")
 
   const showChangePassModal = () => {
@@ -39,7 +43,7 @@ const SideBar = ({logOut,isSidebarOpen,setSidebarOpen}:Props) => {
 <ModalUi  {...{setModalState,modalState}}/>
       <Sidebar  collapsed={iscollapsed}  className='h-100 '>
         <Menu>
-          <MenuItem data-aos="zoom-out" className='my-4 logoImage'  onClick={() => handleToggle()} icon={<img src={sideBarLogo}  alt="logo" />} ></MenuItem>
+          <MenuItem data-aos="zoom-out" data-aos-delay="900" className='my-4 logoImage'  onClick={() => handleToggle()} icon={<img src={sideBarLogo}  alt="logo" />} ></MenuItem>
           <MenuItem data-aos-delay="200" data-aos="fade-right"  className={`${pathname === "/dashboard" ? 'active' : null} link`} component={<Link to="/dashboard" />} icon={<LiaHomeSolid size={'25px'} />}>Home</MenuItem>
           <MenuItem data-aos-delay="300" data-aos="fade-right"  className={`${pathname === '/dashboard/users' ? 'active' : null} link`} component={<Link to='/dashboard/users' />} icon={<HiOutlineUsers size={'25px'} />}>Users</MenuItem>
           <MenuItem data-aos-delay="400" data-aos="fade-right"  className={`${pathname === '/dashboard/recipes' ? 'active' : null} link`} component={<Link to='/dashboard/recipes' />} icon={<BsColumnsGap size={'25px'} />}>Recipes</MenuItem>

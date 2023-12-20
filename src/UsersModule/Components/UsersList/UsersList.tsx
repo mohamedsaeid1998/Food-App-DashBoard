@@ -63,9 +63,6 @@ const UsersList = () => {
   })
 
 
-console.log(role);
-
-
   return <>
 
     <ModalUi key={Math.random()} title="Users" {...{ setModalState, modalState, itemId,refetch,role }} />

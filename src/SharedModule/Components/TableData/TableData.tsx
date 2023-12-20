@@ -145,7 +145,7 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
 
           <thead className={`${pathname === "/dashboard/recipes" ? 'red' : pathname === "/dashboard/users" ? "blue" : "green"}`}>
             <tr >
-              <th>Id</th>
+              <th className='ps-3'>Id</th>
               <th>{location === "recipes" ? "Recipe" : location === "Users" ? "Users" : "Categories"} Name</th>
 
               {location === "Users" ? <>
@@ -172,7 +172,7 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
             {tableData?.data.map((data: any, index: number) =>
 
               <tr key={data?.id} >
-                <td data-cell="id ">{index + 1}</td>
+                <td data-cell="id" className='id ps-3' >{index + 1}</td>
                 <td data-cell="name ">{location === "Users" ? data?.userName : data?.name}</td>
                 {location === "Users" ? <>
                   <td data-cell="image">{data?.imagePath === null ? <img className='img-table' src={NoDataImg} alt="image" /> : <img className='img-table ' src={`https://upskilling-egypt.com:443/` + data?.imagePath} alt="image" />}</td>
@@ -191,7 +191,7 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
                 </> : null}
                 <td data-cell="actions " className='action  align-items-center gap-3   '>
 
-                  <span  className={`delete ${pathname === "/dashboard/users" ? data?.group?.name === "SystemUser" ? "text-danger pointer" : "opacity-25 notAllowed ": "text-danger pointer"}  text-center`} >
+                  <span  className={`delete ${pathname === "/dashboard/users" ? data?.group?.name === "SystemUser" ? "text-danger pointer" : "d-none ": "text-danger pointer"}  text-center`} >
                     <FaTrash onClick={() => showDeleteModal(data.id)} size={'20px'} />
                   </span>
 

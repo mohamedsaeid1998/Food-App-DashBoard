@@ -41,7 +41,7 @@
   }
 }
 
-.Auth-container {
+.Auth-BackGround {
   background: url("../assets/images/AuthBackGround.jpeg") no-repeat;
   background-size: 100% 100%;
   position: fixed;
@@ -49,7 +49,9 @@
   right: 0;
   left: 0;
   bottom: 0;
+}
 
+.Auth-container {
   .bg-overlay {
     background: linear-gradient(
       to bottom left,
@@ -84,17 +86,16 @@
       font-size: 21px;
       color: $input-con-color;
       padding: 2px;
-      border-right: 1px solid $input-con-color;
     }
 
     input::-webkit-input-placeholder {
       color: $input-con-color;
     }
 
-    .show {
-      border-right: unset;
-      cursor: pointer;
-    }
+    // .nav {
+    //   border-right: unset;
+    //   cursor: pointer;
+    // }
   }
 
   .form-control {
@@ -231,31 +232,31 @@ header {
   table-layout: fixed;
   border-collapse: collapse;
   width: 100%;
+  vertical-align: middle !important;
 
-th {
-  background-color: #009879 !important;
-  color: white !important;
-}
+  th {
+    background-color: #009879 !important;
+    color: white !important;
+  }
 
-tr:nth-child(even) td {
-  background-color: #efeded !important;
-  color: #04b18e;
-  font-weight: bold;
-}
+  tr:nth-child(even) td {
+    background-color: #efeded !important;
+    color: #04b18e;
+    font-weight: bold;
+  }
 
-tr:nth-child(odd) td {
-  background-color: #fff !important;
+  tr:nth-child(odd) td {
+    background-color: #fff !important;
+  }
 
-}
-
-tr:hover td {
-  background-color: #07a45dbe !important;
-  color: white;
-  font-weight: bold;
-}
-& > :not(caption) > * > * {
-  border-bottom: none !important;
-}
+  tr:hover td {
+    background-color: #07a45dbe !important;
+    color: white;
+    font-weight: bold;
+  }
+  & > :not(caption) > * > * {
+    border-bottom: none !important;
+  }
 }
 @media (max-width: 1000px) {
   table {
@@ -297,10 +298,6 @@ tr:hover td {
   .action {
     display: flex !important;
   }
-
-  .navStyle {
-    display: block !important;
-  }
 }
 
 .img-table {
@@ -332,15 +329,6 @@ tr:hover td {
   cursor: pointer;
 }
 
-@keyframes bounceAnimation {
-  0% {
-    transform: translateY(15px);
-  }
-
-  100% {
-    transform: translateY(-12px);
-  }
-}
 
 .headerImg {
   animation: bounceAnimation 2.1s infinite alternate;
@@ -352,12 +340,6 @@ tr:hover td {
 
 .img-table:hover {
   transform: scale(1.3);
-}
-
-@media screen and (max-width: (950px)) {
-  .headerImg {
-    display: none;
-  }
 }
 
 .navImage {
@@ -375,11 +357,6 @@ tr:hover td {
   text-transform: capitalize;
 }
 
-.navStyle {
-  display: flex;
-  justify-content: end;
-}
-
 .mWidth {
   max-width: 400px;
 }
@@ -393,48 +370,41 @@ tr:hover td {
   border-color: unset !important;
 }
 
-.notAllowed {
-  pointer-events: none;
+.navStyle {
+  display: flex;
+  justify-content: end;
 }
 
-$max: 12;
-$angle: 360/$max;
-$size: 120px;
-$fill: green;
 
 .l-wrapper {
   margin: auto;
   text-align: center;
 
+
+@keyframes opacity {
+  3% {
+    fill-opacity: 1;
   }
-
-
-
-  @keyframes opacity {
-    3% {
-      fill-opacity: 1;
-    }
-    75% {
-      fill-opacity: 0;
-    }
-    
+  75% {
+    fill-opacity: 0;
   }
+}
 
-@function transform($item: 1){
-  $base: rotate(#{-$angle*$item}deg) translate(5px, 5px);
+@function transform($item: 1) {
+  $base: rotate(#{-$angle * $item}deg) translate(5px, 5px);
   @return $base;
 }
 
 .g--circle {
   transform-origin: $size/2 $size/2;
-  
+
   fill: $fill;
   animation: opacity 1.2s linear infinite;
-  
+
   @for $item from 1 through $max {
-    &:nth-child(#{$max}n + #{$item}){
+    &:nth-child(#{$max}n + #{$item}) {
       animation-delay: -#{$item/10}s;
-      transform: transform($item) scale(.9);
+      transform: transform($item) scale(0.9);
     }
   }
 }
@@ -442,5 +412,28 @@ $fill: green;
 .g-circles--v1 .g--circle {
   fill-opacity: 0;
   animation-name: opacity;
+}
+}
+
+@media screen and (max-width: (950px)) {
+  .headerImg {
+    display: none;
+  }
+}
+
+@media screen and (max-width: (992px)) {
+  .navStyle {
+    justify-content: center !important;
+  }
+}
+
+
+@keyframes bounceAnimation {
+  0% {
+    transform: translateY(15px);
   }
 
+  100% {
+    transform: translateY(-12px);
+  }
+}

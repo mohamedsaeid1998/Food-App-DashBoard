@@ -9,7 +9,7 @@ interface Props{
 const AuthComponent = ({ children }:Props) => {
 const {pathname} =  useLocation()
   return <>
-    <main className="Auth-container container-fluid">
+    <main className="Auth-container Auth-BackGround container-fluid">
       <div className="row bg-overlay justify-content-center align-items-center ">
         <div className="col-md-8 col-lg-6  col-10">
           <div className={`bg-white p-5 animate__animated ${pathname === "/" ?" animate__zoomIn": pathname === "/reset-pass"?"animate__slideInDown" :"animate__zoomInDown"} ` }>
