@@ -1,11 +1,10 @@
-import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
 import { IFormValues } from '@/Interfaces'
 import { ConfirmPassInput, PasswordInput } from '@/SharedModule/Components'
+import { AuthLogo } from '@/assets/images'
 import baseUrl from '@/utils/Custom/Custom'
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
-import { AuthLogo } from '@/assets/images'
 
 const ChangePass = ({handleClose}:any) => {
 

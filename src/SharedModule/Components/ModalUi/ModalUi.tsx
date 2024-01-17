@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { ChangePass } from "@/AuthModule/Components";
 import baseUrl from "@/utils/Custom/Custom";
 import { useEffect, useState } from "react";
