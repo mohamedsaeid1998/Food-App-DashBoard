@@ -16,9 +16,7 @@ function App() {
 
   useEffect(() => {
     localStorage.getItem("adminToken") !== null ? saveAdminData() : null
-
   }, [])
-
   const [adminData, setAdminData] = useState<JwtPayload | null>(null)
 
 
@@ -26,7 +24,6 @@ function App() {
     let encodedToken = localStorage.getItem('adminToken')
     if (encodedToken) {
       let decodedToken = jwtDecode<JwtPayload>(encodedToken);
-
       setAdminData(decodedToken)
     }
   }

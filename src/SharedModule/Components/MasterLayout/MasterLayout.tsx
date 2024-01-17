@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from 'react-router-dom'
 import SideBar from '../SideBar/SideBar'
-import { NavBar } from '..'
+import { CircularNav, NavBar } from '..'
 import { useState } from 'react'
 
 
@@ -27,6 +27,7 @@ const MasterLayout = ({adminData}:any) => {
 
       <div className={`container-fluid main ${isSidebarOpen ? 'main-sidebar-open' : 'main-sidebar-closed'}`}>
         <NavBar {...{ logOut,adminData }} />
+        <CircularNav/>
         <Outlet />
       </div>
 

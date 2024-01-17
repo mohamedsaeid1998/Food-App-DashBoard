@@ -1,6 +1,7 @@
 import { Header, ModalUi, TableData, TableDetailsSec } from "@/SharedModule/Components";
 import { useEffect, useState } from "react";
 import { UseAuthenticatedQuery } from '@/utils';
+import { Helmet } from "react-helmet";
 
 const CategoriesList = () => {
   const [modalState, setModalState] = useState("close")
@@ -18,7 +19,7 @@ const CategoriesList = () => {
 
   }
 
-  const showEditModal = (data:any) => {
+  const showEditModal = (data: any) => {
     setItemName(data.name)
     setItemId(data.id)
     setModalState("Edit")
@@ -29,7 +30,7 @@ const CategoriesList = () => {
     name: '',
   });
 
-  const { data: tableData , refetch } = UseAuthenticatedQuery({
+  const { data: tableData, refetch } = UseAuthenticatedQuery({
     queryKey: [`getCategory`],
     url: `https://upskilling-egypt.com:443
 /api/v1/Category/`,
@@ -37,10 +38,10 @@ const CategoriesList = () => {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
       },
-      params:{
-        pageSize:7,
-        pageNumber:searchParams?.pageNumber,
-        name:searchParams?.name
+      params: {
+        pageSize: 7,
+        pageNumber: searchParams?.pageNumber,
+        name: searchParams?.name
       }
     }
   })
@@ -51,10 +52,13 @@ const CategoriesList = () => {
 
 
   return <>
-    <ModalUi  title="Categories" {...{ setModalState, modalState, itemId, itemName, refetch }} />
+    <Helmet>
+      <title> Categories • Food App</title>
+    </Helmet>
+    <ModalUi title="Categories" {...{ setModalState, modalState, itemId, itemName, refetch }} />
     <Header title="Categories" subTitle="Items" para="You can now add your items that any user can order it from" subPara="the Application and you can edit" />
     <TableDetailsSec showAddModal={showAddModal} />
-    <TableData  location="category" {...{ showDeleteModal, showEditModal,tableData,setSearchParams,searchParams }} />
+    <TableData location="category" {...{ showDeleteModal, showEditModal, tableData, setSearchParams, searchParams }} />
   </>
 }
 

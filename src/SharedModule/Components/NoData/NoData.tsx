@@ -25,21 +25,20 @@ const NoData = ({ location, handleClose ,itemId,refetch}: IProps) => {
         Authorization: `Bearer ${localStorage.getItem('adminToken')}`
       }
     })
-      .then((res) => {
-        console.log(res)
+      .then(() => {
         toast.success(` ${location==="category"?"Category": location==="Users"? "Users":"Recipe"} Deleted successfully`, {
           autoClose: 2000,
           theme: "colored",
         })
         handleClose()
         refetch()
-        setLoading(false)
       })
       .catch((err) => {
         toast.error(`${err.response.data.message}`, {
           autoClose: 2000,
           theme: "colored",
         })
+      }).finally(() => {
         setLoading(false)
       })
   }

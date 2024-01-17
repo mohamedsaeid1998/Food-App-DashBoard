@@ -1,10 +1,11 @@
 import { ChangePass } from "@/AuthModule/Components";
 import baseUrl from "@/utils/Custom/Custom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from 'react-bootstrap/Modal';
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { NoData } from "..";
+import { LoadingSpinner, NoData } from "..";
+import { NoImage5 } from "@/assets/images";
 
 
 interface IProps {
@@ -16,7 +17,7 @@ interface IProps {
   categories?: any
   tags?: any
   refetch?: any
-  role?:any
+  role?: any
 }
 
 interface IFormInputs {
@@ -31,7 +32,7 @@ interface IFormInputs {
 
 
 
-const ModalUi = ({ setModalState, modalState, itemId, itemName, title, categories, tags, refetch,role }: IProps) => {
+const ModalUi = ({ setModalState, modalState, itemId, itemName, title, categories, tags, refetch, role }: IProps) => {
 
 
 
@@ -60,11 +61,10 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title, categorie
   }
 
 
- //!  **********Add Category**********//
+  //!  **********Add Category**********//
 
 
   const onSubmitAdd = (data: IFormInputs) => {
-    console.log(data);
 
     setLoading(true)
 
@@ -73,28 +73,27 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title, categorie
         Authorization: `Bearer ${localStorage.getItem('adminToken')}`
       }
     })
-      .then((res) => {
-        console.log(res)
+      .then(() => {
         toast.success(' Added Category successfully', {
           autoClose: 2000,
           theme: "colored",
         });
         handleClose()
         reset()
-        setLoading(false)
       })
       .catch((err) => {
         toast.error(`${err.response.data.message}`, {
           autoClose: 2000,
           theme: "colored",
         });
+      }).finally(() => {
         setLoading(false)
       })
   }
 
   //!  **********Update Category**********//
   const onSubmitEdit = (data: IFormInputs) => {
-    console.log(data);
+
 
     setLoading(true)
     return baseUrl.put(`/api/v1/Category/${itemId}`, data, {
@@ -102,20 +101,19 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title, categorie
         Authorization: `Bearer ${localStorage.getItem('adminToken')}`
       }
     })
-      .then((res) => {
-        console.log(res)
+      .then(() => {
         toast.success(' Category Updated successfully', {
           autoClose: 2000,
           theme: "colored",
         });
         handleClose()
-        setLoading(false)
       })
       .catch((err) => {
         toast.error(`${err.response.data.message}`, {
           autoClose: 2000,
           theme: "colored",
         });
+      }).finally(() => {
         setLoading(false)
       })
   }
@@ -130,14 +128,12 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title, categorie
         "Content-Type": "multipart/form-data"
       }
     })
-      .then((res) => {
-        console.log(res)
+      .then(() => {
         toast.success('Added Recipes successfully', {
           autoClose: 2000,
           theme: "colored",
         });
         handleClose()
-        setLoading(false)
         refetch()
       })
       .catch((err) => {
@@ -145,6 +141,7 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title, categorie
           autoClose: 2000,
           theme: "colored",
         });
+      }).finally(() => {
         setLoading(false)
       })
 
@@ -153,23 +150,23 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title, categorie
   //TODO  **********Update Recipe**********//
 
   const onSubmitUpdateRecipe = (data: IFormInputs) => {
-    console.log(data);
+
 
     setLoading(true)
-    return baseUrl.put(`/api/v1/Recipe/${itemId}`, { ...data, recipeImage: data.recipeImage[0], }, {
+    return baseUrl.put(`/api/v1/Recipe/${itemId}`, { ...data, recipeImage: data.recipeImage[0] }, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
         "Content-Type": "multipart/form-data"
       }
     })
-      .then((res) => {
-        console.log(res)
+      .then(() => {
+
         toast.success('Added Recipes successfully', {
           autoClose: 2000,
           theme: "colored",
         });
         handleClose()
-        setLoading(false)
+
         refetch()
       })
       .catch((err) => {
@@ -177,12 +174,46 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title, categorie
           autoClose: 2000,
           theme: "colored",
         });
+
+      }).finally(() => {
         setLoading(false)
       })
 
   }
 
-  
+
+
+  //TODO  **********Users Details**********//
+
+  const [userDetails, setUserDetails] = useState()
+
+  const onSubmitUsersDetails = () => {
+
+    setLoading(true)
+    return baseUrl.get(`/api/v1/Users/${itemId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
+      }
+    })
+      .then((res) => {
+
+        setUserDetails(res?.data)
+      })
+      .catch(() => {
+
+      }).finally(() => {
+        setLoading(false)
+      })
+
+  }
+
+  useEffect(() => {
+    if (modalState === 'Edit' && title === "Users")
+      onSubmitUsersDetails()
+  }, [])
+
+
+
   const createNewRecipes = <form onSubmit={handleSubmit(onSubmitRecipes)}>
     <h4 className="text-center">Add New Recipes</h4>
     <input {...register("name", {
@@ -264,13 +295,13 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title, categorie
     <select {...register("categoriesIds", {
       required,
     })} defaultValue={itemName?.categoriesIds?.id} className="form-select w-100 mt-3 mb-1" placeholder="CategoryId" >
-        
+
 
       <option className="text-muted" >Select Category</option>
       {categories?.data?.map((category: any) =>
         <option key={category.id} value={category.id}>{category.name}</option>
       )}
-      
+
     </select>
     {errors?.categoriesIds ? <span className='text-danger'>{errors?.categoriesIds?.message}</span> : null}
 
@@ -284,37 +315,23 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title, categorie
     <div className="d-flex ">
       {currentImage ? <img className='selectedImage me-2' src={currentImage} alt="currentImage" /> : null}
       <input {...register("recipeImage", {
-      })}  className="form-lable mt-3 mb-1 " onChange={handleFileChange} type="file" placeholder="Update Image" />
+      })} className="form-lable mt-3 mb-1 " onChange={handleFileChange} type="file" placeholder="Update Image" />
     </div>
 
     <button type='submit' disabled={Loading} className='btn btn-success w-100 mt-2 fw-bold'>{Loading ? <i className='fa fa-spin fa-spinner'></i> : "Update Recipes"}</button>
 
   </form>
 
-const createNewCategory = <form onSubmit={handleSubmit(onSubmitAdd)}>
-<h4>Add New Category</h4>
-<input {...register("name",{
-  required
-})} className="form-control w-100 mt-3 mb-1" type="text" placeholder="New Category"/>
-  {errors?.name ? <span className='text-danger'>{errors?.name?.message}</span> : null}
-<button type='submit' disabled={Loading} className='btn btn-success w-100 mt-2 fw-bold'>{Loading ? <i className="fa fa-spin fa-spinner"></i> : "Add Category"}</button>
-
-</form>
-
-  // const createNewCategory = <form onSubmit={handleSubmit(onSubmitUpdateRecipe)}>
-
-  //   <h4> Add New Category </h4>
-  //   <input {...register("name", {
-  //     required,
-  //   })} className="form-control w-100 mt-3 mb-1" type="text" placeholder="New Category" />
-  //   {errors?.name ? <span className='text-danger'>{errors?.name?.message}</span> : null}
-  //   <button type='submit' disabled={Loading} className='btn btn-success w-100 mt-2 fw-bold'>{Loading ? <i className='fa fa-spin fa-spinner'></i> : "Add Category"}</button>
-
-  // </form>
-
+  const createNewCategory = <form onSubmit={handleSubmit(onSubmitAdd)}>
+    <h4>Add New Category</h4>
+    <input {...register("name", {
+      required
+    })} className="form-control w-100 mt-3 mb-1" type="text" placeholder="New Category" />
+    {errors?.name ? <span className='text-danger'>{errors?.name?.message}</span> : null}
+    <button type='submit' disabled={Loading} className='btn btn-success w-100 mt-2 fw-bold'>{Loading ? <i className="fa fa-spin fa-spinner"></i> : "Add Category"}</button>
+  </form>
 
   const UpdateCategory = <form onSubmit={handleSubmit(onSubmitEdit)}>
-    {/* {  console.log(itemId,itemName)} */}
     <h4> Update Category </h4>
     <input {...register("name", {
       required,
@@ -325,8 +342,22 @@ const createNewCategory = <form onSubmit={handleSubmit(onSubmitAdd)}>
   </form>
 
 
+  const UsersDetails = <div>
+    <h2>User Details</h2>
+    {!userDetails&&<LoadingSpinner/>}
+    {userDetails&&<>
+    <div className="d-flex justify-content-center p-3">{userDetails?.imagePath === null ? <img className='img-user' src={NoImage5} alt="image" /> : <img className='img-user ' src={`https://upskilling-egypt.com:443/` + userDetails?.imagePath} alt="image" />}</div>
+    <h6 className="d-block text-success fw-bold">UserName: <span className="text-black">{userDetails?.userName}</span></h6>
+    <h6 className="d-block text-success fw-bold">Email: <span className="text-black"> {userDetails?.email}</span></h6>
+    <h6 className="d-block text-success fw-bold">Role: <span className="text-black">{userDetails?.group?.name}</span></h6>
+    <h6 className="d-block text-success fw-bold">Country: <span className="text-black">{userDetails?.country}</span></h6>
+    <h6 className="d-block text-success fw-bold">Phone Number: <span className="text-black">{userDetails?.phoneNumber}</span></h6>
+    </>}
+  </div>
 
-  const render = modalState === 'Add' && title === "Recipes" ? createNewRecipes : modalState === "Delete" && title === "Categories" ? <NoData location='category' {...{refetch,itemId,handleClose}} /> : modalState === "Delete" && title === "Recipes" ? <NoData location='recipes' {...{refetch,itemId,handleClose}} /> : modalState === "Delete" && title === "Users" ? <NoData location='Users' {...{refetch,itemId,handleClose,role}}  /> : (modalState === 'Edit' && title === "Categories") ? UpdateCategory : modalState === 'Edit' && title === "Recipes" ? UpdateRecipes : modalState === 'ChangePass' ? <ChangePass /> : createNewCategory 
+
+
+  const render = modalState === 'Add' && title === "Recipes" ? createNewRecipes : modalState === "Delete" && title === "Categories" ? <NoData location='category' {...{ refetch, itemId, handleClose }} /> : modalState === "Delete" && title === "Recipes" ? <NoData location='recipes' {...{ refetch, itemId, handleClose }} /> : modalState === "Delete" && title === "Users" ? <NoData location='Users' {...{ refetch, itemId, handleClose, role }} /> : (modalState === 'Edit' && title === "Categories") ? UpdateCategory : modalState === 'Edit' && title === "Recipes" ? UpdateRecipes : modalState === 'ChangePass' ? <ChangePass {...{handleClose}}/> : modalState === 'Edit' && title === "Users" ? UsersDetails : createNewCategory
 
   return <>
 

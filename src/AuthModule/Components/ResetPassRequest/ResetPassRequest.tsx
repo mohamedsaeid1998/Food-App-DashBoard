@@ -2,6 +2,7 @@ import { IFormValues } from '@/Interfaces'
 import { AuthComponent, EmailInput } from '@/SharedModule/Components'
 import baseUrl from '@/utils/Custom/Custom'
 import { useState } from 'react'
+import { Helmet } from 'react-helmet'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -30,6 +31,7 @@ const ResetPassRequest = () => {
           autoClose: 2000,
           theme: "colored",
         });
+      }).finally(() => {
         setLoading(false)
       })
 
@@ -38,7 +40,9 @@ const ResetPassRequest = () => {
 
 
   return <>
-
+<Helmet>
+  <title> Reset Password • Food App</title>
+</Helmet>
     <AuthComponent>
 
       <form onSubmit={handleSubmit(onSubmit)}>

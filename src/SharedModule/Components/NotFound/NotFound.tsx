@@ -1,8 +1,12 @@
 import { AuthLogo } from "@/assets/images"
+import { Helmet } from "react-helmet"
 import { Link } from "react-router-dom"
 
 const NotFound = () => {
   return <>
+    <Helmet>
+      <title> NotFound Page • Food App</title>
+    </Helmet>
     <main className="NotFound-container container-fluid vh-100 pt-2 ps-5  animate__animated animate__zoomInDown">
       <img src={AuthLogo} className="w-25" alt="Logo" />
       <div className=" NotFound d-flex flex-column justify-content-center  ms-3 ">

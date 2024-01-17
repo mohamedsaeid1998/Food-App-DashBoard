@@ -2,6 +2,7 @@ import { IFormValues } from '@/Interfaces'
 import { AuthComponent, EmailInput, PasswordInput } from '@/SharedModule/Components'
 import baseUrl from '@/utils/Custom/Custom'
 import { useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -21,7 +22,6 @@ const Login = ({ saveAdminData }: Props) => {
   const { register, handleSubmit, formState: { errors } } = useForm<IFormValues>()
 
   function handleCallbackResponse(response:any){
-
     localStorage.setItem("adminToken", response.credential)
     saveAdminData()
     navigate('/dashboard')
@@ -33,8 +33,7 @@ const Login = ({ saveAdminData }: Props) => {
     }
 
   useEffect(() => {
-    // @ts-ignore
-    
+      // @ts-ignore
   const google = window.google
     google.accounts.id.initialize({
       client_id:'320174446901-75vhr20bt9ei5l896ul3lldh92bshbdg.apps.googleusercontent.com',
@@ -70,6 +69,7 @@ const Login = ({ saveAdminData }: Props) => {
           autoClose: 2000,
           theme: "colored",
         });
+      }).finally(() => {
         setLoading(false)
       })
 
@@ -77,6 +77,9 @@ const Login = ({ saveAdminData }: Props) => {
   }
 
   return <>
+  <Helmet>
+  <title> Sign in • Food App </title>
+</Helmet>
     <AuthComponent>
       <form onSubmit={handleSubmit(onSubmit)}>
         <h2 className='fw-bold'>Log In</h2>

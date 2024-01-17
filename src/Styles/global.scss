@@ -258,7 +258,11 @@ header {
     border-bottom: none !important;
   }
 }
-@media (max-width: 1000px) {
+
+
+@media (max-width: 670px) {
+
+
   table {
     margin-top: 20px;
   }
@@ -306,6 +310,13 @@ header {
   border-radius: 50%;
 }
 
+.img-user {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+
 #g_a11y_announcement {
   right: 0 !important;
 }
@@ -326,9 +337,12 @@ header {
 .page {
   display: flex;
   justify-content: end;
-  cursor: pointer;
+
 }
 
+.page-link{
+  cursor: pointer;
+}
 
 .headerImg {
   animation: bounceAnimation 2.1s infinite alternate;
@@ -372,47 +386,49 @@ header {
 
 .navStyle {
   display: flex;
-  justify-content: end;
+  justify-content: space-around;
 }
 
+.navbar-nav {
+  align-self: flex-end;
+}
 
 .l-wrapper {
   margin: auto;
   text-align: center;
 
-
-@keyframes opacity {
-  3% {
-    fill-opacity: 1;
-  }
-  75% {
-    fill-opacity: 0;
-  }
-}
-
-@function transform($item: 1) {
-  $base: rotate(#{-$angle * $item}deg) translate(5px, 5px);
-  @return $base;
-}
-
-.g--circle {
-  transform-origin: $size/2 $size/2;
-
-  fill: $fill;
-  animation: opacity 1.2s linear infinite;
-
-  @for $item from 1 through $max {
-    &:nth-child(#{$max}n + #{$item}) {
-      animation-delay: -#{$item/10}s;
-      transform: transform($item) scale(0.9);
+  @keyframes opacity {
+    3% {
+      fill-opacity: 1;
+    }
+    75% {
+      fill-opacity: 0;
     }
   }
-}
 
-.g-circles--v1 .g--circle {
-  fill-opacity: 0;
-  animation-name: opacity;
-}
+  @function transform($item: 1) {
+    $base: rotate(#{-$angle * $item}deg) translate(5px, 5px);
+    @return $base;
+  }
+
+  .g--circle {
+    transform-origin: $size/2 $size/2;
+
+    fill: $fill;
+    animation: opacity 1.2s linear infinite;
+
+    @for $item from 1 through $max {
+      &:nth-child(#{$max}n + #{$item}) {
+        animation-delay: -#{$item/10}s;
+        transform: transform($item) scale(0.9);
+      }
+    }
+  }
+
+  .g-circles--v1 .g--circle {
+    fill-opacity: 0;
+    animation-name: opacity;
+  }
 }
 
 @media screen and (max-width: (950px)) {
@@ -425,8 +441,10 @@ header {
   .navStyle {
     justify-content: center !important;
   }
+  .typeWriting {
+    display: none;
+  }
 }
-
 
 @keyframes bounceAnimation {
   0% {
@@ -436,4 +454,34 @@ header {
   100% {
     transform: translateY(-12px);
   }
+}
+
+.typeWriting {
+  background-image: linear-gradient(102deg, #007a3d 30%, #ff0000 30%, #000 90%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  font-weight: bold;
+
+}
+
+
+.navbar-expand-lg .navbar-collapse{
+  justify-content: end;
+}
+
+
+
+@media (max-width: 1000px) {
+  .main-sidebar-open {
+    margin-left: 0;
+  }
+  
+  .main-sidebar-closed {
+    margin-left: 0;
+  }
+
+.side{
+  display: none;
+}
 }

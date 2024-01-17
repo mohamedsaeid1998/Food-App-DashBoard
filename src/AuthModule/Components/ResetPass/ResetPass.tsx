@@ -2,6 +2,7 @@ import { IFormValues } from '@/Interfaces'
 import { AuthComponent, ConfirmPassInput, EmailInput, PasswordInput } from '@/SharedModule/Components'
 import baseUrl from '@/utils/Custom/Custom'
 import { useState } from 'react'
+import { Helmet } from 'react-helmet'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -30,6 +31,8 @@ const ResetPass = () => {
           autoClose: 2000,
           theme: "colored",
         })
+
+      }).finally(() => {
         setLoading(false)
       })
 
@@ -37,6 +40,9 @@ const ResetPass = () => {
 
 
   return <>
+    <Helmet>
+      <title> Reset Password • Food App</title>
+    </Helmet>
     <AuthComponent>
       <form onSubmit={handleSubmit(onSubmit)}>
         <h2 className='fw-bold'>Reset Password</h2>
@@ -67,9 +73,9 @@ const ResetPass = () => {
         </div>
         {errors?.seed ? <span className='text-danger small'>{errors?.seed?.message}</span> : null}
 
-        <PasswordInput register={register} inputName={'password'} placeholder='New Password' errors={errors} />
+        <PasswordInput inputName={'password'} placeholder='New Password' {...{ errors, register }} />
 
-        <ConfirmPassInput register={register} inputName={'confirmPassword'} placeholder='Confirm New Password' getValues={getValues} errors={errors} />
+        <ConfirmPassInput inputName={'confirmPassword'} placeholder='Confirm New Password' {...{ errors, register, getValues }} />
 
         <div className=' mt-2 '>
           <Link to={'/'} className='forget'>Login Now ?</Link>

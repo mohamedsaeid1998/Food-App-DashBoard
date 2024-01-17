@@ -7,11 +7,9 @@ import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { AuthLogo } from '@/assets/images'
 
-const ChangePass = () => {
+const ChangePass = ({handleClose}:any) => {
 
   const [Loading, setLoading] = useState(false)
-
-  const navigate = useNavigate()
 
   const { register, getValues, handleSubmit, formState: { errors } } = useForm<IFormValues>()
 
@@ -24,19 +22,18 @@ const ChangePass = () => {
       },
     })
       .then((res) => {
-   
         toast.success(`${res.data.message}`, {
           autoClose: 2000,
           theme: "colored",
         })
-
-        navigate('/')
+        handleClose()
       })
       .catch((err) => {
         toast.error(`${err.response.data.message}`, {
           autoClose: 2000,
           theme: "colored",
         });
+      }).finally(() => {
         setLoading(false)
       })
 
@@ -56,11 +53,11 @@ const ChangePass = () => {
               <h2 className='fw-bold'>Change Your Password</h2>
               <p>Enter your details below</p>
 
-              <PasswordInput register={register} inputName={'oldPassword'} placeholder='Old Password' errors={errors} />
+              <PasswordInput {...{register,errors}}inputName={'oldPassword'} placeholder='Old Password'  />
 
-              <PasswordInput register={register} inputName={'newPassword'} placeholder='New Password' errors={errors} />
+              <PasswordInput {...{register,errors}} inputName={'newPassword'} placeholder='New Password'  />
 
-              <ConfirmPassInput register={register} inputName={'confirmNewPassword'} placeholder='Confirm New Password' getValues={getValues} errors={errors} />
+              <ConfirmPassInput {...{register,errors,getValues}} inputName={'confirmNewPassword'} placeholder='Confirm New Password'  />
               <button type='submit' disabled={Loading} className='btn btn-success w-100 mt-4 fw-bold'>{Loading ? <i className='fa fa-spin fa-spinner'></i> : "Change Password"}</button>
 
             </form>
