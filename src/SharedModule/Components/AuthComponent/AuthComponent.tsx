@@ -73,7 +73,7 @@ const AuthComponent = ({ setValue,children }: Props) => {
                 <button
                   className="btn btn-sm btn-success ms-2 fw-bold"
                   onClick={() => handleTestCode(event)}
-                >
+                > 
                   Submit
                 </button>
                 <div
