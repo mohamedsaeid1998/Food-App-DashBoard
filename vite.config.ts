@@ -12,5 +12,6 @@ export default defineConfig({
   plugins: [react()],
   base: /Food-App-DashBoard/
   
+  
 
 })
