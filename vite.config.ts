@@ -13,7 +13,4 @@ export default defineConfig({
   base: /Food-App-DashBoard/
   
 
-
-
-  
 })
