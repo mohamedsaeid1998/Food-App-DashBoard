@@ -259,10 +259,7 @@ header {
   }
 }
 
-
 @media (max-width: 670px) {
-
-
   table {
     margin-top: 20px;
   }
@@ -316,7 +313,6 @@ header {
   border-radius: 50%;
 }
 
-
 #g_a11y_announcement {
   right: 0 !important;
 }
@@ -337,10 +333,9 @@ header {
 .page {
   display: flex;
   justify-content: end;
-
 }
 
-.page-link{
+.page-link {
   cursor: pointer;
 }
 
@@ -462,26 +457,52 @@ header {
   -webkit-background-clip: text;
   color: transparent;
   font-weight: bold;
-
 }
 
-
-.navbar-expand-lg .navbar-collapse{
+.navbar-expand-lg .navbar-collapse {
   justify-content: end;
 }
-
-
 
 @media (max-width: 1000px) {
   .main-sidebar-open {
     margin-left: 0;
   }
-  
+
   .main-sidebar-closed {
     margin-left: 0;
   }
 
-.side{
-  display: none;
+  .side {
+    display: none;
+  }
 }
+
+.testContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  .testInput {
+    width: 100px;
+    margin-top: 20px !important;
+  }
+  .radioInput {
+    width: 20px;
+    height: 20px;
+  }
+  .inputWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+  }
+}
+
+.show {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 20px;
+}
+.hide {
+  display: none;
 }
