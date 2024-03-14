@@ -5,7 +5,7 @@ import { toast } from "react-toastify"
 
 interface Props {
   children: React.ReactNode
-  setValue:any,
+  setValue?:any,
 }
 
 const AuthComponent = ({ setValue,children }: Props) => {
