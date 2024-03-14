@@ -9,8 +9,6 @@ import { toast } from 'react-toastify'
 
 interface Props {
   saveAdminData: () => void
-
-
 }
 
 const Login = ({ saveAdminData }: Props) => {
@@ -49,9 +47,6 @@ const Login = ({ saveAdminData }: Props) => {
   }, [])
 
 
-
-
-
   const onSubmit = (data: IFormValues) => {
     setLoading(true)
     return baseUrl.post(`/api/v1/Users/Login`, data)
@@ -75,17 +70,6 @@ const Login = ({ saveAdminData }: Props) => {
 
   }
 
-
-
-
-
-
-
-
-
-
-
-
   return <>
     <Helmet>
       <title> Sign in • Food App </title>
@@ -101,7 +85,7 @@ const Login = ({ saveAdminData }: Props) => {
 
 
         <div className=' mt-2 d-flex flex-md-row justify-content-between align-items-center flex-column'>
-          <div className=' my-2' id='signInDiv'></div>
+
           <Link to={'/forget-pass-request'} className='forget'>Forgot Password ?</Link>
         </div>
         <button type='submit' disabled={Loading} className='btn btn-success w-100 mt-4 fw-bold'>{Loading ? <i className='fa fa-spin fa-spinner'></i> : "Login"}</button>
