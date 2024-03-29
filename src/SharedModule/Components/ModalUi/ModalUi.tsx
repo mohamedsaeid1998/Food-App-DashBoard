@@ -345,20 +345,20 @@ const ModalUi = ({ setModalState, modalState, itemId, itemName, title, categorie
 
   const UsersDetails = <div>
     <h2>User Details</h2>
-    {!userDetails&&<LoadingSpinner/>}
-    {userDetails&&<>
-    <div className="d-flex justify-content-center p-3">{userDetails?.imagePath === null ? <img className='img-user' src={NoImage5} alt="image" /> : <img className='img-user ' src={`https://upskilling-egypt.com:443/` + userDetails?.imagePath} alt="image" />}</div>
-    <h6 className="d-block text-success fw-bold">UserName: <span className="text-black">{userDetails?.userName}</span></h6>
-    <h6 className="d-block text-success fw-bold">Email: <span className="text-black"> {userDetails?.email}</span></h6>
-    <h6 className="d-block text-success fw-bold">Role: <span className="text-black">{userDetails?.group?.name}</span></h6>
-    <h6 className="d-block text-success fw-bold">Country: <span className="text-black">{userDetails?.country}</span></h6>
-    <h6 className="d-block text-success fw-bold">Phone Number: <span className="text-black">{userDetails?.phoneNumber}</span></h6>
+    {!userDetails && <LoadingSpinner />}
+    {userDetails && <>
+      <div className="d-flex justify-content-center p-3">{userDetails?.imagePath === null ? <img className='img-user' src={NoImage5} alt="image" /> : <img className='img-user ' src={`https://upskilling-egypt.com:3006/` + userDetails?.imagePath} alt="image" />}</div>
+      <h6 className="d-block text-success fw-bold">UserName: <span className="text-black">{userDetails?.userName}</span></h6>
+      <h6 className="d-block text-success fw-bold">Email: <span className="text-black"> {userDetails?.email}</span></h6>
+      <h6 className="d-block text-success fw-bold">Role: <span className="text-black">{userDetails?.group?.name}</span></h6>
+      <h6 className="d-block text-success fw-bold">Country: <span className="text-black">{userDetails?.country}</span></h6>
+      <h6 className="d-block text-success fw-bold">Phone Number: <span className="text-black">{userDetails?.phoneNumber}</span></h6>
     </>}
   </div>
 
 
 
-  const render = modalState === 'Add' && title === "Recipes" ? createNewRecipes : modalState === "Delete" && title === "Categories" ? <NoData location='category' {...{ refetch, itemId, handleClose }} /> : modalState === "Delete" && title === "Recipes" ? <NoData location='recipes' {...{ refetch, itemId, handleClose }} /> : modalState === "Delete" && title === "Users" ? <NoData location='Users' {...{ refetch, itemId, handleClose, role }} /> : (modalState === 'Edit' && title === "Categories") ? UpdateCategory : modalState === 'Edit' && title === "Recipes" ? UpdateRecipes : modalState === 'ChangePass' ? <ChangePass {...{handleClose}}/> : modalState === 'Edit' && title === "Users" ? UsersDetails : createNewCategory
+  const render = modalState === 'Add' && title === "Recipes" ? createNewRecipes : modalState === "Delete" && title === "Categories" ? <NoData location='category' {...{ refetch, itemId, handleClose }} /> : modalState === "Delete" && title === "Recipes" ? <NoData location='recipes' {...{ refetch, itemId, handleClose }} /> : modalState === "Delete" && title === "Users" ? <NoData location='Users' {...{ refetch, itemId, handleClose, role }} /> : (modalState === 'Edit' && title === "Categories") ? UpdateCategory : modalState === 'Edit' && title === "Recipes" ? UpdateRecipes : modalState === 'ChangePass' ? <ChangePass {...{ handleClose }} /> : modalState === 'Edit' && title === "Users" ? UsersDetails : createNewCategory
 
   return <>
 

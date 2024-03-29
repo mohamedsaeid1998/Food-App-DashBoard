@@ -12,7 +12,7 @@ const NavBar = ({ logOut, adminData }: Props) => {
 
   const { data } = UseAuthenticatedQuery({
     queryKey: [`getUserDetails`],
-    url: `https://upskilling-egypt.com:443/api/v1/Users/currentUser`,
+    url: `https://upskilling-egypt.com:3006/api/v1/Users/currentUser`,
     config: {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
@@ -52,7 +52,7 @@ const NavBar = ({ logOut, adminData }: Props) => {
             <li data-aos="fade-left" data-aos-delay="400" className="nav-item dropdown">
 
               <a className="nav-link dropdown-toggle d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img className='navImage me-3' src={adminData?.given_name ? NavAvatar : data?.imagePath !== null ? `https://upskilling-egypt.com:443/` + data?.imagePath : NavAvatar} alt="NavAvatar" />
+                <img className='navImage me-3' src={adminData?.given_name ? NavAvatar : data?.imagePath !== null ? `https://upskilling-egypt.com:3006/` + data?.imagePath : NavAvatar} alt="NavAvatar" />
                 <div className='d-flex flex-column'>
                   <span className='capitalize'>{data?.userName || adminData?.given_name}</span>
                   <span className='navEmail small'>{data?.email || adminData?.email}</span>

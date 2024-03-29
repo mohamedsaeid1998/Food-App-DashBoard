@@ -29,7 +29,7 @@ const RecipesList = () => {
       tag: tag,
       categoriesIds: category[0],
       description,
-      imagePath: (imagePath ? `https://upskilling-egypt.com:443/` + imagePath : undefined)
+      imagePath: (imagePath ? `https://upskilling-egypt.com:3006/` + imagePath : undefined)
     })
 
     setModalState("Edit")
@@ -39,7 +39,7 @@ const RecipesList = () => {
   //?  **********Get Tags**********//
   const { data: tags } = UseAuthenticatedQuery({
     queryKey: [`getTags`],
-    url: `https://upskilling-egypt.com:443
+    url: `https://upskilling-egypt.com:3006
 /api/v1/tag`,
     config: {
       headers: {
@@ -51,7 +51,7 @@ const RecipesList = () => {
   //?  **********Get categories**********//
   const { data: categories } = UseAuthenticatedQuery({
     queryKey: [`getCategories`],
-    url: `https://upskilling-egypt.com:443
+    url: `https://upskilling-egypt.com:3006
 /api/v1/Category/`,
     config: {
       headers: {
@@ -75,7 +75,7 @@ const RecipesList = () => {
   });
   const { data: tableData, refetch, isLoading } = UseAuthenticatedQuery({
     queryKey: [`getRecipes`],
-    url: `https://upskilling-egypt.com:443
+    url: `https://upskilling-egypt.com:3006
 /api/v1/Recipe/`,
     config: {
       headers: {

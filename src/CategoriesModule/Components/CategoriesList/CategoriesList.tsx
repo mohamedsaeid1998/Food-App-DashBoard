@@ -32,7 +32,7 @@ const CategoriesList = () => {
 
   const { data: tableData, refetch } = UseAuthenticatedQuery({
     queryKey: [`getCategory`],
-    url: `https://upskilling-egypt.com:443
+    url: `https://upskilling-egypt.com:3006
 /api/v1/Category/`,
     config: {
       headers: {

@@ -92,7 +92,7 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
       </div>
       <div className="col-md-3">
         <select onChange={getTagValue} value={searchParams.tagId} className="form-select "  >
-          <option  value={0} className="text-muted">Select Tag</option>
+          <option value={0} className="text-muted">Select Tag</option>
           {tags?.map((tag: any) =>
             <option key={tag.id} value={tag.id}>{tag.name}</option>
 
@@ -129,7 +129,7 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
         : <input ref={searchInputRef} onChange={getNameValue} value={searchParams.name} type="search" className='form-control my-3' placeholder={`Search by Category Name...`} />
     }
 
-    {tableData?    <>
+    {tableData ? <>
       {tableData?.data.length > 0 ? <>
         <table className="table">
 
@@ -163,21 +163,21 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
                 <td data-cell="id" className='id ps-3' >{index + 1}</td>
                 <td data-cell="name ">{location === "Users" ? data?.userName : data?.name}</td>
                 {location === "Users" ? <>
-                  <td data-cell="image">{data?.imagePath === null ? <img className='img-table' src={NoImage5} alt="image" /> : <img className='img-table ' src={`https://upskilling-egypt.com:443/` + data?.imagePath} alt="image" />}</td>
+                  <td data-cell="image">{data?.imagePath === null ? <img className='img-table' src={NoImage5} alt="image" /> : <img className='img-table ' src={`https://upskilling-egypt.com:3006/` + data?.imagePath} alt="image" />}</td>
                   <td data-cell="country ">{data.country}</td>
                   <td data-cell="group ">{data.group.name}</td>
                 </>
                   : null}
                 {location === "recipes" ? <>
                   <td data-cell="price ">{data?.price}</td>
-                  <td data-cell="image ">{data?.imagePath === "" ? <img className='img-table' src={NoImage5} alt="image" /> : <img className=' img-table' src={`https://upskilling-egypt.com:443/` + data?.imagePath} alt="image" />}</td>
+                  <td data-cell="image ">{data?.imagePath === "" ? <img className='img-table' src={NoImage5} alt="image" /> : <img className=' img-table' src={`https://upskilling-egypt.com:3006/` + data?.imagePath} alt="image" />}</td>
                   <td className='text-truncate' data-cell="description ">{data?.description}</td>
                   <td data-cell="tag ">{data?.tag?.name}</td>
                   <td data-cell="category ">{data?.category[0] === undefined ? "No Category" : data?.category[0]?.name}</td>
                 </> : null}
                 <td data-cell="actions " className='action  align-items-center gap-3   '>
 
-                  <span  className={`delete ${pathname === "/dashboard/users" ? (data?.group?.name === "SystemUser" ? "text-danger pointer" : "d-none ") :"text-danger pointer"}  text-center`} >
+                  <span className={`delete ${pathname === "/dashboard/users" ? (data?.group?.name === "SystemUser" ? "text-danger pointer" : "d-none ") : "text-danger pointer"}  text-center`} >
                     <FaTrash onClick={() => showDeleteModal(data.id)} size={'20px'} />
                   </span>
 
@@ -222,8 +222,8 @@ const TableData = ({ showDeleteModal, showEditModal, location, tableData, setSea
 
       </> : <NoData handleClose={handleClose} />}
 
-    </> : <LoadingSpinner/>
-}
+    </> : <LoadingSpinner />
+    }
   </>
 }
 

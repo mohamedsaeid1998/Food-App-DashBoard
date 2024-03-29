@@ -11,13 +11,13 @@ const UsersList = () => {
     setModalState("Add")
   }
   const showDeleteModal = (id: number) => {
-    
+
     setItemId(id)
     setModalState("Delete")
 
   }
 
-  const showEditModal = (id:number) => {
+  const showEditModal = (id: number) => {
     setItemId(id)
     setModalState("Edit")
   }
@@ -26,12 +26,12 @@ const UsersList = () => {
     pageNumber: 1,
     userName: "",
     email: "",
-    country:  "",
+    country: "",
     groups: [],
   });
   const { data: tableData, refetch } = UseAuthenticatedQuery({
     queryKey: [`getUsers`],
-    url: `https://upskilling-egypt.com:443
+    url: `https://upskilling-egypt.com:3006
 /api/v1/Users/`,
     config: {
       headers: {
@@ -54,9 +54,9 @@ const UsersList = () => {
 
 
 
-  const { data:role } = UseAuthenticatedQuery({
+  const { data: role } = UseAuthenticatedQuery({
     queryKey: [`getUserDetails`],
-    url: `https://upskilling-egypt.com:443/api/v1/Users/currentUser`,
+    url: `https://upskilling-egypt.com:3006/api/v1/Users/currentUser`,
     config: {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
@@ -69,10 +69,10 @@ const UsersList = () => {
     <Helmet>
       <title> Users • Food App</title>
     </Helmet>
-    <ModalUi key={Math.random()} title="Users" {...{ setModalState, modalState, itemId,refetch,role }} />
+    <ModalUi key={Math.random()} title="Users" {...{ setModalState, modalState, itemId, refetch, role }} />
     <Header title="Users" subTitle="List" para="You can now add your items that any user can order it from " subPara="the Application and you can edit" />
     <TableDetailsSec showAddModal={showAddModal} />
-    <TableData key={Math.random()} location="Users" {...{ showDeleteModal, showEditModal,tableData,setSearchParams,searchParams }} />
+    <TableData key={Math.random()} location="Users" {...{ showDeleteModal, showEditModal, tableData, setSearchParams, searchParams }} />
   </>
 }
 

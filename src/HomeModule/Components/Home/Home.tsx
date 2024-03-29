@@ -9,7 +9,7 @@ const Home = ({ adminData }: any) => {
 
   const { data } = UseAuthenticatedQuery({
     queryKey: [`getUserDetails`],
-    url: `https://upskilling-egypt.com:443/api/v1/Users/currentUser`,
+    url: `https://upskilling-egypt.com:3006/api/v1/Users/currentUser`,
     config: {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
