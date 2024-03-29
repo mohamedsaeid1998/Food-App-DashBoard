@@ -6,7 +6,6 @@ import { Helmet } from 'react-helmet'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { useTypewriter } from "react-simple-typewriter";
 interface Props {
   saveAdminData: () => void
 }
@@ -17,7 +16,7 @@ const Login = ({ saveAdminData }: Props) => {
 
   const navigate = useNavigate()
 
-  const { register, handleSubmit,setValue, formState: { errors } } = useForm<IFormValues>()
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<IFormValues>()
 
   function handleCallbackResponse(response: any) {
     localStorage.setItem("adminToken", response.credential)
@@ -91,9 +90,9 @@ const Login = ({ saveAdminData }: Props) => {
         <button type='submit' disabled={Loading} className='btn btn-success w-100 mt-4 fw-bold'>{Loading ? <i className='fa fa-spin fa-spinner'></i> : "Login"}</button>
 
       </form>
-      
+
     </AuthComponent>
-    
+
   </>
 }
 
